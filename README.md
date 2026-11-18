@@ -1,6 +1,6 @@
 # 政策问答系统
 
-电商售后政策问答系统。第一段交付了项目骨架、数据库表、语料导入和已锁定的 embedding；第二段补齐 70 篇语料、100 道评测题、条款跨度标注与映射，并在开发集上实测了 B0 基线；第三段完成了三种切分消融、BM25+RRF、gte-rerank 尝试、开发集 Recall@5 CI 门禁，以及测试集第一次评测。完整生成与拒答链路不在本阶段。
+电商售后政策问答系统。第一段交付了项目骨架、数据库表、语料导入和已锁定的 embedding；第二段补齐 70 篇语料、100 道评测题、条款跨度标注与映射，并在开发集上实测了 B0 基线；第三段完成了三种切分消融、BM25+RRF、gte-rerank 尝试、开发集 Recall@5 CI 门禁，以及测试集第一次评测；第四段接上查订单、查物流、退款和日报工具，跑通冰箱质量问题主路径，并实测对抗用例无错误副作用。多轮对话、句级引用、缓存、Langfuse 与模型级联标定不在本阶段。
 
 技术栈（已锁定，后续阶段沿用）：Python、FastAPI、官方 SDK 加自写编排、Postgres + pgvector、应用层 `rank_bm25.BM25Okapi`（jieba，k1=1.5，b=0.75）、RRF 融合、gte-rerank API、qwen-turbo 级联升到 qwen-plus（DeepSeek 只作行判或备用）、Langfuse Cloud、Streamlit、Docker Compose。不使用 LangChain 全家桶，不在本地跑 reranker，不自建 Langfuse。
 
@@ -42,6 +42,12 @@ python scripts/ci_check_recall.py --current reports/hybrid_dev_eval.json --basel
 python scripts/verify_foundation.py
 uvicorn app.main:app --host 127.0.0.1 --port 8000
 # 另开终端：curl http://127.0.0.1:8000/health
+
+# 10. 第四段：写入可复现种子，跑冰箱主路径与对抗用例
+python db/migrate.py
+python scripts/seed_stage4.py
+python scripts/run_stage4_fridge_path.py
+python scripts/run_stage4_adversarial.py
 ```
 
 ## 使用 Docker Compose 的环境
@@ -90,6 +96,18 @@ python scripts/import_corpus.py
 GitHub Actions 工作流：`.github/workflows/retrieval-ci.yml`。只卡开发集 Recall@5：与 `reports/ci_baseline.json` 的逐题结果比，recall 下降题数减去上升题数，净减少超过 3 题则失败。不设绝对 90% 门槛，延迟不进硬门禁，测试集不参与决策。本机可用 `scripts/ci_check_recall.py` 对已有评测报告做同样检查。
 
 工作流从 GitHub Actions secrets 读取 `DASHSCOPE_API_KEY`，不会把密钥写入仓库。若仓库尚未配置该 secret，工作流会跳过评测并说明原因，不视为门禁失败。需要的话，请在仓库 Settings > Secrets and variables > Actions 中添加同名 secret，不要把密钥发在聊天里。
+
+
+## 第四段：工具与主路径
+
+四个工具的签名都不含 `user_id`，只从服务端注入的会话上下文取当前用户：
+
+- `query_order(order_no?, keyword?)`：只读。必须返回 sku、类目、签收时间、是否会员、运费险，并把这些字段注入冲突解析（先按 sku → 品类 → 通用套政策，范围相同再比政策 → 手册 → FAQ，最后比生效日）。干扰语料与范围不匹配的专项条款不参与适用。
+- `query_logistics(order_no?, tracking_no?)`：只读本库运单与轨迹，不对接外部物流 API。
+- `refund(action=query|apply, order_no?, refund_no?, reason?, amount_cents?, idempotency_key?)`：查询只读；申请时同一订单只能有一笔进行中退款，由数据库约束 `ux_refunds_one_open_per_order` 保证。幂等键用于识别同一次提交的重试，不含申请当日或理由。
+- `daily_report(action=query|generate, report_date?)`：query 只读实时聚合；generate 才按 Asia/Shanghai 自然日幂等写入 `daily_reports` 快照，不改订单或退款。
+
+主路径「这单冰箱买了 20 天质量问题还能退吗」必须先真实查订单，不能只凭用户口述。生成模型为 `qwen-turbo`。种子脚本、主路径与对抗用例报告见 `reports/stage4_seed.json`、`reports/stage4_fridge_path.json`、`reports/stage4_adversarial.json`。
 
 ## 密钥
 

@@ -1,11 +1,15 @@
-"""数据库与 Redis 连接检查。"""
+"""数据库与 Redis 连接检查，以及工具使用的连接助手。"""
 
 from __future__ import annotations
 
+from collections.abc import Iterator
+from contextlib import contextmanager
+
 import psycopg
 import redis
+from psycopg import Connection
 
-from app.config import Settings
+from app.config import Settings, get_settings
 
 
 def check_postgres(settings: Settings) -> tuple[bool, str]:
@@ -33,3 +37,26 @@ def check_redis(settings: Settings) -> tuple[bool, str]:
         return (True, "ok") if pong else (False, "unexpected_pong")
     except Exception as exc:  # noqa: BLE001
         return False, type(exc).__name__
+
+
+def connect(settings: Settings | None = None, *, read_only: bool = False) -> Connection:
+    """打开一条连接。调用方负责关闭；只读连接在会话级禁止写入。"""
+    if settings is None:
+        settings = get_settings()
+    conn = psycopg.connect(settings.dsn())
+    if read_only:
+        conn.execute("SET SESSION CHARACTERISTICS AS TRANSACTION READ ONLY")
+    return conn
+
+
+@contextmanager
+def connection(*, read_only: bool = False, settings: Settings | None = None) -> Iterator[Connection]:
+    conn = connect(settings, read_only=read_only)
+    try:
+        yield conn
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()

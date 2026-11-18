@@ -93,6 +93,53 @@ COMMENT ON COLUMN document_sections.section_path IS '稳定章节路径，如 1.
 COMMENT ON COLUMN document_sections.char_start IS '相对 documents.body 的起始字符偏移（含）';
 COMMENT ON COLUMN document_sections.char_end IS '相对 documents.body 的结束字符偏移（不含）';
 
+
+-- 退款幂等键：只用于识别同一次提交的重试，不得包含申请日期或理由。
+ALTER TABLE refunds ADD COLUMN IF NOT EXISTS idempotency_key TEXT;
+CREATE UNIQUE INDEX IF NOT EXISTS ux_refunds_idempotency_key
+    ON refunds (idempotency_key)
+    WHERE idempotency_key IS NOT NULL;
+COMMENT ON COLUMN refunds.idempotency_key IS '幂等键；不得包含申请当日日期或退款理由';
+
+-- 物流：仅存本库数据，不对接外部物流 API。订单删除时级联清理，避免影响既有地基验证脚本。
+CREATE TABLE IF NOT EXISTS shipments (
+    id              BIGSERIAL PRIMARY KEY,
+    order_id        BIGINT NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+    tracking_no     TEXT NOT NULL UNIQUE,
+    carrier         TEXT,
+    status          TEXT NOT NULL,
+    shipped_at      TIMESTAMPTZ,
+    delivered_at    TIMESTAMPTZ,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS shipment_events (
+    id              BIGSERIAL PRIMARY KEY,
+    shipment_id     BIGINT NOT NULL REFERENCES shipments(id) ON DELETE CASCADE,
+    event_time      TIMESTAMPTZ NOT NULL,
+    location        TEXT,
+    status          TEXT NOT NULL,
+    description     TEXT NOT NULL,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+COMMENT ON TABLE shipments IS '本库物流运单；查物流工具只读本表';
+COMMENT ON TABLE shipment_events IS '物流轨迹事件，按 event_time 排序';
+
+-- 日报快照。查询动作只读实时聚合，不写本表；显式 generate 才按自然日（Asia/Shanghai）幂等写入。
+CREATE TABLE IF NOT EXISTS daily_reports (
+    report_date         DATE PRIMARY KEY,
+    generated_at        TIMESTAMPTZ NOT NULL DEFAULT now(),
+    orders_received     INTEGER NOT NULL DEFAULT 0,
+    refunds_created     INTEGER NOT NULL DEFAULT 0,
+    refunds_open        INTEGER NOT NULL DEFAULT 0,
+    refunds_completed   INTEGER NOT NULL DEFAULT 0,
+    payload             JSONB NOT NULL DEFAULT '{}'::jsonb
+);
+
+COMMENT ON TABLE daily_reports IS '日报快照，按 Asia/Shanghai 的日历日唯一；查询类调用不得写入';
+
 -- 切分结果。chunk_id 仅用于存储与检索，评测标注不得直接使用 chunk_id。
 CREATE TABLE IF NOT EXISTS chunks (
     id              BIGSERIAL PRIMARY KEY,

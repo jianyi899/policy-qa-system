@@ -1,0 +1,36 @@
+# secrets and local env
+.env
+.env.*
+!.env.example
+
+# python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# local runtime / data
+data/
+*.rdb
+*.pid
+*.log
+reports/e0_result.json
+reports/verify_latest.json
+
+# editors / OS
+.idea/
+.vscode/
+.DS_Store
+
+# packaging artifacts
+*.egg-info/

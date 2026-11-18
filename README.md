@@ -22,7 +22,7 @@ cp .env.example .env
 # 本机默认可通过 Unix socket、用户 box、数据库 policy_qa 连接，可不填密码。
 # 若要做 E0 embedding 选型，在环境中提供 DASHSCOPE_API_KEY，不要把密钥写进仓库或提交。
 
-# 4. 建表（未设置 EMBEDDING_DIM 时会跳过向量表，这是预期行为）
+# 4. 建表（E0 锁定后按实测维度 1024 创建 chunk_embeddings）
 python db/migrate.py
 
 # 5. 导入 25 篇语料
@@ -54,7 +54,13 @@ python scripts/import_corpus.py
 
 ## E0 embedding
 
-在已提供 `DASHSCOPE_API_KEY` 时运行 `python scripts/e0_select_embedding.py`，以小规模实测锁定模型和维度，再设置 `EMBEDDING_MODEL`、`EMBEDDING_DIM` 并重新执行 `python db/migrate.py` 按实测维度建列。选定后不要更换。缺少密钥时不得编造结果。
+已于 2026-11-18（Asia/Shanghai）用同一组 3 条中文政策句子，对 DashScope 候选模型做小规模实测并锁定，选定后不要更换。实测记录见 `reports/e0_result.json`。
+
+- `text-embedding-v3`：成功，维度 1024，延迟 1763.82 ms
+- `text-embedding-v4`：成功，维度 1024，延迟 497.44 ms（锁定）
+- `text-embedding-v2`：成功，维度 1536，延迟 586.82 ms
+
+按既定规则在成功结果中选择延迟最低者，锁定 `EMBEDDING_MODEL=text-embedding-v4`，并以实测维度 `EMBEDDING_DIM=1024` 建立 `chunk_embeddings`。该维度来自接口返回，不是预先写死。更换 embedding 会推翻后续全部实验，因此不再改动。
 
 ## 密钥
 

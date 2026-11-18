@@ -1,0 +1,43 @@
+{
+  "status": "selected",
+  "protocol": "dashscope_small_scale_latency_and_dim",
+  "sample_size": 3,
+  "candidates": [
+    {
+      "model": "text-embedding-v3",
+      "ok": true,
+      "status_code": 200,
+      "n_vectors": 3,
+      "dims": [
+        1024
+      ],
+      "dim": 1024,
+      "latency_ms": 1763.82
+    },
+    {
+      "model": "text-embedding-v4",
+      "ok": true,
+      "status_code": 200,
+      "n_vectors": 3,
+      "dims": [
+        1024
+      ],
+      "dim": 1024,
+      "latency_ms": 497.44
+    },
+    {
+      "model": "text-embedding-v2",
+      "ok": true,
+      "status_code": 200,
+      "n_vectors": 3,
+      "dims": [
+        1536
+      ],
+      "dim": 1536,
+      "latency_ms": 586.82
+    }
+  ],
+  "selected_model": "text-embedding-v4",
+  "selected_dim": 1024,
+  "note": "选定后请将 EMBEDDING_MODEL / EMBEDDING_DIM 写入环境变量，再运行 python db/migrate.py 按实测维度建列。选定后不要更换。"
+}

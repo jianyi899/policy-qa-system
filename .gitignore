@@ -24,7 +24,7 @@ data/
 *.rdb
 *.pid
 *.log
-reports/e0_result.json
+# e0_result.json 在锁定后入库，作为不可更换的选型记录
 reports/verify_latest.json
 
 # editors / OS

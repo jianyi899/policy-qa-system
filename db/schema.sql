@@ -71,12 +71,12 @@ CREATE TABLE IF NOT EXISTS documents (
     body            TEXT NOT NULL,
     created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
     CONSTRAINT documents_source_type_check
-        CHECK (source_type IN ('policy', 'manual', 'faq')),
+        CHECK (source_type IN ('policy', 'manual', 'faq', 'noise')),
     CONSTRAINT documents_scope_type_check
         CHECK (scope_type IN ('sku', 'category', 'general'))
 );
 
-COMMENT ON TABLE documents IS '语料文档；标注键使用 doc_id + section_path + 字符起止，不直接使用 chunk_id';
+COMMENT ON TABLE documents IS '语料文档；标注键使用 doc_id + section_path + 字符起止，不直接使用 chunk_id。source_type=noise 为干扰语料，不得覆盖正式政策答案';
 
 CREATE TABLE IF NOT EXISTS document_sections (
     id              BIGSERIAL PRIMARY KEY,

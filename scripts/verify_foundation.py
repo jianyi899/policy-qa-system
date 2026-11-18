@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""第一段地基实测验证：数据库连接、表、退款唯一约束、25 篇语料。"""
+"""地基实测验证：数据库连接、表、退款唯一约束、70 篇语料。"""
 
 from __future__ import annotations
 
@@ -18,7 +18,12 @@ sys.path.insert(0, str(ROOT))
 from app.config import get_settings  # noqa: E402
 from app.db import check_postgres, check_redis  # noqa: E402
 
-EXPECTED_DOCS = [f"P{i:02d}" for i in range(1, 21)] + [f"M{i:02d}" for i in range(1, 6)]
+EXPECTED_DOCS = (
+    [f"P{i:02d}" for i in range(1, 21)]
+    + [f"M{i:02d}" for i in range(1, 26)]
+    + [f"F{i:02d}" for i in range(1, 16)]
+    + [f"N{i:02d}" for i in range(1, 11)]
+)
 REQUIRED_TABLES = {
     "users",
     "orders",

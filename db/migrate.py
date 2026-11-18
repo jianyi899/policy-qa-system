@@ -50,6 +50,17 @@ def migrate() -> None:
     with psycopg.connect(settings.dsn(), cursor_factory=ClientCursor) as conn:
         conn.execute("CREATE EXTENSION IF NOT EXISTS vector")
         conn.execute(base_sql)
+        # 已有库的 CHECK 不会被 CREATE TABLE IF NOT EXISTS 更新，需显式对齐。
+        conn.execute(
+            "ALTER TABLE documents DROP CONSTRAINT IF EXISTS documents_source_type_check"
+        )
+        conn.execute(
+            """
+            ALTER TABLE documents
+            ADD CONSTRAINT documents_source_type_check
+            CHECK (source_type IN ('policy', 'manual', 'faq', 'noise'))
+            """
+        )
         if dim is not None:
             conn.execute(embed_sql.replace("__EMBEDDING_DIM__", str(dim)))
             print(f"schema applied; chunk_embeddings.embedding vector({dim})")

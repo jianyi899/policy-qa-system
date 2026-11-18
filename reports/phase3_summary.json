@@ -1,0 +1,488 @@
+{
+  "ok": true,
+  "name": "phase3",
+  "measured_at": "2026-11-18T19:45:28+08:00",
+  "timezone": "Asia/Shanghai",
+  "chunking_ablation": {
+    "selected": "section_window_400",
+    "reason": "按开发集纯密集检索 Recall@5 最高者锁定切分；选定 section_window_400，Recall@5=0.7844444444444445。 B0 切分即为最好或并列最好，予以保留。",
+    "strategies": [
+      {
+        "name": "section_window_400",
+        "chunking": {
+          "name": "section_window_400",
+          "strategy": "section_window_chars",
+          "chunk_size": 400,
+          "overlap": 80,
+          "min_tail": 40,
+          "unit": "python_unicode_chars",
+          "scope": "within_section_path"
+        },
+        "n_chunks": 221,
+        "n_unmapped_spans": 0,
+        "Recall@5": {
+          "mean": 0.7844444444444445,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "Hit@5": {
+          "mean": 0.85,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "n_failures_hit@5": 9,
+        "failure_ids": [
+          "Q008",
+          "Q015",
+          "Q017",
+          "Q021",
+          "Q024",
+          "Q032",
+          "Q039",
+          "Q044",
+          "Q049"
+        ],
+        "vs_section_window_400": null
+      },
+      {
+        "name": "section_window_120",
+        "chunking": {
+          "name": "section_window_120",
+          "strategy": "section_window_chars",
+          "chunk_size": 120,
+          "overlap": 24,
+          "min_tail": 15,
+          "unit": "python_unicode_chars",
+          "scope": "within_section_path"
+        },
+        "n_chunks": 255,
+        "n_unmapped_spans": 0,
+        "Recall@5": {
+          "mean": 0.7427777777777779,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "Hit@5": {
+          "mean": 0.8333333333333334,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "n_failures_hit@5": 10,
+        "failure_ids": [
+          "Q008",
+          "Q013",
+          "Q017",
+          "Q021",
+          "Q022",
+          "Q024",
+          "Q032",
+          "Q044",
+          "Q045",
+          "Q049"
+        ],
+        "vs_section_window_400": {
+          "baseline": "section_window_400",
+          "current": "section_window_120",
+          "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+          "n_comparable": 60,
+          "n_only_baseline": 0,
+          "n_only_current": 0,
+          "wrong_to_right": {
+            "n": 2,
+            "ids": [
+              "Q015",
+              "Q039"
+            ]
+          },
+          "right_to_wrong": {
+            "n": 3,
+            "ids": [
+              "Q013",
+              "Q022",
+              "Q045"
+            ]
+          },
+          "mcnemar": {
+            "n_improved": 2,
+            "n_regressed": 3,
+            "n_discordant": 5,
+            "p_value": 1.0,
+            "test": "mcnemar_exact_binomial",
+            "significant_at_0.05": false,
+            "direction": "negative",
+            "interpretation": "方向为负但未达显著"
+          },
+          "recall@5_changes": {
+            "n_up": 4,
+            "ids_up": [
+              "Q015",
+              "Q016",
+              "Q039",
+              "Q057"
+            ],
+            "n_down": 6,
+            "ids_down": [
+              "Q011",
+              "Q013",
+              "Q022",
+              "Q045",
+              "Q047",
+              "Q060"
+            ],
+            "n_same": 50,
+            "net_decrease_questions": 2
+          }
+        }
+      },
+      {
+        "name": "sentence_pack_150",
+        "chunking": {
+          "name": "sentence_pack_150",
+          "strategy": "sentence_pack",
+          "max_chars": 150,
+          "overlap_sentences": 0,
+          "sentence_delimiters": "。！？；!?;",
+          "unit": "python_unicode_chars",
+          "scope": "within_section_path"
+        },
+        "n_chunks": 232,
+        "n_unmapped_spans": 0,
+        "Recall@5": {
+          "mean": 0.7844444444444445,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "Hit@5": {
+          "mean": 0.85,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "n_failures_hit@5": 9,
+        "failure_ids": [
+          "Q008",
+          "Q015",
+          "Q017",
+          "Q021",
+          "Q024",
+          "Q032",
+          "Q039",
+          "Q044",
+          "Q049"
+        ],
+        "vs_section_window_400": {
+          "baseline": "section_window_400",
+          "current": "sentence_pack_150",
+          "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+          "n_comparable": 60,
+          "n_only_baseline": 0,
+          "n_only_current": 0,
+          "wrong_to_right": {
+            "n": 0,
+            "ids": []
+          },
+          "right_to_wrong": {
+            "n": 0,
+            "ids": []
+          },
+          "mcnemar": {
+            "n_improved": 0,
+            "n_regressed": 0,
+            "n_discordant": 0,
+            "p_value": 1.0,
+            "test": "mcnemar_exact_binomial",
+            "significant_at_0.05": false,
+            "direction": "tied",
+            "interpretation": "无分歧题目，无法检验。"
+          },
+          "recall@5_changes": {
+            "n_up": 0,
+            "ids_up": [],
+            "n_down": 0,
+            "ids_down": [],
+            "n_same": 60,
+            "net_decrease_questions": 0
+          }
+        }
+      }
+    ]
+  },
+  "bm25_rrf": {
+    "adopted": true,
+    "Recall@5": {
+      "mean": 0.8469444444444445,
+      "n": 60,
+      "n_undefined_no_gold": 0
+    },
+    "dense_Recall@5": {
+      "mean": 0.7844444444444445,
+      "n": 60,
+      "n_undefined_no_gold": 0
+    },
+    "comparison_vs_dense": {
+      "baseline": "section_window_400+dense",
+      "current": "section_window_400+hybrid",
+      "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+      "n_comparable": 60,
+      "n_only_baseline": 0,
+      "n_only_current": 0,
+      "wrong_to_right": {
+        "n": 6,
+        "ids": [
+          "Q008",
+          "Q015",
+          "Q021",
+          "Q032",
+          "Q044",
+          "Q049"
+        ]
+      },
+      "right_to_wrong": {
+        "n": 1,
+        "ids": [
+          "Q022"
+        ]
+      },
+      "mcnemar": {
+        "n_improved": 6,
+        "n_regressed": 1,
+        "n_discordant": 7,
+        "p_value": 0.125,
+        "test": "mcnemar_exact_binomial",
+        "significant_at_0.05": false,
+        "direction": "positive",
+        "interpretation": "方向为正但未达显著"
+      },
+      "recall@5_changes": {
+        "n_up": 9,
+        "ids_up": [
+          "Q005",
+          "Q008",
+          "Q010",
+          "Q015",
+          "Q021",
+          "Q032",
+          "Q044",
+          "Q049",
+          "Q052"
+        ],
+        "n_down": 2,
+        "ids_down": [
+          "Q022",
+          "Q033"
+        ],
+        "n_same": 49,
+        "net_decrease_questions": -7
+      }
+    },
+    "reason": "融合后开发集 Recall@5 高于纯密集，纳入主链路。"
+  },
+  "gte_rerank": {
+    "status": "failed",
+    "adopted": false,
+    "error_type": "AccessDenied",
+    "Recall@5": null,
+    "comparison_vs_hybrid": null,
+    "comparison_vs_best_before_rerank": null,
+    "reason": "gte-rerank API 调用失败，不编造结果，本步不纳入主链路。"
+  },
+  "locked_pipeline": {
+    "name": "locked_retrieval",
+    "measured_at": "2026-11-18T19:45:24+08:00",
+    "timezone": "Asia/Shanghai",
+    "chunking_name": "section_window_400",
+    "chunking": {
+      "name": "section_window_400",
+      "strategy": "section_window_chars",
+      "chunk_size": 400,
+      "overlap": 80,
+      "min_tail": 40,
+      "unit": "python_unicode_chars",
+      "scope": "within_section_path"
+    },
+    "retriever": "hybrid",
+    "retrieval": "hybrid",
+    "embedding_model": "text-embedding-v4",
+    "embedding_dim": 1024,
+    "bm25": true,
+    "rrf": true,
+    "rerank": false,
+    "generation": false,
+    "dev_Recall@5": {
+      "mean": 0.8469444444444445,
+      "n": 60,
+      "n_undefined_no_gold": 0
+    },
+    "dev_Hit@5": {
+      "mean": 0.9333333333333333,
+      "n": 60,
+      "n_undefined_no_gold": 0
+    },
+    "selection_reason": "切分选定 section_window_400；BM25+RRF 纳入；gte-rerank 不纳入。全部依据开发集 Recall@5，测试集未参与选型或调参。"
+  },
+  "ci": {
+    "baseline_path": "reports/ci_baseline.json",
+    "workflow": ".github/workflows/retrieval-ci.yml",
+    "gate": {
+      "metric": "Recall@5",
+      "unit": "questions",
+      "rule": "与上次通过的开发集逐题 Recall@5 比较：recall 下降的题数减去上升的题数，若净减少大于 3 则失败。不设绝对 90% 门槛，延迟不进硬门禁。测试集不参与 CI 决策。",
+      "max_net_decrease_questions": 3
+    },
+    "self_check": {
+      "ok": true,
+      "passed": true,
+      "gate": {
+        "metric": "Recall@5",
+        "unit": "questions",
+        "rule": "与上次通过的开发集逐题 Recall@5 比较：recall 下降的题数减去上升的题数，若净减少大于 3 则失败。不设绝对 90% 门槛，延迟不进硬门禁。测试集不参与 CI 决策。",
+        "max_net_decrease_questions": 3
+      },
+      "baseline_Recall@5": {
+        "mean": 0.8469444444444445,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "current_Recall@5": {
+        "mean": 0.8469444444444445,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "n_recall_up": 0,
+      "n_recall_down": 0,
+      "net_decrease_questions": 0,
+      "hit@5_wrong_to_right": {
+        "n": 0,
+        "ids": []
+      },
+      "hit@5_right_to_wrong": {
+        "n": 0,
+        "ids": []
+      },
+      "message": "通过：开发集 Recall@5 净减少 0 题，未超过 3 题门禁。"
+    },
+    "needs_repo_secret": true,
+    "secret_name": "DASHSCOPE_API_KEY"
+  },
+  "test_run1": {
+    "ok": true,
+    "split": "test",
+    "retriever": "hybrid",
+    "n_questions_in_split": 30,
+    "n_answerable": 25,
+    "n_refusal_excluded": 5,
+    "n_used_for_recall": 25,
+    "metrics": {
+      "Recall@5": {
+        "mean": 0.9213333333333334,
+        "n": 25,
+        "n_undefined_no_gold": 0
+      },
+      "Hit@5": {
+        "mean": 1.0,
+        "n": 25,
+        "n_undefined_no_gold": 0
+      },
+      "MRR@5": {
+        "mean": 0.6193333333333333,
+        "n": 25,
+        "n_undefined_no_gold": 0
+      },
+      "nDCG@5": {
+        "mean": 0.6856163154930307,
+        "n": 25,
+        "n_undefined_no_gold": 0
+      },
+      "Recall@10": {
+        "mean": 0.9526666666666667,
+        "n": 25,
+        "n_undefined_no_gold": 0
+      },
+      "Hit@10": {
+        "mean": 1.0,
+        "n": 25,
+        "n_undefined_no_gold": 0
+      }
+    },
+    "Recall@5": {
+      "mean": 0.9213333333333334,
+      "n": 25,
+      "n_undefined_no_gold": 0
+    },
+    "Hit@5": {
+      "mean": 1.0,
+      "n": 25,
+      "n_undefined_no_gold": 0
+    },
+    "by_type": {
+      "multi_hop": {
+        "n": 7,
+        "recall@5_mean": 0.719047619047619,
+        "hit@5_mean": 1.0
+      },
+      "single_hop": {
+        "n": 18,
+        "recall@5_mean": 1.0,
+        "hit@5_mean": 1.0
+      }
+    },
+    "n_failures_hit@5": 0,
+    "failure_ids": [],
+    "settings": {
+      "retriever": "hybrid",
+      "embedding_model": "text-embedding-v4",
+      "embedding_dim": 1024,
+      "n_chunks": 221,
+      "rrf": {
+        "fusion": "rrf",
+        "rrf_k": 60,
+        "bm25": {
+          "implementation": "rank_bm25.BM25Okapi",
+          "tokenizer": "jieba",
+          "k1": 1.5,
+          "b": 0.75
+        }
+      },
+      "rerank": false
+    },
+    "metric_definitions": {
+      "Recall@5": "对每道有金标切片的可答题，计算 |gold ∩ top5| / |gold|，再对题目做宏平均。分母=有金标切片的可答题数。拒答题不计入。",
+      "Hit@5": "对每道有金标切片的可答题，top5 中至少有一条相关切片记 1，否则记 0，再宏平均。分母同上。",
+      "MRR@5": "第一条相关切片排名的倒数，未命中为 0，再宏平均。",
+      "nDCG@5": "相关切片相关性按二元，再宏平均。",
+      "retrieval": "密集检索与 BM25Okapi（jieba，k1=1.5，b=0.75）经 RRF（k=60）融合。不加 rerank。"
+    },
+    "refusal": {
+      "n": 5,
+      "ids": [
+        "Q096",
+        "Q097",
+        "Q098",
+        "Q099",
+        "Q100"
+      ],
+      "generation": "not_run",
+      "note": "本段只评检索，不跑生成；拒答题不设正确率目标，也不计入 Recall@5。"
+    },
+    "testset_seal": {
+      "ok": true,
+      "expected_sha256": "092576646b41d9c35a3390e330ea62c2e62b0f00ab4ab78a32cb0220b3fc6a59",
+      "observed_sha256": "092576646b41d9c35a3390e330ea62c2e62b0f00ab4ab78a32cb0220b3fc6a59",
+      "seal_file_sha256": "092576646b41d9c35a3390e330ea62c2e62b0f00ab4ab78a32cb0220b3fc6a59",
+      "hash_file_sha256": "092576646b41d9c35a3390e330ea62c2e62b0f00ab4ab78a32cb0220b3fc6a59",
+      "n_test_questions": 30,
+      "match": true
+    },
+    "report_path": "reports/test_run1.json",
+    "per_question_path": "reports/test_run1_eval.json",
+    "generation": "not_run"
+  },
+  "testset_seal": {
+    "ok": true,
+    "expected_sha256": "092576646b41d9c35a3390e330ea62c2e62b0f00ab4ab78a32cb0220b3fc6a59",
+    "observed_sha256": "092576646b41d9c35a3390e330ea62c2e62b0f00ab4ab78a32cb0220b3fc6a59",
+    "seal_file_sha256": "092576646b41d9c35a3390e330ea62c2e62b0f00ab4ab78a32cb0220b3fc6a59",
+    "hash_file_sha256": "092576646b41d9c35a3390e330ea62c2e62b0f00ab4ab78a32cb0220b3fc6a59",
+    "n_test_questions": 30,
+    "match": true
+  }
+}

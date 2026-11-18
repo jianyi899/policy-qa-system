@@ -1,0 +1,451 @@
+{
+  "name": "chunking_ablation",
+  "status": "measured",
+  "measured_at": "2026-11-18T19:45:20+08:00",
+  "timezone": "Asia/Shanghai",
+  "split": "dev",
+  "retrieval": "dense_only",
+  "embedding_model": "text-embedding-v4",
+  "embedding_dim": 1024,
+  "n_cached_vectors_ingested_at_start": 221,
+  "strategies_distinct": true,
+  "pairwise_chunk_sets": [
+    {
+      "a": "section_window_400",
+      "b": "section_window_120",
+      "n_a": 221,
+      "n_b": 255,
+      "intersection": 189,
+      "only_a": 32,
+      "only_b": 66,
+      "equal": false
+    },
+    {
+      "a": "section_window_400",
+      "b": "sentence_pack_150",
+      "n_a": 221,
+      "n_b": 232,
+      "intersection": 210,
+      "only_a": 11,
+      "only_b": 22,
+      "equal": false
+    },
+    {
+      "a": "section_window_120",
+      "b": "sentence_pack_150",
+      "n_a": 255,
+      "n_b": 232,
+      "intersection": 190,
+      "only_a": 65,
+      "only_b": 42,
+      "equal": false
+    }
+  ],
+  "strategies": [
+    {
+      "name": "section_window_400",
+      "chunking": {
+        "name": "section_window_400",
+        "strategy": "section_window_chars",
+        "chunk_size": 400,
+        "overlap": 80,
+        "min_tail": 40,
+        "unit": "python_unicode_chars",
+        "scope": "within_section_path"
+      },
+      "n_chunks": 221,
+      "n_unmapped_spans": 0,
+      "dev_answerable": {
+        "n_questions": 60,
+        "n_gold_spans": 86,
+        "n_mapped_question_chunk_pairs": 86,
+        "n_questions_missing_gold": 0
+      },
+      "metrics": {
+        "Recall@5": {
+          "mean": 0.7844444444444445,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "Hit@5": {
+          "mean": 0.85,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "MRR@5": {
+          "mean": 0.6080555555555556,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "nDCG@5": {
+          "mean": 0.6329051122127236,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "Recall@10": {
+          "mean": 0.8641666666666666,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "Hit@10": {
+          "mean": 0.9166666666666666,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        }
+      },
+      "Recall@5": {
+        "mean": 0.7844444444444445,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "Hit@5": {
+        "mean": 0.85,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "n_failures_hit@5": 9,
+      "failure_ids": [
+        "Q008",
+        "Q015",
+        "Q017",
+        "Q021",
+        "Q024",
+        "Q032",
+        "Q039",
+        "Q044",
+        "Q049"
+      ],
+      "per_question_path": "reports/chunking_section_window_400_dev_eval.json"
+    },
+    {
+      "name": "section_window_120",
+      "chunking": {
+        "name": "section_window_120",
+        "strategy": "section_window_chars",
+        "chunk_size": 120,
+        "overlap": 24,
+        "min_tail": 15,
+        "unit": "python_unicode_chars",
+        "scope": "within_section_path"
+      },
+      "n_chunks": 255,
+      "n_unmapped_spans": 0,
+      "dev_answerable": {
+        "n_questions": 60,
+        "n_gold_spans": 86,
+        "n_mapped_question_chunk_pairs": 98,
+        "n_questions_missing_gold": 0
+      },
+      "metrics": {
+        "Recall@5": {
+          "mean": 0.7427777777777779,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "Hit@5": {
+          "mean": 0.8333333333333334,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "MRR@5": {
+          "mean": 0.5700000000000001,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "nDCG@5": {
+          "mean": 0.5896142888936606,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "Recall@10": {
+          "mean": 0.8447222222222222,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "Hit@10": {
+          "mean": 0.9333333333333333,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        }
+      },
+      "Recall@5": {
+        "mean": 0.7427777777777779,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "Hit@5": {
+        "mean": 0.8333333333333334,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "n_failures_hit@5": 10,
+      "failure_ids": [
+        "Q008",
+        "Q013",
+        "Q017",
+        "Q021",
+        "Q022",
+        "Q024",
+        "Q032",
+        "Q044",
+        "Q045",
+        "Q049"
+      ],
+      "per_question_path": "reports/chunking_section_window_120_dev_eval.json",
+      "vs_section_window_400": {
+        "baseline": "section_window_400",
+        "current": "section_window_120",
+        "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+        "n_comparable": 60,
+        "n_only_baseline": 0,
+        "n_only_current": 0,
+        "wrong_to_right": {
+          "n": 2,
+          "ids": [
+            "Q015",
+            "Q039"
+          ]
+        },
+        "right_to_wrong": {
+          "n": 3,
+          "ids": [
+            "Q013",
+            "Q022",
+            "Q045"
+          ]
+        },
+        "mcnemar": {
+          "n_improved": 2,
+          "n_regressed": 3,
+          "n_discordant": 5,
+          "p_value": 1.0,
+          "test": "mcnemar_exact_binomial",
+          "significant_at_0.05": false,
+          "direction": "negative",
+          "interpretation": "方向为负但未达显著"
+        },
+        "recall@5_changes": {
+          "n_up": 4,
+          "ids_up": [
+            "Q015",
+            "Q016",
+            "Q039",
+            "Q057"
+          ],
+          "n_down": 6,
+          "ids_down": [
+            "Q011",
+            "Q013",
+            "Q022",
+            "Q045",
+            "Q047",
+            "Q060"
+          ],
+          "n_same": 50,
+          "net_decrease_questions": 2
+        }
+      }
+    },
+    {
+      "name": "sentence_pack_150",
+      "chunking": {
+        "name": "sentence_pack_150",
+        "strategy": "sentence_pack",
+        "max_chars": 150,
+        "overlap_sentences": 0,
+        "sentence_delimiters": "。！？；!?;",
+        "unit": "python_unicode_chars",
+        "scope": "within_section_path"
+      },
+      "n_chunks": 232,
+      "n_unmapped_spans": 0,
+      "dev_answerable": {
+        "n_questions": 60,
+        "n_gold_spans": 86,
+        "n_mapped_question_chunk_pairs": 86,
+        "n_questions_missing_gold": 0
+      },
+      "metrics": {
+        "Recall@5": {
+          "mean": 0.7844444444444445,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "Hit@5": {
+          "mean": 0.85,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "MRR@5": {
+          "mean": 0.6038888888888889,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "nDCG@5": {
+          "mean": 0.629520713954161,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "Recall@10": {
+          "mean": 0.8391666666666667,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        },
+        "Hit@10": {
+          "mean": 0.9,
+          "n": 60,
+          "n_undefined_no_gold": 0
+        }
+      },
+      "Recall@5": {
+        "mean": 0.7844444444444445,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "Hit@5": {
+        "mean": 0.85,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "n_failures_hit@5": 9,
+      "failure_ids": [
+        "Q008",
+        "Q015",
+        "Q017",
+        "Q021",
+        "Q024",
+        "Q032",
+        "Q039",
+        "Q044",
+        "Q049"
+      ],
+      "per_question_path": "reports/chunking_sentence_pack_150_dev_eval.json",
+      "vs_section_window_400": {
+        "baseline": "section_window_400",
+        "current": "sentence_pack_150",
+        "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+        "n_comparable": 60,
+        "n_only_baseline": 0,
+        "n_only_current": 0,
+        "wrong_to_right": {
+          "n": 0,
+          "ids": []
+        },
+        "right_to_wrong": {
+          "n": 0,
+          "ids": []
+        },
+        "mcnemar": {
+          "n_improved": 0,
+          "n_regressed": 0,
+          "n_discordant": 0,
+          "p_value": 1.0,
+          "test": "mcnemar_exact_binomial",
+          "significant_at_0.05": false,
+          "direction": "tied",
+          "interpretation": "无分歧题目，无法检验。"
+        },
+        "recall@5_changes": {
+          "n_up": 0,
+          "ids_up": [],
+          "n_down": 0,
+          "ids_down": [],
+          "n_same": 60,
+          "net_decrease_questions": 0
+        }
+      }
+    }
+  ],
+  "comparisons_vs_section_window_400": {
+    "section_window_120": {
+      "baseline": "section_window_400",
+      "current": "section_window_120",
+      "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+      "n_comparable": 60,
+      "n_only_baseline": 0,
+      "n_only_current": 0,
+      "wrong_to_right": {
+        "n": 2,
+        "ids": [
+          "Q015",
+          "Q039"
+        ]
+      },
+      "right_to_wrong": {
+        "n": 3,
+        "ids": [
+          "Q013",
+          "Q022",
+          "Q045"
+        ]
+      },
+      "mcnemar": {
+        "n_improved": 2,
+        "n_regressed": 3,
+        "n_discordant": 5,
+        "p_value": 1.0,
+        "test": "mcnemar_exact_binomial",
+        "significant_at_0.05": false,
+        "direction": "negative",
+        "interpretation": "方向为负但未达显著"
+      },
+      "recall@5_changes": {
+        "n_up": 4,
+        "ids_up": [
+          "Q015",
+          "Q016",
+          "Q039",
+          "Q057"
+        ],
+        "n_down": 6,
+        "ids_down": [
+          "Q011",
+          "Q013",
+          "Q022",
+          "Q045",
+          "Q047",
+          "Q060"
+        ],
+        "n_same": 50,
+        "net_decrease_questions": 2
+      }
+    },
+    "sentence_pack_150": {
+      "baseline": "section_window_400",
+      "current": "sentence_pack_150",
+      "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+      "n_comparable": 60,
+      "n_only_baseline": 0,
+      "n_only_current": 0,
+      "wrong_to_right": {
+        "n": 0,
+        "ids": []
+      },
+      "right_to_wrong": {
+        "n": 0,
+        "ids": []
+      },
+      "mcnemar": {
+        "n_improved": 0,
+        "n_regressed": 0,
+        "n_discordant": 0,
+        "p_value": 1.0,
+        "test": "mcnemar_exact_binomial",
+        "significant_at_0.05": false,
+        "direction": "tied",
+        "interpretation": "无分歧题目，无法检验。"
+      },
+      "recall@5_changes": {
+        "n_up": 0,
+        "ids_up": [],
+        "n_down": 0,
+        "ids_down": [],
+        "n_same": 60,
+        "net_decrease_questions": 0
+      }
+    }
+  },
+  "selected": "section_window_400",
+  "selection_rule": "开发集 Recall@5 宏平均最高；并列时保留 section_window_400（B0）。测试集数字不参与选型。",
+  "selection_reason": "按开发集纯密集检索 Recall@5 最高者锁定切分；选定 section_window_400，Recall@5=0.7844444444444445。 B0 切分即为最好或并列最好，予以保留。"
+}

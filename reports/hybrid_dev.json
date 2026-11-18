@@ -1,0 +1,287 @@
+{
+  "name": "bm25_rrf",
+  "status": "measured",
+  "measured_at": "2026-11-18T19:45:22+08:00",
+  "timezone": "Asia/Shanghai",
+  "split": "dev",
+  "chunking_name": "section_window_400",
+  "dense": {
+    "ok": true,
+    "split": "dev",
+    "retriever": "dense",
+    "n_questions_in_split": 70,
+    "n_answerable": 60,
+    "n_refusal_excluded": 10,
+    "n_used_for_recall": 60,
+    "metrics": {
+      "Recall@5": {
+        "mean": 0.7844444444444445,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "Hit@5": {
+        "mean": 0.85,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "MRR@5": {
+        "mean": 0.6080555555555556,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "nDCG@5": {
+        "mean": 0.6329051122127236,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "Recall@10": {
+        "mean": 0.8641666666666666,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "Hit@10": {
+        "mean": 0.9166666666666666,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      }
+    },
+    "Recall@5": {
+      "mean": 0.7844444444444445,
+      "n": 60,
+      "n_undefined_no_gold": 0
+    },
+    "Hit@5": {
+      "mean": 0.85,
+      "n": 60,
+      "n_undefined_no_gold": 0
+    },
+    "by_type": {
+      "multi_hop": {
+        "n": 18,
+        "recall@5_mean": 0.5592592592592592,
+        "hit@5_mean": 0.7777777777777778
+      },
+      "single_hop": {
+        "n": 42,
+        "recall@5_mean": 0.8809523809523809,
+        "hit@5_mean": 0.8809523809523809
+      }
+    },
+    "n_failures_hit@5": 9,
+    "failure_ids": [
+      "Q008",
+      "Q015",
+      "Q017",
+      "Q021",
+      "Q024",
+      "Q032",
+      "Q039",
+      "Q044",
+      "Q049"
+    ],
+    "settings": {
+      "retriever": "dense",
+      "embedding_model": "text-embedding-v4",
+      "embedding_dim": 1024,
+      "n_chunks": 221,
+      "rrf": false,
+      "rerank": false
+    },
+    "metric_definitions": {
+      "Recall@5": "对每道有金标切片的可答题，计算 |gold ∩ top5| / |gold|，再对题目做宏平均。分母=有金标切片的可答题数。拒答题不计入。",
+      "Hit@5": "对每道有金标切片的可答题，top5 中至少有一条相关切片记 1，否则记 0，再宏平均。分母同上。",
+      "MRR@5": "第一条相关切片排名的倒数，未命中为 0，再宏平均。",
+      "nDCG@5": "相关切片相关性按二元，再宏平均。",
+      "retrieval": "纯密集检索，距离为 pgvector 余弦距离 <=>，得分=1-距离。不加 BM25/RRF/rerank。"
+    },
+    "refusal": {
+      "n": 10,
+      "ids": [
+        "Q062",
+        "Q063",
+        "Q064",
+        "Q065",
+        "Q066",
+        "Q067",
+        "Q068",
+        "Q069",
+        "Q070",
+        "Q071"
+      ],
+      "generation": "not_run",
+      "note": "本段只评检索，不跑生成；拒答题不设正确率目标，也不计入 Recall@5。"
+    },
+    "testset_seal": null
+  },
+  "hybrid": {
+    "ok": true,
+    "split": "dev",
+    "retriever": "hybrid",
+    "n_questions_in_split": 70,
+    "n_answerable": 60,
+    "n_refusal_excluded": 10,
+    "n_used_for_recall": 60,
+    "metrics": {
+      "Recall@5": {
+        "mean": 0.8469444444444445,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "Hit@5": {
+        "mean": 0.9333333333333333,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "MRR@5": {
+        "mean": 0.6066666666666667,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "nDCG@5": {
+        "mean": 0.6488333803342254,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "Recall@10": {
+        "mean": 0.9141666666666667,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      },
+      "Hit@10": {
+        "mean": 0.9666666666666667,
+        "n": 60,
+        "n_undefined_no_gold": 0
+      }
+    },
+    "Recall@5": {
+      "mean": 0.8469444444444445,
+      "n": 60,
+      "n_undefined_no_gold": 0
+    },
+    "Hit@5": {
+      "mean": 0.9333333333333333,
+      "n": 60,
+      "n_undefined_no_gold": 0
+    },
+    "by_type": {
+      "multi_hop": {
+        "n": 18,
+        "recall@5_mean": 0.712037037037037,
+        "hit@5_mean": 1.0
+      },
+      "single_hop": {
+        "n": 42,
+        "recall@5_mean": 0.9047619047619048,
+        "hit@5_mean": 0.9047619047619048
+      }
+    },
+    "n_failures_hit@5": 4,
+    "failure_ids": [
+      "Q017",
+      "Q022",
+      "Q024",
+      "Q039"
+    ],
+    "settings": {
+      "retriever": "hybrid",
+      "embedding_model": "text-embedding-v4",
+      "embedding_dim": 1024,
+      "n_chunks": 221,
+      "rrf": {
+        "fusion": "rrf",
+        "rrf_k": 60,
+        "bm25": {
+          "implementation": "rank_bm25.BM25Okapi",
+          "tokenizer": "jieba",
+          "k1": 1.5,
+          "b": 0.75
+        }
+      },
+      "rerank": false
+    },
+    "metric_definitions": {
+      "Recall@5": "对每道有金标切片的可答题，计算 |gold ∩ top5| / |gold|，再对题目做宏平均。分母=有金标切片的可答题数。拒答题不计入。",
+      "Hit@5": "对每道有金标切片的可答题，top5 中至少有一条相关切片记 1，否则记 0，再宏平均。分母同上。",
+      "MRR@5": "第一条相关切片排名的倒数，未命中为 0，再宏平均。",
+      "nDCG@5": "相关切片相关性按二元，再宏平均。",
+      "retrieval": "密集检索与 BM25Okapi（jieba，k1=1.5，b=0.75）经 RRF（k=60）融合。不加 rerank。"
+    },
+    "refusal": {
+      "n": 10,
+      "ids": [
+        "Q062",
+        "Q063",
+        "Q064",
+        "Q065",
+        "Q066",
+        "Q067",
+        "Q068",
+        "Q069",
+        "Q070",
+        "Q071"
+      ],
+      "generation": "not_run",
+      "note": "本段只评检索，不跑生成；拒答题不设正确率目标，也不计入 Recall@5。"
+    },
+    "testset_seal": null
+  },
+  "comparison_vs_dense": {
+    "baseline": "section_window_400+dense",
+    "current": "section_window_400+hybrid",
+    "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+    "n_comparable": 60,
+    "n_only_baseline": 0,
+    "n_only_current": 0,
+    "wrong_to_right": {
+      "n": 6,
+      "ids": [
+        "Q008",
+        "Q015",
+        "Q021",
+        "Q032",
+        "Q044",
+        "Q049"
+      ]
+    },
+    "right_to_wrong": {
+      "n": 1,
+      "ids": [
+        "Q022"
+      ]
+    },
+    "mcnemar": {
+      "n_improved": 6,
+      "n_regressed": 1,
+      "n_discordant": 7,
+      "p_value": 0.125,
+      "test": "mcnemar_exact_binomial",
+      "significant_at_0.05": false,
+      "direction": "positive",
+      "interpretation": "方向为正但未达显著"
+    },
+    "recall@5_changes": {
+      "n_up": 9,
+      "ids_up": [
+        "Q005",
+        "Q008",
+        "Q010",
+        "Q015",
+        "Q021",
+        "Q032",
+        "Q044",
+        "Q049",
+        "Q052"
+      ],
+      "n_down": 2,
+      "ids_down": [
+        "Q022",
+        "Q033"
+      ],
+      "n_same": 49,
+      "net_decrease_questions": -7
+    }
+  },
+  "adopted": true,
+  "reason": "融合后开发集 Recall@5 高于纯密集，纳入主链路。",
+  "per_question_path": "reports/hybrid_dev_eval.json"
+}

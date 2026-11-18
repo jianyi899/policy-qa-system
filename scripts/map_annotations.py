@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -28,6 +29,10 @@ def load_jsonl(path: Path) -> list[dict]:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--out", type=Path, default=OUT_PATH, help="映射结果输出路径")
+    args = parser.parse_args()
+    out_path = args.out
     load_dotenv(ROOT / ".env")
     settings = get_settings()
     questions = load_jsonl(ROOT / "eval" / "questions.jsonl")
@@ -72,7 +77,8 @@ def main() -> int:
         "n_questions_missing_gold": sum(1 for it in test_items if not it["gold_chunks"]),
     }
     mapping["ok"] = mapping["n_unmapped_spans"] == 0 and mapping["dev_answerable"]["n_questions_missing_gold"] == 0
-    OUT_PATH.write_text(json.dumps(mapping, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(mapping, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     summary = {k: mapping[k] for k in mapping if k != "items"}
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if mapping["ok"] else 4

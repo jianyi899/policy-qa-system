@@ -1,0 +1,24 @@
+{
+  "name": "gte_rerank",
+  "status": "failed",
+  "measured_at": "2026-11-18T19:45:24+08:00",
+  "timezone": "Asia/Shanghai",
+  "split": "dev",
+  "chunking_name": "section_window_400",
+  "error_type": "AccessDenied",
+  "error": {
+    "ok": false,
+    "error_type": "AccessDenied",
+    "script": "eval_retrieval.py",
+    "returncode": 4,
+    "child": {
+      "ok": false,
+      "error_type": "AccessDenied",
+      "stage": "rerank",
+      "split": "dev",
+      "failed_question_id": "Q001"
+    }
+  },
+  "adopted": false,
+  "reason": "gte-rerank API 调用失败，不编造结果，本步不纳入主链路。"
+}

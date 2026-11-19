@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "signal": "top1_rrf",
+  "upgrade_when": "score_lte",
+  "threshold": 0.03225806451612903,
+  "fast_model": "qwen3.8-flash",
+  "strong_model": "qwen-plus",
+  "n_dev": 70,
+  "n_bins": 5,
+  "selection_rule": "先比 task_ok_rate，再比宏平均引用召回，再比要点覆盖召回，最后少用 qwen-plus。threshold=null 表示永不升级。",
+  "selected_metrics": {
+    "threshold": 0.03225806451612903,
+    "n_plus": 30,
+    "plus_rate": 0.42857142857142855,
+    "task_ok_rate": 0.9142857142857143,
+    "n_task_ok": 64,
+    "macro_citation_recall": 0.6106000481000481,
+    "macro_point_recall": 0.975
+  },
+  "flash_only": {
+    "n": 70,
+    "n_scored": 70,
+    "task_ok_rate": 0.9142857142857143,
+    "n_task_ok": 64,
+    "macro_citation_recall": 0.6066317941317941,
+    "macro_citation_precision": 0.38222117848983517,
+    "macro_point_recall": 0.9694444444444444
+  },
+  "plus_only": {
+    "n": 70,
+    "n_scored": 70,
+    "task_ok_rate": 0.9,
+    "n_task_ok": 63,
+    "macro_citation_recall": 0.5465867003367003,
+    "macro_citation_precision": 0.34598947901186705,
+    "macro_point_recall": 0.975
+  },
+  "self_confidence": {
+    "used_in_product": false,
+    "reason": "自评级联在开发集上优于检索分数级联。即便开发集数字略好，本段仍只把检索分数作为产品级联信号，自评只作对比实验记录，以免增加一次额外模型调用。",
+    "best": {
+      "confidence_threshold": 0.95,
+      "n_plus": 34,
+      "n_missing_confidence": 0,
+      "plus_rate": 0.4857142857142857,
+      "task_ok_rate": 0.9428571428571428,
+      "n_task_ok": 66,
+      "macro_citation_recall": 0.6007190957190958,
+      "macro_point_recall": 0.9694444444444444
+    }
+  },
+  "price_note": {
+    "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
+    "region": "华北2（北京）",
+    "mode": "非思考模式，实时推理，qwen-plus 按输入≤128K 档"
+  }
+}

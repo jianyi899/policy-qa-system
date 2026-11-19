@@ -1,6 +1,6 @@
 # 政策问答系统
 
-电商售后政策问答系统。第一段交付了项目骨架、数据库表、语料导入和已锁定的 embedding；第二段补齐 70 篇语料、100 道评测题、条款跨度标注与映射，并在开发集上实测了 B0 基线；第三段完成了三种切分消融、BM25+RRF、gte-rerank 尝试、开发集 Recall@5 CI 门禁，以及测试集第一次评测；第四段接上查订单、查物流、退款和日报工具，跑通冰箱质量问题主路径，并实测对抗用例无错误副作用；第五段补上多轮对话、句级引用与冲突消解收尾，并完成测试集第二次评测。缓存、Langfuse 与模型级联标定不在本阶段。
+电商售后政策问答系统。第一段交付了项目骨架、数据库表、语料导入和已锁定的 embedding；第二段补齐 70 篇语料、100 道评测题、条款跨度标注与映射，并在开发集上实测了 B0 基线；第三段完成了三种切分消融、BM25+RRF、gte-rerank 尝试、开发集 Recall@5 CI 门禁，以及测试集第一次评测；第四段接上查订单、查物流、退款和日报工具，跑通冰箱质量问题主路径，并实测对抗用例无错误副作用；第五段补上多轮对话、句级引用与冲突消解收尾，并完成测试集第二次评测；第六段补上纯政策问答与检索缓存、Langfuse Cloud（日本区域）追踪，以及在开发集上标定的 qwen3.8-flash 升 qwen-plus 级联，并用开发集做了可复现流量回放。
 
 技术栈（已锁定，后续阶段沿用）：Python、FastAPI、官方 SDK 加自写编排、Postgres + pgvector、应用层 `rank_bm25.BM25Okapi`（jieba，k1=1.5，b=0.75）、RRF 融合、gte-rerank API、qwen3.8-flash 级联升到 qwen-plus（原锁定 qwen-turbo，已于 2026-10-10 官方下线；DeepSeek 只作行判或备用）、Langfuse Cloud、Streamlit、Docker Compose。不使用 LangChain 全家桶，不在本地跑 reranker，不自建 Langfuse。
 
@@ -54,6 +54,14 @@ python scripts/run_stage5_units.py
 python scripts/run_stage5_multiturn.py
 python scripts/run_stage5_dev.py
 python scripts/run_stage5_test.py   # 仅在引用与冲突模块收尾后跑一次，数字不参与调参
+
+# 12. 第六段：缓存规则、级联阈值标定、Langfuse 验证与流量回放（不跑测试集调参）
+# 需要环境中的 DASHSCOPE_API_KEY、LANGFUSE_PUBLIC_KEY、LANGFUSE_SECRET_KEY
+# 以及 LANGFUSE_BASE_URL=https://jp.cloud.langfuse.com（不要把密钥写入仓库）
+python scripts/run_stage6_units.py
+python scripts/run_stage6_cache.py
+python scripts/calibrate_cascade.py
+python scripts/run_stage6_replay.py
 ```
 
 ## 使用 Docker Compose 的环境
@@ -124,6 +132,15 @@ GitHub Actions 工作流：`.github/workflows/retrieval-ci.yml`。只卡开发�
 - 冲突消解会说明更细范围为何覆盖更一般规则。开发集 Q041 实测按「手机数码」品类专项答对：激活后不适用七天无理由，仅支持质量问题，签收之日起 15 日内可申请退换，并写明品类规定优先于通用规则。报告见 `reports/stage5_q041.json`。
 - 测试集第二次评测（数字不参与调参）见 `reports/test_run2.json`。封存 sha256 仍为 `092576646b41d9c35a3390e330ea62c2e62b0f00ab4ab78a32cb0220b3fc6a59`，与第一次一致，题目未改。检索指标与第一次相同：Recall@5=0.9213，Hit@5=1.0（分母=25 道有金标切片的可答题）；错→对 0、对→错 0，无分歧题目，无法做 McNemar 检验。第一次只评检索，故生成/引用/拒答为首次实测：测试集可答题句级引用宏平均精度 0.4252、微平均 0.3171（39/123）；拒答 5/5。Q042（测试集）按 SKU 专项答 24 个月，并说明覆盖通用 12 个月。
 
+## 第六段：缓存、Langfuse 与模型级联
+
+默认生成模型仍是 `qwen3.8-flash`，在最终检索链路（`section_window_400` + dense+BM25 RRF）的 top-1 RRF 分数达到阈值时升到 `qwen-plus`。两者都走官方兼容模式，`enable_thinking=False`。本段未改评测集，也未用测试集调参。
+
+- 缓存只覆盖纯政策问答和检索结果，键为规范化后的精确文本（Unicode NFKC 与空白折叠，不做同义改写）。工具类在路由层绕过，不得读写缓存。开发集 70 道可缓存政策题按「先冷启动再原句重复」回放，命中率分母不含同义变体和工具类：140 次中命中 70 次，命中率 0.5；8 条同义变体误命中 0；7 道工具题全部绕过。见 `reports/stage6_units.json`、`reports/stage6_cache.json`。
+- Langfuse Cloud 使用官方日本区域 `https://jp.cloud.langfuse.com`，不自建。已用官方 API 回读真实 trace，例如缓存命中 `d2a59f7c6097829d512a9a7815ddefc5`（handle_ask），未缓存政策问答 `b6e038c4b46a92ecb24f3820d298ce1f`（含 hybrid_retrieve 与 generate_answer），工具调用 `c3d295935182264915a58876bc230de1`（query_order）。详见 `reports/stage6_replay.json`。
+- 级联阈值在开发集 70 题上按 top-1 RRF 升序均分成 5 箱标定。选定阈值 0.03225806（分数小于等于该值时升到 qwen-plus）。该阈值下开发集 task_ok 64/70（0.9143），与全走 flash 相同，宏平均引用召回 0.6106、要点覆盖召回 0.975，略高于全走 flash（0.6066 / 0.9694）；全走 plus 为 63/70，并不更好。箱内质量不是单调的：第 0 箱 plus 更差，第 1 箱 plus 更好。自评 confidence 对比实验里，阈值 0.95 时 task_ok 可到 66/70，但要额外调用一次快速模型，且全走 plus 本身没有增益，因此不把自评支路留在产品路径。标定过程见 `reports/stage6_cascade.json`，阈值见 `reports/cascade_threshold.json`。
+- 模拟流量回放在本机预发（uvicorn `127.0.0.1:8016`）测量。缓存命中的 20 道政策问答首 token：均值 10.62 ms，P50 10.39 ms，P95 12.47 ms，最小 8.72 ms，最大 16.07 ms，全部低于 800 ms；该路径本次请求 token 为 0。刊例价换算来源为阿里云百炼价格页（华北 2 北京，非思考模式）。报告见 `reports/stage6_replay.json`。
+
 ## 密钥
 
-所有密钥只放在环境变量或本地 `.env`（已被 git 忽略）。仓库内 `.env.example` 只有变量名。
+所有密钥只放在环境变量或本地 `.env`（已被 git 忽略）。仓库内 `.env.example` 只有占位符和日本区域默认 `LANGFUSE_BASE_URL`，没有真实密钥。

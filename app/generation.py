@@ -1,4 +1,4 @@
-"""用 qwen3.8-flash 根据冲突解析后的证据作答。不使用 LangChain，不升级到 qwen-plus。默认关闭思考模式。"""
+"""根据冲突解析后的证据作答。默认 qwen3.8-flash，级联达到阈值时升到 qwen-plus。不使用 LangChain。默认关闭思考模式。"""
 
 from __future__ import annotations
 
@@ -62,10 +62,17 @@ def generate_answer(
     model: str = DEFAULT_MODEL,
     max_evidence: int = 10,
     max_retries: int = DEFAULT_MAX_RETRIES,
+    on_first_token=None,
 ) -> dict:
     """根据订单事实与适用政策生成带句级引用的回答。失败时抛出 GenerationError（不含密钥）。"""
-    if model != DEFAULT_MODEL:
-        # 本阶段只用 qwen3.8-flash，级联到 qwen-plus 留到第六段。
+    settings = get_settings()
+    allowed = {
+        DEFAULT_MODEL,
+        settings.qwen_fast_model or DEFAULT_MODEL,
+        settings.qwen_strong_model or "qwen-plus",
+        "qwen-plus",
+    }
+    if model not in allowed:
         raise GenerationError("model_lock_violation")
     api_key = _require_api_key()
     sentences = list(evidence_sentences or [])
@@ -133,6 +140,7 @@ def generate_answer(
 
     settings = get_settings()
     url = settings.dashscope_base_url.rstrip("/") + "/chat/completions"
+    use_stream = on_first_token is not None
     messages = [{"role": "system", "content": system}]
     for turn in (history or [])[-4:]:
         prev_q = (turn.get("question") or "").strip()
@@ -148,6 +156,9 @@ def generate_answer(
         "top_p": 0.8,
         "enable_thinking": False,
     }
+    if use_stream:
+        payload["stream"] = True
+        payload["stream_options"] = {"include_usage": True}
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
@@ -156,17 +167,38 @@ def generate_answer(
     retries = max(1, int(max_retries))
     for attempt in range(retries):
         try:
-            with httpx.Client(timeout=60.0) as client:
-                response = client.post(url, headers=headers, json=payload)
+            if use_stream:
+                text, usage_dict, status_code, data = _stream_completion(
+                    url, headers, payload, on_first_token=on_first_token
+                )
+            else:
+                with httpx.Client(timeout=60.0) as client:
+                    response = client.post(url, headers=headers, json=payload)
+                status_code = response.status_code
+                try:
+                    data = response.json()
+                except Exception:  # noqa: BLE001
+                    data = {}
+                text = ""
+                usage_dict = None
+                if status_code == 200 and isinstance(data, dict):
+                    choices = data.get("choices") or []
+                    if choices:
+                        message = (choices[0] or {}).get("message") or {}
+                        text = message.get("content") or ""
+                    usage = data.get("usage")
+                    if isinstance(usage, dict):
+                        usage_dict = {
+                            "input_tokens": usage.get("input_tokens", usage.get("prompt_tokens")),
+                            "output_tokens": usage.get("output_tokens", usage.get("completion_tokens")),
+                            "total_tokens": usage.get("total_tokens"),
+                        }
+                    if str(text).strip() and on_first_token is not None:
+                        on_first_token(str(text).strip()[:1])
         except Exception as exc:  # noqa: BLE001
             last_err = GenerationError(type(exc).__name__)
             time.sleep(min(2 ** (attempt + 1), 20))
             continue
-        status_code = response.status_code
-        try:
-            data = response.json()
-        except Exception:  # noqa: BLE001
-            data = {}
         if status_code != 200:
             err = data.get("error") if isinstance(data, dict) else {}
             code = (err or {}).get("code") or (err or {}).get("type") or data.get("code")
@@ -184,22 +216,9 @@ def generate_answer(
                 time.sleep(delay)
                 continue
             raise last_err
-        text = ""
-        choices = data.get("choices") if isinstance(data, dict) else None
-        if choices:
-            message = (choices[0] or {}).get("message") or {}
-            text = message.get("content") or ""
         if not str(text).strip():
             last_err = GenerationError("empty_generation")
             continue
-        usage = data.get("usage") if isinstance(data, dict) else None
-        usage_dict = None
-        if isinstance(usage, dict):
-            usage_dict = {
-                "input_tokens": usage.get("input_tokens", usage.get("prompt_tokens")),
-                "output_tokens": usage.get("output_tokens", usage.get("completion_tokens")),
-                "total_tokens": usage.get("total_tokens"),
-            }
         answer = str(text).strip()
         citations = resolve_citations(answer, sentences) if sentences else []
         return {
@@ -210,3 +229,59 @@ def generate_answer(
             "citations": citations,
         }
     raise last_err or GenerationError("generation_failed")
+
+
+def _stream_completion(url: str, headers: dict, payload: dict, *, on_first_token) -> tuple[str, dict | None, int, dict]:
+    """兼容模式 SSE 流式读取。首个非空 token 时回调 on_first_token。"""
+    import json as json_lib
+
+    import httpx
+
+    text_parts: list[str] = []
+    usage_dict = None
+    first_sent = False
+    data: dict = {}
+    with httpx.Client(timeout=60.0) as client:
+        with client.stream("POST", url, headers=headers, json=payload) as response:
+            status_code = response.status_code
+            if status_code != 200:
+                try:
+                    body = response.read().decode("utf-8", errors="replace")
+                    data = json_lib.loads(body) if body else {}
+                except Exception:  # noqa: BLE001
+                    data = {}
+                return "", None, status_code, data
+            for line in response.iter_lines():
+                if not line:
+                    continue
+                if line.startswith("data:"):
+                    chunk = line[5:].strip()
+                else:
+                    continue
+                if chunk == "[DONE]":
+                    break
+                try:
+                    event = json_lib.loads(chunk)
+                except Exception:  # noqa: BLE001
+                    continue
+                if not isinstance(event, dict):
+                    continue
+                usage = event.get("usage")
+                if isinstance(usage, dict):
+                    usage_dict = {
+                        "input_tokens": usage.get("input_tokens", usage.get("prompt_tokens")),
+                        "output_tokens": usage.get("output_tokens", usage.get("completion_tokens")),
+                        "total_tokens": usage.get("total_tokens"),
+                    }
+                choices = event.get("choices") or []
+                if not choices:
+                    continue
+                delta = (choices[0] or {}).get("delta") or {}
+                piece = delta.get("content") or ""
+                if piece:
+                    if not first_sent:
+                        first_sent = True
+                        if on_first_token is not None:
+                            on_first_token(piece)
+                    text_parts.append(piece)
+    return "".join(text_parts), usage_dict, 200, data

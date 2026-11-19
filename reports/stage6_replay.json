@@ -1,0 +1,420 @@
+{
+  "ok": true,
+  "measured_at": "2026-11-19T09:22:35.626470+08:00",
+  "timezone": "Asia/Shanghai",
+  "environment": "local_preprod_uvicorn",
+  "base_url": "http://127.0.0.1:8016",
+  "n_questions": 20,
+  "all_cache_hits": true,
+  "first_token_cache_hit_policy": {
+    "n": 20,
+    "mean_ms": 10.6186262501069,
+    "p50_ms": 10.39019449854095,
+    "p95_ms": 12.470198451774198,
+    "min_ms": 8.722774000489153,
+    "max_ms": 16.06781900045462,
+    "n_under_800ms": 20,
+    "meets_800ms_all": true,
+    "meets_800ms_p95": true
+  },
+  "total_latency_cache_hit_policy": {
+    "n": 20,
+    "mean_ms": 10.913355149932613,
+    "p50_ms": 10.775592001664336,
+    "p95_ms": 12.685874550697921,
+    "min_ms": 8.905087001039647,
+    "max_ms": 16.24534499933361
+  },
+  "cost": {
+    "cache_hit_replay": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "cost_cny": 0.0,
+      "note": "缓存命中路径按本次请求 usage 计；命中时应为 0。"
+    },
+    "langfuse_policy_miss_probe": {
+      "model": "qwen3.8-flash",
+      "input_tokens": 1808,
+      "output_tokens": 310,
+      "total_tokens": 2118,
+      "cost_cny": 0.0022834
+    },
+    "price": {
+      "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "region": "华北2（北京）",
+      "mode": "非思考模式，实时推理，qwen-plus 按输入≤128K 档"
+    }
+  },
+  "langfuse": {
+    "ok": true,
+    "base_url": "https://jp.cloud.langfuse.com",
+    "trace_id": "d2a59f7c6097829d512a9a7815ddefc5",
+    "traces": {
+      "cache_hit": {
+        "trace_id": "d2a59f7c6097829d512a9a7815ddefc5",
+        "ok": true,
+        "n_observations": 1,
+        "observation_names": [
+          "handle_ask"
+        ],
+        "observation_types": [
+          "SPAN"
+        ]
+      },
+      "policy_miss": {
+        "trace_id": "b6e038c4b46a92ecb24f3820d298ce1f",
+        "ok": true,
+        "n_observations": 3,
+        "observation_names": [
+          "generate_answer",
+          "hybrid_retrieve",
+          "handle_ask"
+        ],
+        "observation_types": [
+          "GENERATION",
+          "RETRIEVER",
+          "SPAN"
+        ],
+        "model": "qwen3.8-flash"
+      },
+      "tool": {
+        "trace_id": "c3d295935182264915a58876bc230de1",
+        "ok": true,
+        "n_observations": 2,
+        "observation_names": [
+          "query_order",
+          "handle_ask"
+        ],
+        "observation_types": [
+          "TOOL",
+          "SPAN"
+        ],
+        "tool": "query_order"
+      }
+    },
+    "note": "已用官方 API observations.get_many 从日本区域回读。缓存命中路径只有 handle_ask；未缓存政策问答含检索与生成；工具路径含 query_order。"
+  },
+  "samples": [
+    {
+      "ok": true,
+      "first_token_ms": 11.236172998906113,
+      "total_ms": 11.484708000352839,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "5f6a6585cd445f55dc8c97245109add4",
+      "n_token_events": 2,
+      "id": "Q001"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 10.677321002731333,
+      "total_ms": 10.938212002656655,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "d1815765f217279f6a1dfa15a393dd72",
+      "n_token_events": 2,
+      "id": "Q002"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 10.347243998694466,
+      "total_ms": 10.616887997457525,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "bc75152624be970896b578683564cacd",
+      "n_token_events": 2,
+      "id": "Q003"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 10.32957800271106,
+      "total_ms": 10.697852001612773,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "bcb9fb69a0706f37ffb214cab971a42e",
+      "n_token_events": 2,
+      "id": "Q004"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 10.631312001351034,
+      "total_ms": 10.853332001715899,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "ae732ce4d6d28e79d5a9fb7bfeac31a1",
+      "n_token_events": 2,
+      "id": "Q005"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 16.06781900045462,
+      "total_ms": 16.24534499933361,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "c90668d7d7a2de214db2eae9ed667656",
+      "n_token_events": 2,
+      "id": "Q006"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 11.791526998422341,
+      "total_ms": 11.98433000172372,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "060c96dc2e0d73428ff4be5de8b0ae9b",
+      "n_token_events": 2,
+      "id": "Q007"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 8.722774000489153,
+      "total_ms": 8.905087001039647,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "cee70da078b6f0965a398bc8551f44c3",
+      "n_token_events": 2,
+      "id": "Q008"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 9.344152997073252,
+      "total_ms": 10.311079997336492,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "05643594584efad296ad6809368919ff",
+      "n_token_events": 2,
+      "id": "Q009"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 9.188615000311984,
+      "total_ms": 9.385289999045199,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "af1ab8d099291347c0ce230365228d41",
+      "n_token_events": 2,
+      "id": "Q010"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 10.433144998387434,
+      "total_ms": 11.138967998704175,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "4dafe21298721ca3f89064a6ac19dc1b",
+      "n_token_events": 2,
+      "id": "Q011"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 9.40843599892105,
+      "total_ms": 9.642933000577614,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "5887532619a40e0d00d326dee6c67021",
+      "n_token_events": 2,
+      "id": "Q012"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 10.021706999395974,
+      "total_ms": 10.193554997385945,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "85fb0559ca2b2726b46e8f7ac435f7f2",
+      "n_token_events": 2,
+      "id": "Q013"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 9.003695002320455,
+      "total_ms": 9.218775001500035,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "b8c6991d75acfaba4a9b12791acbee4d",
+      "n_token_events": 2,
+      "id": "Q014"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 10.212311000941554,
+      "total_ms": 10.408608999568969,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "c175085f0a47b92975be465b196cdc5c",
+      "n_token_events": 2,
+      "id": "Q015"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 9.484139998676255,
+      "total_ms": 9.770011998625705,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "4abd773a13095c4596d90f8c0111efa8",
+      "n_token_events": 2,
+      "id": "Q016"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 10.771593999379547,
+      "total_ms": 11.114601998997387,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "fc7ee4ecf49675a1d18c5470453660b7",
+      "n_token_events": 2,
+      "id": "Q017"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 12.280850001843646,
+      "total_ms": 12.498534000769723,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "bda4442fc8a8764f8095f00daddc0388",
+      "n_token_events": 2,
+      "id": "Q018"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 11.30874800219317,
+      "total_ms": 11.510131000250112,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "7346daaad80c9b81dc71e79047962ba7",
+      "n_token_events": 2,
+      "id": "Q019"
+    },
+    {
+      "ok": true,
+      "first_token_ms": 11.11138299893355,
+      "total_ms": 11.34885999999824,
+      "cache_hit": true,
+      "intent": "policy",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "trace_id": "d7d6a3ba19340b59392b4fb879186f04",
+      "n_token_events": 2,
+      "id": "Q020"
+    }
+  ]
+}

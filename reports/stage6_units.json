@@ -1,0 +1,135 @@
+{
+  "ok": true,
+  "n_checks": 22,
+  "n_failed": 0,
+  "failed": [],
+  "checks": [
+    {
+      "name": "dev_questions_are_pure_policy",
+      "ok": true,
+      "n": 70,
+      "unexpected": []
+    },
+    {
+      "name": "route_TOOL-ORDER-1",
+      "ok": true,
+      "intent": "tool",
+      "tool": "query_order",
+      "expect": "query_order"
+    },
+    {
+      "name": "route_TOOL-ORDER-2",
+      "ok": true,
+      "intent": "tool",
+      "tool": "query_order",
+      "expect": "query_order"
+    },
+    {
+      "name": "route_TOOL-LOG-1",
+      "ok": true,
+      "intent": "tool",
+      "tool": "query_logistics",
+      "expect": "query_logistics"
+    },
+    {
+      "name": "route_TOOL-LOG-2",
+      "ok": true,
+      "intent": "tool",
+      "tool": "query_logistics",
+      "expect": "query_logistics"
+    },
+    {
+      "name": "route_TOOL-REFUND-1",
+      "ok": true,
+      "intent": "tool",
+      "tool": "refund",
+      "expect": "refund"
+    },
+    {
+      "name": "route_TOOL-REPORT-1",
+      "ok": true,
+      "intent": "tool",
+      "tool": "daily_report",
+      "expect": "daily_report"
+    },
+    {
+      "name": "route_TOOL-REPORT-2",
+      "ok": true,
+      "intent": "tool",
+      "tool": "daily_report",
+      "expect": "daily_report"
+    },
+    {
+      "name": "route_TOOL-REFUND-APPLY",
+      "ok": true,
+      "intent": "tool",
+      "tool": "refund",
+      "expect": "refund"
+    },
+    {
+      "name": "fridge_path_is_policy_with_order",
+      "ok": true,
+      "intent": "policy",
+      "reason": "policy_with_order",
+      "cacheable": false
+    },
+    {
+      "name": "exact_text_hits",
+      "ok": true
+    },
+    {
+      "name": "whitespace_normalized_hits",
+      "ok": true
+    },
+    {
+      "name": "synonym_SYN-Q001_no_false_hit",
+      "ok": true,
+      "source_id": "Q001"
+    },
+    {
+      "name": "synonym_SYN-Q002_no_false_hit",
+      "ok": true,
+      "source_id": "Q002"
+    },
+    {
+      "name": "synonym_SYN-Q003_no_false_hit",
+      "ok": true,
+      "source_id": "Q003"
+    },
+    {
+      "name": "synonym_SYN-Q004_no_false_hit",
+      "ok": true,
+      "source_id": "Q004"
+    },
+    {
+      "name": "synonym_SYN-Q006_no_false_hit",
+      "ok": true,
+      "source_id": "Q006"
+    },
+    {
+      "name": "synonym_SYN-Q011_no_false_hit",
+      "ok": true,
+      "source_id": "Q011"
+    },
+    {
+      "name": "synonym_SYN-Q041_no_false_hit",
+      "ok": true,
+      "source_id": "Q041"
+    },
+    {
+      "name": "synonym_SYN-Q062_no_false_hit",
+      "ok": true,
+      "source_id": "Q062"
+    },
+    {
+      "name": "all_synonyms_miss",
+      "ok": true,
+      "false_hits": []
+    },
+    {
+      "name": "tool_questions_do_not_add_cache_keys",
+      "ok": true,
+      "added": []
+    }
+  ]
+}

@@ -73,4 +73,21 @@ def invoke(name: str, arguments: dict | None, ctx: SessionContext | None) -> dic
     raw = dict(arguments or {})
     cleaned = {k: v for k, v in raw.items() if k not in _FORBIDDEN_CLIENT_KEYS}
     handler = _HANDLERS[name]
-    return handler(ctx, **cleaned)
+    from app.observability import observation
+
+    with observation(name=name, as_type="tool", input={"tool": name, "arguments": cleaned}) as span:
+        result = handler(ctx, **cleaned)
+        # 只记录摘要，避免把整单明细重复打到追踪里。
+        summary = {"tool": result.get("tool", name)}
+        if "n" in result:
+            summary["n"] = result.get("n")
+        if "orders" in result:
+            summary["order_nos"] = [o.get("order_no") for o in (result.get("orders") or [])]
+        if "refunds" in result:
+            summary["n_refunds"] = len(result.get("refunds") or [])
+        if "report_date" in result:
+            summary["report_date"] = result.get("report_date")
+        if "status" in result:
+            summary["status"] = result.get("status")
+        span.update(output=summary)
+        return result

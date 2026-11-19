@@ -1,0 +1,884 @@
+{
+  "ok": true,
+  "timezone": "Asia/Shanghai",
+  "signal": "top1_rrf",
+  "definition": "锁定链路 section_window_400 + dense+BM25 RRF（k=60）的 top-1 RRF 分数。开发集 70 题按该分数升序均分成 5 箱。",
+  "n_dev": 70,
+  "retrieve_failed": [],
+  "plus_failed": [],
+  "confidence_failed": [],
+  "bins": [
+    {
+      "bin": 0,
+      "n": 14,
+      "ids": [
+        "Q069",
+        "Q067",
+        "Q032",
+        "Q036",
+        "Q063",
+        "Q065",
+        "Q022",
+        "Q017",
+        "Q070",
+        "Q039",
+        "Q054",
+        "Q047",
+        "Q021",
+        "Q023"
+      ],
+      "score_min": 0.028790389395194696,
+      "score_max": 0.031544957774465976,
+      "flash": {
+        "n": 14,
+        "n_scored": 14,
+        "task_ok_rate": 1.0,
+        "n_task_ok": 14,
+        "macro_citation_recall": 0.6867724867724868,
+        "macro_citation_precision": 0.21854043392504932,
+        "macro_point_recall": 0.9629629629629629
+      },
+      "plus": {
+        "n": 14,
+        "n_scored": 14,
+        "task_ok_rate": 0.8571428571428571,
+        "n_task_ok": 12,
+        "macro_citation_recall": 0.6285714285714286,
+        "macro_citation_precision": 0.211002886002886,
+        "macro_point_recall": 1.0
+      }
+    },
+    {
+      "bin": 1,
+      "n": 14,
+      "ids": [
+        "Q008",
+        "Q064",
+        "Q033",
+        "Q016",
+        "Q018",
+        "Q001",
+        "Q012",
+        "Q038",
+        "Q043",
+        "Q044",
+        "Q068",
+        "Q071",
+        "Q004",
+        "Q029"
+      ],
+      "score_min": 0.031754032258064516,
+      "score_max": 0.03225806451612903,
+      "flash": {
+        "n": 14,
+        "n_scored": 14,
+        "task_ok_rate": 0.8571428571428571,
+        "n_task_ok": 12,
+        "macro_citation_recall": 0.6611832611832612,
+        "macro_citation_precision": 0.3041631445477599,
+        "macro_point_recall": 1.0
+      },
+      "plus": {
+        "n": 14,
+        "n_scored": 14,
+        "task_ok_rate": 1.0,
+        "n_task_ok": 14,
+        "macro_citation_recall": 0.7486291486291485,
+        "macro_citation_precision": 0.31031746031746027,
+        "macro_point_recall": 1.0
+      }
+    },
+    {
+      "bin": 2,
+      "n": 14,
+      "ids": [
+        "Q061",
+        "Q066",
+        "Q014",
+        "Q015",
+        "Q025",
+        "Q040",
+        "Q041",
+        "Q046",
+        "Q048",
+        "Q062",
+        "Q002",
+        "Q003",
+        "Q006",
+        "Q007"
+      ],
+      "score_min": 0.03225806451612903,
+      "score_max": 0.03252247488101534,
+      "flash": {
+        "n": 14,
+        "n_scored": 14,
+        "task_ok_rate": 0.8571428571428571,
+        "n_task_ok": 12,
+        "macro_citation_recall": 0.7532227032227032,
+        "macro_citation_precision": 0.4378038628038628,
+        "macro_point_recall": 0.9166666666666666
+      },
+      "plus": {
+        "n": 14,
+        "n_scored": 14,
+        "task_ok_rate": 0.8571428571428571,
+        "n_task_ok": 12,
+        "macro_citation_recall": 0.4941017316017316,
+        "macro_citation_precision": 0.3977678571428571,
+        "macro_point_recall": 0.9166666666666666
+      }
+    },
+    {
+      "bin": 3,
+      "n": 14,
+      "ids": [
+        "Q020",
+        "Q024",
+        "Q034",
+        "Q049",
+        "Q055",
+        "Q058",
+        "Q059",
+        "Q060",
+        "Q005",
+        "Q009",
+        "Q010",
+        "Q011",
+        "Q013",
+        "Q019"
+      ],
+      "score_min": 0.03252247488101534,
+      "score_max": 0.03278688524590164,
+      "flash": {
+        "n": 14,
+        "n_scored": 14,
+        "task_ok_rate": 1.0,
+        "n_task_ok": 14,
+        "macro_citation_recall": 0.4129612451041022,
+        "macro_citation_precision": 0.5142857142857143,
+        "macro_point_recall": 0.9642857142857143
+      },
+      "plus": {
+        "n": 14,
+        "n_scored": 14,
+        "task_ok_rate": 0.9285714285714286,
+        "n_task_ok": 13,
+        "macro_citation_recall": 0.37704854669140386,
+        "macro_citation_precision": 0.44841269841269843,
+        "macro_point_recall": 0.9642857142857143
+      }
+    },
+    {
+      "bin": 4,
+      "n": 14,
+      "ids": [
+        "Q026",
+        "Q027",
+        "Q028",
+        "Q030",
+        "Q031",
+        "Q035",
+        "Q037",
+        "Q045",
+        "Q050",
+        "Q051",
+        "Q052",
+        "Q053",
+        "Q056",
+        "Q057"
+      ],
+      "score_min": 0.03278688524590164,
+      "score_max": 0.03278688524590164,
+      "flash": {
+        "n": 14,
+        "n_scored": 14,
+        "task_ok_rate": 0.8571428571428571,
+        "n_task_ok": 12,
+        "macro_citation_recall": 0.5802721088435374,
+        "macro_citation_precision": 0.423015873015873,
+        "macro_point_recall": 1.0
+      },
+      "plus": {
+        "n": 14,
+        "n_scored": 14,
+        "task_ok_rate": 0.8571428571428571,
+        "n_task_ok": 12,
+        "macro_citation_recall": 0.5496598639455782,
+        "macro_citation_precision": 0.3716783216783217,
+        "macro_point_recall": 1.0
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "threshold": null,
+      "n_plus": 0,
+      "plus_rate": 0.0,
+      "task_ok_rate": 0.9142857142857143,
+      "n_task_ok": 64,
+      "macro_citation_recall": 0.6066317941317941,
+      "macro_point_recall": 0.9694444444444444
+    },
+    {
+      "threshold": 0.031544957774465976,
+      "n_plus": 14,
+      "plus_rate": 0.2,
+      "task_ok_rate": 0.8857142857142857,
+      "n_task_ok": 62,
+      "macro_citation_recall": 0.5979016354016354,
+      "macro_point_recall": 0.975
+    },
+    {
+      "threshold": 0.03225806451612903,
+      "n_plus": 30,
+      "plus_rate": 0.42857142857142855,
+      "task_ok_rate": 0.9142857142857143,
+      "n_task_ok": 64,
+      "macro_citation_recall": 0.6106000481000481,
+      "macro_point_recall": 0.975
+    },
+    {
+      "threshold": 0.03252247488101534,
+      "n_plus": 50,
+      "plus_rate": 0.7142857142857143,
+      "task_ok_rate": 0.9142857142857143,
+      "n_task_ok": 64,
+      "macro_citation_recall": 0.5589147426647426,
+      "macro_point_recall": 0.975
+    },
+    {
+      "threshold": 0.03278688524590164,
+      "n_plus": 70,
+      "plus_rate": 1.0,
+      "task_ok_rate": 0.9,
+      "n_task_ok": 63,
+      "macro_citation_recall": 0.5465867003367003,
+      "macro_point_recall": 0.975
+    }
+  ],
+  "selected": {
+    "threshold": 0.03225806451612903,
+    "n_plus": 30,
+    "plus_rate": 0.42857142857142855,
+    "task_ok_rate": 0.9142857142857143,
+    "n_task_ok": 64,
+    "macro_citation_recall": 0.6106000481000481,
+    "macro_point_recall": 0.975
+  },
+  "flash_only": {
+    "n": 70,
+    "n_scored": 70,
+    "task_ok_rate": 0.9142857142857143,
+    "n_task_ok": 64,
+    "macro_citation_recall": 0.6066317941317941,
+    "macro_citation_precision": 0.38222117848983517,
+    "macro_point_recall": 0.9694444444444444
+  },
+  "plus_only": {
+    "n": 70,
+    "n_scored": 70,
+    "task_ok_rate": 0.9,
+    "n_task_ok": 63,
+    "macro_citation_recall": 0.5465867003367003,
+    "macro_citation_precision": 0.34598947901186705,
+    "macro_point_recall": 0.975
+  },
+  "self_confidence": {
+    "used_in_product": false,
+    "reason": "自评级联在开发集上优于检索分数级联。即便开发集数字略好，本段仍只把检索分数作为产品级联信号，自评只作对比实验记录，以免增加一次额外模型调用。",
+    "best": {
+      "confidence_threshold": 0.95,
+      "n_plus": 34,
+      "n_missing_confidence": 0,
+      "plus_rate": 0.4857142857142857,
+      "task_ok_rate": 0.9428571428571428,
+      "n_task_ok": 66,
+      "macro_citation_recall": 0.6007190957190958,
+      "macro_point_recall": 0.9694444444444444
+    }
+  },
+  "plus_usage": {
+    "n": 70,
+    "input_tokens": 129049,
+    "output_tokens": 13383,
+    "total_tokens": 142432,
+    "cost_cny": 0.13000520000000002
+  },
+  "confidence_usage": {
+    "n": 70,
+    "input_tokens": 80406,
+    "output_tokens": 635,
+    "total_tokens": 81041,
+    "cost_cny": 0.0660393
+  },
+  "price": {
+    "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
+    "region": "华北2（北京）",
+    "mode": "非思考模式，实时推理，qwen-plus 按输入≤128K 档"
+  },
+  "threshold_path": "reports/cascade_threshold.json",
+  "plus_path": "reports/stage6_plus_dev.json",
+  "confidence_path": "reports/stage6_confidence_dev.json",
+  "items": [
+    {
+      "id": "Q069",
+      "bin": 0,
+      "score": 0.028790389395194696,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.05
+    },
+    {
+      "id": "Q067",
+      "bin": 0,
+      "score": 0.02946236559139785,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.15
+    },
+    {
+      "id": "Q032",
+      "bin": 0,
+      "score": 0.030776515151515152,
+      "flash_task_ok": true,
+      "plus_task_ok": false,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q036",
+      "bin": 0,
+      "score": 0.030834914611005692,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q063",
+      "bin": 0,
+      "score": 0.030834914611005692,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.0
+    },
+    {
+      "id": "Q065",
+      "bin": 0,
+      "score": 0.030886196246139225,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.0
+    },
+    {
+      "id": "Q022",
+      "bin": 0,
+      "score": 0.031024531024531024,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q017",
+      "bin": 0,
+      "score": 0.031054405392392875,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.85
+    },
+    {
+      "id": "Q070",
+      "bin": 0,
+      "score": 0.03131881575727918,
+      "flash_task_ok": true,
+      "plus_task_ok": false,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q039",
+      "bin": 0,
+      "score": 0.03149801587301587,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q054",
+      "bin": 0,
+      "score": 0.03149801587301587,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q047",
+      "bin": 0,
+      "score": 0.0315136476426799,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q021",
+      "bin": 0,
+      "score": 0.031544957774465976,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q023",
+      "bin": 0,
+      "score": 0.031544957774465976,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q008",
+      "bin": 1,
+      "score": 0.031754032258064516,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q064",
+      "bin": 1,
+      "score": 0.031754032258064516,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.0
+    },
+    {
+      "id": "Q033",
+      "bin": 1,
+      "score": 0.03177805800756621,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q016",
+      "bin": 1,
+      "score": 0.03200204813108039,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q018",
+      "bin": 1,
+      "score": 0.03200204813108039,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q001",
+      "bin": 1,
+      "score": 0.032018442622950824,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q012",
+      "bin": 1,
+      "score": 0.032018442622950824,
+      "flash_task_ok": false,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q038",
+      "bin": 1,
+      "score": 0.032018442622950824,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q043",
+      "bin": 1,
+      "score": 0.032018442622950824,
+      "flash_task_ok": false,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q044",
+      "bin": 1,
+      "score": 0.032018442622950824,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 1.0
+    },
+    {
+      "id": "Q068",
+      "bin": 1,
+      "score": 0.032018442622950824,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.0
+    },
+    {
+      "id": "Q071",
+      "bin": 1,
+      "score": 0.032018442622950824,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.15
+    },
+    {
+      "id": "Q004",
+      "bin": 1,
+      "score": 0.03225806451612903,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q029",
+      "bin": 1,
+      "score": 0.03225806451612903,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q061",
+      "bin": 2,
+      "score": 0.03225806451612903,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q066",
+      "bin": 2,
+      "score": 0.03225806451612903,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.05
+    },
+    {
+      "id": "Q014",
+      "bin": 2,
+      "score": 0.032266458495966696,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q015",
+      "bin": 2,
+      "score": 0.032266458495966696,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q025",
+      "bin": 2,
+      "score": 0.032266458495966696,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q040",
+      "bin": 2,
+      "score": 0.032266458495966696,
+      "flash_task_ok": false,
+      "plus_task_ok": false,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q041",
+      "bin": 2,
+      "score": 0.032266458495966696,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q046",
+      "bin": 2,
+      "score": 0.032266458495966696,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q048",
+      "bin": 2,
+      "score": 0.032266458495966696,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q062",
+      "bin": 2,
+      "score": 0.032266458495966696,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.0
+    },
+    {
+      "id": "Q002",
+      "bin": 2,
+      "score": 0.03252247488101534,
+      "flash_task_ok": false,
+      "plus_task_ok": false,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q003",
+      "bin": 2,
+      "score": 0.03252247488101534,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q006",
+      "bin": 2,
+      "score": 0.03252247488101534,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q007",
+      "bin": 2,
+      "score": 0.03252247488101534,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q020",
+      "bin": 3,
+      "score": 0.03252247488101534,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q024",
+      "bin": 3,
+      "score": 0.03252247488101534,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q034",
+      "bin": 3,
+      "score": 0.03252247488101534,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q049",
+      "bin": 3,
+      "score": 0.03252247488101534,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q055",
+      "bin": 3,
+      "score": 0.03252247488101534,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.85
+    },
+    {
+      "id": "Q058",
+      "bin": 3,
+      "score": 0.03252247488101534,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q059",
+      "bin": 3,
+      "score": 0.03252247488101534,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 1.0
+    },
+    {
+      "id": "Q060",
+      "bin": 3,
+      "score": 0.03252247488101534,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q005",
+      "bin": 3,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q009",
+      "bin": 3,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q010",
+      "bin": 3,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": false,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q011",
+      "bin": 3,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q013",
+      "bin": 3,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q019",
+      "bin": 3,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 1.0
+    },
+    {
+      "id": "Q026",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": false,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q027",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": false,
+      "plus_task_ok": false,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q028",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q030",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q031",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 1.0
+    },
+    {
+      "id": "Q035",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.95
+    },
+    {
+      "id": "Q037",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q045",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q050",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.15
+    },
+    {
+      "id": "Q051",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q052",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q053",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    },
+    {
+      "id": "Q056",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": false,
+      "plus_task_ok": true,
+      "confidence": 0.15
+    },
+    {
+      "id": "Q057",
+      "bin": 4,
+      "score": 0.03278688524590164,
+      "flash_task_ok": true,
+      "plus_task_ok": true,
+      "confidence": 0.98
+    }
+  ]
+}

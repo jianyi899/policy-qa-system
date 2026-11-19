@@ -119,6 +119,10 @@ def answer_turn(
     max_sentences: int = 24,
     generate: bool = True,
     gold_spans: list[dict] | None = None,
+    model: str | None = None,
+    use_cascade: bool = False,
+    use_cache: bool = True,
+    on_first_token=None,
 ) -> dict:
     """处理一轮问答。session 会写入本轮结果，已查订单可被后续轮次复用。"""
     tool_calls: list[dict] = []
@@ -191,7 +195,7 @@ def answer_turn(
 
     query = retrieval_query(question, session)
     try:
-        search_result = retrieve(query, top_k=top_k)
+        search_result = retrieve(query, top_k=top_k, use_cache=use_cache)
     except Exception as exc:  # noqa: BLE001
         err = getattr(exc, "error_type", None) or type(exc).__name__
         return {
@@ -212,6 +216,26 @@ def answer_turn(
         session.last_order_facts = facts
     explanation = explain_conflict(resolution)
     sentences = evidence_sentences(resolution["applicable"][:max_evidence], max_sentences=max_sentences)
+
+    from app.cascade import choose_model, retrieval_score
+
+    score_info = retrieval_score(search_result.get("hits"))
+    if use_cascade:
+        cascade_decision = choose_model(score_info["score"])
+        chosen_model = model or cascade_decision["model"]
+    else:
+        from app.generation import DEFAULT_MODEL
+
+        cascade_decision = {
+            "model": model or DEFAULT_MODEL,
+            "upgraded": False,
+            "score": score_info["score"],
+            "threshold": None,
+            "reason": "cascade_disabled",
+            "signal": score_info["signal"],
+        }
+        chosen_model = model or DEFAULT_MODEL
+    cascade_block = {**cascade_decision, **score_info}
 
     retrieval_block = {
         "retriever": search_result["retriever"],
@@ -250,22 +274,43 @@ def answer_turn(
             "conflict_resolution": conflict_block,
             "evidence_sentences": sentences,
             "generation": "not_run",
+            "cascade": cascade_block,
         }
         return result
 
     history = [{"question": t["question"], "answer": t["answer"]} for t in session.turns if t.get("answer")]
     try:
-        gen = generate_answer(
-            question=question,
-            order_facts=facts,
-            applicable=resolution["applicable"],
-            excluded=resolution["excluded"],
-            conflict_rule=resolution["rule"],
-            conflict_explanation=explanation["text"],
-            evidence_sentences=sentences,
-            history=history,
-            max_evidence=max_evidence,
-        )
+        from app.observability import observation
+
+        with observation(
+            name="generate_answer",
+            as_type="generation",
+            model=chosen_model,
+            input={"question": question, "n_evidence": len(sentences)},
+            model_parameters={"temperature": 0.1, "top_p": 0.8, "enable_thinking": False},
+        ) as gen_span:
+            gen = generate_answer(
+                question=question,
+                order_facts=facts,
+                applicable=resolution["applicable"],
+                excluded=resolution["excluded"],
+                conflict_rule=resolution["rule"],
+                conflict_explanation=explanation["text"],
+                evidence_sentences=sentences,
+                history=history,
+                model=chosen_model,
+                max_evidence=max_evidence,
+                on_first_token=on_first_token,
+            )
+            usage = gen.get("usage") or {}
+            gen_span.update(
+                output={"answer": gen.get("answer"), "n_citations": len(gen.get("citations") or [])},
+                usage_details={
+                    "input": usage.get("input_tokens") or 0,
+                    "output": usage.get("output_tokens") or 0,
+                    "total": usage.get("total_tokens") or 0,
+                },
+            )
     except GenerationError as exc:
         return {
             "ok": False,
@@ -315,6 +360,7 @@ def answer_turn(
             for s in sentences
         ],
         "model": gen["model"],
+        "cascade": cascade_block,
         "answer": gen["answer"],
         "citations": citations,
         "citation_score": citation_score,

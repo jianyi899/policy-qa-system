@@ -42,11 +42,29 @@ def _assert_lock(pipe: dict) -> None:
         raise RuntimeError("retrieval_lock_violation")
 
 
-def retrieve(query: str, *, top_k: int = 20) -> dict:
+def retrieve(query: str, *, top_k: int = 20, use_cache: bool = True) -> dict:
     """对单条问题跑锁定的 hybrid 检索，并附带文档的范围 / 来源 / 生效日。"""
+    from app.cache import compact_retrieval_payload, get_json, retrieval_key, set_json
+    from app.observability import observation
+
     pipe = locked_params()
     _assert_lock(pipe)
     settings = get_settings()
+    cache_key = retrieval_key(query, top_k=top_k) if use_cache else None
+    if cache_key:
+        cached = get_json(cache_key)
+        if cached and cached.get("hits"):
+            cached = dict(cached)
+            cached["cache_hit"] = True
+            cached["cache_key"] = cache_key
+            with observation(
+                name="hybrid_retrieve",
+                as_type="retriever",
+                input={"query": query, "top_k": top_k, "cache_hit": True},
+                output={"n_hits": len(cached.get("hits") or []), "cache_hit": True},
+                metadata={"retriever": "hybrid", "cache_hit": True},
+            ):
+                return cached
     vectors = embed_texts_cached([query], model=LOCKED_MODEL, expected_dim=LOCKED_DIM)
     qvec = vectors[0]
     lit = vector_literal(qvec)
@@ -115,7 +133,7 @@ def retrieve(query: str, *, top_k: int = 20) -> dict:
         item["dense_score"] = float(dense_scores[i])
         item["bm25_score"] = float(bm25_scores[i])
         hits.append(item)
-    return {
+    result = {
         "ok": True,
         "retriever": "hybrid",
         "embedding_model": LOCKED_MODEL,
@@ -127,4 +145,22 @@ def retrieve(query: str, *, top_k: int = 20) -> dict:
         "query": query,
         "top_k": top_k,
         "hits": hits,
+        "cache_hit": False,
     }
+    if cache_key:
+        set_json(cache_key, compact_retrieval_payload(result))
+        result["cache_key"] = cache_key
+    with observation(
+        name="hybrid_retrieve",
+        as_type="retriever",
+        input={"query": query, "top_k": top_k, "cache_hit": False},
+        output={
+            "n_hits": len(hits),
+            "cache_hit": False,
+            "top_doc_ids": [h.get("doc_id") for h in hits[:5]],
+            "top1_rrf": hits[0]["score"] if hits else None,
+        },
+        metadata={"retriever": "hybrid", "cache_hit": False},
+    ):
+        pass
+    return result

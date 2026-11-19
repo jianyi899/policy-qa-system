@@ -29,13 +29,18 @@ class Settings(BaseSettings):
 
     langfuse_public_key: str = ""
     langfuse_secret_key: str = ""
-    langfuse_host: str = "https://cloud.langfuse.com"
+    # 官方日本区域；LANGFUSE_HOST 仅作兼容别名，优先使用 LANGFUSE_BASE_URL。
+    langfuse_base_url: str = "https://jp.cloud.langfuse.com"
+    langfuse_host: str = ""
 
     embedding_model: str = ""
     embedding_dim: int | None = None
     rerank_model: str = "gte-rerank"
     qwen_fast_model: str = "qwen3.8-flash"
     qwen_strong_model: str = "qwen-plus"
+
+    cache_ttl_seconds: int = 86400
+    cache_namespace: str = "policyqa:v1"
 
     app_host: str = "127.0.0.1"
     app_port: int = 8000
@@ -53,6 +58,10 @@ class Settings(BaseSettings):
             f"postgresql://{auth}@{self.postgres_host}:{self.postgres_port}"
             f"/{self.postgres_db}"
         )
+
+    def langfuse_url(self) -> str:
+        url = (self.langfuse_base_url or self.langfuse_host or "https://jp.cloud.langfuse.com").strip()
+        return url.rstrip("/")
 
 
 def get_settings() -> Settings:

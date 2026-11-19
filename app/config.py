@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     embedding_model: str = ""
     embedding_dim: int | None = None
     rerank_model: str = "gte-rerank"
-    qwen_fast_model: str = "qwen-flash"
+    qwen_fast_model: str = "qwen3.8-flash"
     qwen_strong_model: str = "qwen-plus"
 
     app_host: str = "127.0.0.1"

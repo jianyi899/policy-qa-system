@@ -1,4 +1,4 @@
-"""用 qwen-flash 根据冲突解析后的证据作答。不使用 LangChain，不升级到 qwen-plus。"""
+"""用 qwen3.8-flash 根据冲突解析后的证据作答。不使用 LangChain，不升级到 qwen-plus。默认关闭思考模式。"""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ import time
 
 from app.config import get_settings
 
-DEFAULT_MODEL = "qwen-flash"  # qwen-turbo 已于 2026-10-10 官方下线，改用同档位模型
+DEFAULT_MODEL = "qwen3.8-flash"  # qwen-turbo 已于 2026-10-10 官方下线；按现型号替换
 DEFAULT_MAX_RETRIES = 4
 
 
@@ -36,7 +36,7 @@ def generate_answer(
 ) -> dict:
     """根据订单事实与适用政策生成回答。失败时抛出 GenerationError（不含密钥）。"""
     if model != DEFAULT_MODEL:
-        # 第四段只用 qwen-flash，级联到 qwen-plus 留到第六段。
+        # 第四段只用 qwen3.8-flash，级联到 qwen-plus 留到第六段。
         raise GenerationError("model_lock_violation")
     api_key = _require_api_key()
     evidence_blocks = []
@@ -89,34 +89,48 @@ def generate_answer(
         + ("\n".join(excluded_brief) if excluded_brief else "（无）")
     )
 
-    import dashscope
-    from dashscope import Generation
+    # qwen3.8-flash 在 DashScope 原生 Generation.call（/api/v1）会返回 url error，
+    # 改走官方兼容模式接口。默认关闭思考模式，避免非流式超时和额外 Token。
+    import httpx
 
-    dashscope.api_key = api_key
+    settings = get_settings()
+    url = settings.dashscope_base_url.rstrip("/") + "/chat/completions"
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
+        "temperature": 0.1,
+        "top_p": 0.8,
+        "enable_thinking": False,
+    }
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+    }
     last_err: GenerationError | None = None
     for attempt in range(DEFAULT_MAX_RETRIES):
         try:
-            response = Generation.call(
-                model=model,
-                messages=[
-                    {"role": "system", "content": system},
-                    {"role": "user", "content": user},
-                ],
-                result_format="message",
-                temperature=0.1,
-                top_p=0.8,
-            )
+            with httpx.Client(timeout=60.0) as client:
+                response = client.post(url, headers=headers, json=payload)
         except Exception as exc:  # noqa: BLE001
             last_err = GenerationError(type(exc).__name__)
             time.sleep(min(2 ** (attempt + 1), 20))
             continue
-        status_code = getattr(response, "status_code", None)
+        status_code = response.status_code
+        try:
+            data = response.json()
+        except Exception:  # noqa: BLE001
+            data = {}
         if status_code != 200:
-            code = getattr(response, "code", None)
+            err = data.get("error") if isinstance(data, dict) else {}
+            code = (err or {}).get("code") or (err or {}).get("type") or data.get("code")
             err_type = str(code) if code else f"http_{status_code}"
             retryable = status_code in {429, 500, 502, 503, 504} or str(code) in {
                 "Throttling.RateQuota",
                 "Throttling",
+                "limit_requests",
                 "ServiceUnavailable",
             }
             last_err = GenerationError(err_type)
@@ -124,42 +138,22 @@ def generate_answer(
                 time.sleep(min(2 ** (attempt + 1), 20))
                 continue
             raise last_err
-        output = getattr(response, "output", None) or {}
         text = ""
-        if isinstance(output, dict):
-            message = output.get("message") or output.get("choices")
-            if isinstance(message, dict):
-                text = message.get("content") or ""
-            elif isinstance(output.get("text"), str):
-                text = output.get("text") or ""
-        if not text and hasattr(response, "output") and hasattr(output, "choices"):
-            pass
-        if not text:
-            # 兼容不同 SDK 结构
-            try:
-                choices = output.get("choices") if isinstance(output, dict) else None
-                if choices:
-                    text = choices[0].get("message", {}).get("content") or ""
-            except Exception:  # noqa: BLE001
-                text = ""
+        choices = data.get("choices") if isinstance(data, dict) else None
+        if choices:
+            message = (choices[0] or {}).get("message") or {}
+            text = message.get("content") or ""
         if not str(text).strip():
             last_err = GenerationError("empty_generation")
             continue
-        usage = getattr(response, "usage", None)
+        usage = data.get("usage") if isinstance(data, dict) else None
         usage_dict = None
-        if usage is not None:
-            if isinstance(usage, dict):
-                usage_dict = {
-                    k: usage.get(k)
-                    for k in ("input_tokens", "output_tokens", "total_tokens")
-                    if k in usage
-                }
-            else:
-                usage_dict = {
-                    "input_tokens": getattr(usage, "input_tokens", None),
-                    "output_tokens": getattr(usage, "output_tokens", None),
-                    "total_tokens": getattr(usage, "total_tokens", None),
-                }
+        if isinstance(usage, dict):
+            usage_dict = {
+                "input_tokens": usage.get("input_tokens", usage.get("prompt_tokens")),
+                "output_tokens": usage.get("output_tokens", usage.get("completion_tokens")),
+                "total_tokens": usage.get("total_tokens"),
+            }
         return {
             "ok": True,
             "model": model,

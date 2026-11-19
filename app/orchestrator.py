@@ -56,6 +56,7 @@ def check_fridge_answer(answer: str, facts: dict) -> dict:
         for s in (
             "不能按七天无理由",
             "不能按无理由",
+            "无法按无理由",
             "不能再依据七天无理由",
             "不得再依据七天无理由",
             "不能走七天无理由",
@@ -70,6 +71,7 @@ def check_fridge_answer(answer: str, facts: dict) -> dict:
             "超过7天",
             "已过 7 天",
             "已过七天",
+            "已过7天",
             "超出 7 天无理由",
             "不在七天无理由",
             "不在 7 天无理由",

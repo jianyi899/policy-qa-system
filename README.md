@@ -2,7 +2,7 @@
 
 电商售后政策问答系统。第一段交付了项目骨架、数据库表、语料导入和已锁定的 embedding；第二段补齐 70 篇语料、100 道评测题、条款跨度标注与映射，并在开发集上实测了 B0 基线；第三段完成了三种切分消融、BM25+RRF、gte-rerank 尝试、开发集 Recall@5 CI 门禁，以及测试集第一次评测；第四段接上查订单、查物流、退款和日报工具，跑通冰箱质量问题主路径，并实测对抗用例无错误副作用。多轮对话、句级引用、缓存、Langfuse 与模型级联标定不在本阶段。
 
-技术栈（已锁定，后续阶段沿用）：Python、FastAPI、官方 SDK 加自写编排、Postgres + pgvector、应用层 `rank_bm25.BM25Okapi`（jieba，k1=1.5，b=0.75）、RRF 融合、gte-rerank API、qwen-turbo 级联升到 qwen-plus（DeepSeek 只作行判或备用）、Langfuse Cloud、Streamlit、Docker Compose。不使用 LangChain 全家桶，不在本地跑 reranker，不自建 Langfuse。
+技术栈（已锁定，后续阶段沿用）：Python、FastAPI、官方 SDK 加自写编排、Postgres + pgvector、应用层 `rank_bm25.BM25Okapi`（jieba，k1=1.5，b=0.75）、RRF 融合、gte-rerank API、qwen-flash 级联升到 qwen-plus（原锁定 qwen-turbo，已于 2026-10-10 官方下线；DeepSeek 只作行判或备用）、Langfuse Cloud、Streamlit、Docker Compose。不使用 LangChain 全家桶，不在本地跑 reranker，不自建 Langfuse。
 
 ## 本机拉起（当前开发机）
 
@@ -107,7 +107,7 @@ GitHub Actions 工作流：`.github/workflows/retrieval-ci.yml`。只卡开发�
 - `refund(action=query|apply, order_no?, refund_no?, reason?, amount_cents?, idempotency_key?)`：查询只读；申请时同一订单只能有一笔进行中退款，由数据库约束 `ux_refunds_one_open_per_order` 保证。幂等键用于识别同一次提交的重试，不含申请当日或理由。
 - `daily_report(action=query|generate, report_date?)`：query 只读实时聚合；generate 才按 Asia/Shanghai 自然日幂等写入 `daily_reports` 快照，不改订单或退款。
 
-主路径「这单冰箱买了 20 天质量问题还能退吗」必须先真实查订单，不能只凭用户口述。生成模型为 `qwen-turbo`。种子脚本、主路径与对抗用例报告见 `reports/stage4_seed.json`、`reports/stage4_fridge_path.json`、`reports/stage4_adversarial.json`。
+主路径「这单冰箱买了 20 天质量问题还能退吗」必须先真实查订单，不能只凭用户口述。生成模型为 `qwen-flash`（因 `qwen-turbo` 已于 2026-10-10 官方下线而替换，级联目标仍为 `qwen-plus`）。种子脚本、主路径与对抗用例报告见 `reports/stage4_seed.json`、`reports/stage4_fridge_path.json`、`reports/stage4_adversarial.json`。
 
 ## 密钥
 

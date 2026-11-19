@@ -1,4 +1,4 @@
-"""用 qwen-turbo 根据冲突解析后的证据作答。不使用 LangChain，不升级到 qwen-plus。"""
+"""用 qwen-flash 根据冲突解析后的证据作答。不使用 LangChain，不升级到 qwen-plus。"""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ import time
 
 from app.config import get_settings
 
-DEFAULT_MODEL = "qwen-turbo"
+DEFAULT_MODEL = "qwen-flash"  # qwen-turbo 已于 2026-10-10 官方下线，改用同档位模型
 DEFAULT_MAX_RETRIES = 4
 
 
@@ -36,7 +36,7 @@ def generate_answer(
 ) -> dict:
     """根据订单事实与适用政策生成回答。失败时抛出 GenerationError（不含密钥）。"""
     if model != DEFAULT_MODEL:
-        # 第四段只用 qwen-turbo，级联到 qwen-plus 留到第六段。
+        # 第四段只用 qwen-flash，级联到 qwen-plus 留到第六段。
         raise GenerationError("model_lock_violation")
     api_key = _require_api_key()
     evidence_blocks = []

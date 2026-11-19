@@ -27,3 +27,5 @@
 每次重切分后运行 `scripts/map_annotations.py`。规则：切片与条款跨度在同一 `doc_id + section_path` 下的字符交集长度，除以条款跨度长度，大于 0.5 时切片继承 relevance。不对着检索结果标注，不直接使用 `chunk_id`。
 
 第三段比较了三种不同切片集的切分（`section_window_400`、`section_window_120`、`sentence_pack_150`），按开发集密集检索 Recall@5 选定 `section_window_400`（B0 切分，221 切片）。映射结果见 `eval/annotation_mapping.json`，各策略对照见 `reports/mapping_*.json`。
+
+第五段已在引用与冲突模块收尾后第二次跑测试集，报告见 `reports/test_run2.json`。封存 sha256 未改，题目本身未改动；数字不参与调参。第一次只评检索，第二次在可比的检索指标上与第一次对照，并另行记录生成、句级引用与拒答的实测结果。

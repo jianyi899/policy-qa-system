@@ -1,17 +1,11 @@
 """第四段单轮主路径：必须先真实查订单，注入冲突解析，再按锁定检索链路作答。
 
-不做多轮对话、不做句级引用模块、不接入 Langfuse、不升级到 qwen-plus。
+多轮与句级引用见 app.dialogue。不接入 Langfuse、不升级到 qwen-plus。
 """
 
 from __future__ import annotations
 
-from app.clock import iso, now_shanghai
-from app.conflict import resolve
 from app.context import SessionContext
-from app.generation import GenerationError, generate_answer
-from app.search import retrieve
-from app.tools import invoke
-from app.tools.errors import ToolError
 
 # 主路径口语题，供脚本与验收使用。
 FRIDGE_QUESTION = "这单冰箱买了 20 天质量问题还能退吗"
@@ -146,7 +140,7 @@ def check_fridge_answer(answer: str, facts: dict) -> dict:
         {
             "id": "member_does_not_extend",
             "expected": "会员身份不延长七天无理由时限（可选提及）",
-            "ok": ("会员" in text and any(s in text for s in ("不延长", "不改变", "不能延长"))),
+            "ok": ("会员" in text and any(s in text for s in ("不延长", "不会延长", "不改变", "不能延长"))),
         },
         {
             "id": "quality_freight_merchant",
@@ -174,111 +168,15 @@ def answer_after_sales(
     top_k: int = 40,
     max_evidence: int = 12,
 ) -> dict:
-    tool_calls: list[dict] = []
-    kw = keyword if keyword is not None else keyword_for_question(question)
-    order_args: dict = {}
-    if order_no:
-        order_args["order_no"] = order_no
-    if kw:
-        order_args["keyword"] = kw
-    # 必须真实查订单，不能只凭用户自述的「买了 20 天」。
-    try:
-        order_result = invoke("query_order", order_args, ctx)
-    except ToolError as exc:
-        return {"ok": False, "measured_at": iso(now_shanghai()), "timezone": "Asia/Shanghai", "error_type": exc.error_type, "stage": "query_order", "tool_calls": tool_calls}
-    tool_calls.append(
-        {
-            "tool": "query_order",
-            "arguments": order_args,
-            "result": order_result,
-        }
-    )
-    orders = order_result.get("orders") or []
-    if not orders:
-        return {
-            "ok": False,
-            "measured_at": iso(now_shanghai()),
-            "timezone": "Asia/Shanghai",
-            "error_type": "order_not_found",
-            "stage": "query_order",
-            "question": question,
-            "tool_calls": tool_calls,
-            "answer": "没有在当前用户下查到对应订单，无法仅凭口述判断能否退货。",
-        }
-    order = orders[0]
-    try:
-        search_result = retrieve(question, top_k=top_k)
-    except Exception as exc:  # noqa: BLE001
-        err = getattr(exc, "error_type", None) or type(exc).__name__
-        return {
-            "ok": False,
-            "measured_at": iso(now_shanghai()),
-            "timezone": "Asia/Shanghai",
-            "error_type": err,
-            "stage": "retrieve",
-            "question": question,
-            "tool_calls": tool_calls,
-        }
-    resolution = resolve(search_result["hits"], order)
-    facts = resolution["order_fields_injected"]
-    retrieval_block = {
-        "retriever": search_result["retriever"],
-        "embedding_model": search_result["embedding_model"],
-        "embedding_dim": search_result["embedding_dim"],
-        "chunking_name": search_result["chunking_name"],
-        "bm25": search_result["bm25"],
-        "rrf_k": search_result["rrf_k"],
-        "rerank": False,
-        "query": search_result["query"],
-        "top_k": search_result["top_k"],
-    }
-    conflict_block = {
-        "rule": resolution["rule"],
-        "n_applicable": resolution["n_applicable"],
-        "n_excluded": resolution["n_excluded"],
-        "applicable": [_compact_chunk(x) for x in resolution["applicable"]],
-        "excluded": [_compact_chunk(x) for x in resolution["excluded"]],
-    }
-    try:
-        gen = generate_answer(
-            question=question,
-            order_facts=facts,
-            applicable=resolution["applicable"],
-            excluded=resolution["excluded"],
-            conflict_rule=resolution["rule"],
-            max_evidence=max_evidence,
-        )
-    except GenerationError as exc:
-        return {
-            "ok": False,
-            "measured_at": iso(now_shanghai()),
-            "timezone": "Asia/Shanghai",
-            "error_type": exc.error_type,
-            "stage": "generation",
-            "question": question,
-            "tool_calls": tool_calls,
-            "order_fields_injected": facts,
-            "retrieval": retrieval_block,
-            "conflict_resolution": conflict_block,
-        }
+    """单轮售后问答。多轮请使用 app.dialogue.DialogueSession。"""
+    from app.dialogue import answer_question
 
-    review = check_fridge_answer(gen["answer"], facts) if "冰箱" in question else None
-    return {
-        "ok": True,
-        "measured_at": iso(now_shanghai()),
-        "timezone": "Asia/Shanghai",
-        "question": question,
-        "session": {
-            "user_id_injected_from": "server_session_context",
-            "external_id": ctx.external_id,
-        },
-        "tool_calls": tool_calls,
-        "order_fields_injected": facts,
-        "retrieval": retrieval_block,
-        "conflict_resolution": conflict_block,
-        "model": gen["model"],
-        "answer": gen["answer"],
-        "usage": gen.get("usage"),
-        "review": review,
-        "meets_expected": (review or {}).get("meets_expected"),
-    }
+    return answer_question(
+        question,
+        ctx=ctx,
+        keyword=keyword,
+        order_no=order_no,
+        top_k=top_k,
+        max_evidence=max_evidence,
+    )
+

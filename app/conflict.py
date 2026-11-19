@@ -7,6 +7,8 @@
 
 from __future__ import annotations
 
+import re
+
 from datetime import date, datetime
 
 from app.clock import (
@@ -78,7 +80,7 @@ def classify_scope(doc: dict, order: dict) -> tuple[str, str]:
     """返回 (applicability, scope_match)。"""
     source = doc.get("source_type")
     scope_type = doc.get("scope_type") or "general"
-    scope_value = (doc.get("scope_value") or "") .strip()
+    scope_value = (doc.get("scope_value") or "").strip()
     if source == "noise":
         return "excluded_noise", "n/a"
     sku = order.get("sku")
@@ -143,4 +145,125 @@ def resolve(chunks: list[dict], order: dict) -> dict:
         "excluded": excluded,
         "n_applicable": len(applicable),
         "n_excluded": len(excluded),
+    }
+
+
+SKU_RE = re.compile(r"SKU-[A-Z0-9-]+", re.IGNORECASE)
+
+
+def known_scopes(docs: list[dict] | None = None) -> dict:
+    """从语料 front matter 收集已知 SKU / 品类，供问题侧范围推断。"""
+    if docs is None:
+        from app.corpus_io import load_corpus
+
+        docs = load_corpus()
+    skus = sorted({d.get("scope_value") for d in docs if d.get("scope_type") == "sku" and d.get("scope_value")})
+    categories = sorted(
+        {d.get("scope_value") for d in docs if d.get("scope_type") == "category" and d.get("scope_value")},
+        key=len,
+        reverse=True,
+    )
+    return {"skus": skus, "categories": categories}
+
+
+def infer_scope_from_question(question: str, *, scopes: dict | None = None) -> dict:
+    """从问句中识别 SKU / 品类，供无订单时的冲突套用。订单事实优先于推断。"""
+    scopes = scopes if scopes is not None else known_scopes()
+    text = question or ""
+    sku = None
+    for known in scopes.get("skus") or []:
+        if known and known in text:
+            sku = known
+            break
+    if sku is None:
+        match = SKU_RE.search(text)
+        if match:
+            sku = match.group(0).upper()
+    category = None
+    for cat in scopes.get("categories") or []:
+        if cat and cat in text:
+            category = cat
+            break
+    return {
+        "sku": sku,
+        "category": category,
+        "inferred": bool(sku or category),
+        "source": "question_inferred" if (sku or category) else "none",
+    }
+
+
+def context_for_resolve(order: dict | None, question: str | None = None) -> dict:
+    """构造传入 resolve 的范围上下文：真实订单优先，否则用问句推断的 SKU/品类。"""
+    ctx = dict(order or {})
+    if question and not (ctx.get("sku") or ctx.get("category")):
+        inferred = infer_scope_from_question(question)
+        if inferred.get("sku") and not ctx.get("sku"):
+            ctx["sku"] = inferred["sku"]
+        if inferred.get("category") and not ctx.get("category"):
+            ctx["category"] = inferred["category"]
+        if inferred.get("inferred"):
+            ctx["scope_source"] = inferred["source"]
+    return ctx
+
+
+def explain_conflict(resolution: dict) -> dict:
+    """把冲突排序结果写成可注入提示词、也可展示给用户的说明。"""
+    facts = resolution.get("order_fields_injected") or {}
+    applicable = resolution.get("applicable") or []
+    by_scope: dict[str, list[dict]] = {"sku": [], "category": [], "general": []}
+    seen_docs: set[tuple] = set()
+    for item in applicable:
+        scope = item.get("scope_match") or "general"
+        doc_key = (item.get("doc_id"), scope)
+        if scope not in by_scope or doc_key in seen_docs:
+            continue
+        seen_docs.add(doc_key)
+        by_scope[scope].append(item)
+
+    def _fmt(item: dict) -> str:
+        value = item.get("scope_value") or ""
+        title = item.get("title") or ""
+        title_part = f"《{title}》" if title else ""
+        scope_part = f"{item.get('scope_label')}"
+        if value:
+            scope_part += f"：{value}"
+        return (
+            f"{item.get('doc_id')}{title_part}"
+            f"（来源={item.get('source_label')}，范围={scope_part}，生效日={item.get('effective_date')}）"
+        )
+
+    lines: list[str] = []
+    sku = facts.get("sku")
+    category = facts.get("category")
+    if facts.get("order_no"):
+        lines.append(f"已绑定订单 {facts.get('order_no')}：SKU={sku or '（无）'}，品类={category or '（无）'}。")
+    elif sku or category:
+        lines.append(f"未绑定具体订单，按问题中的范围套用：SKU={sku or '（未指定）'}，品类={category or '（未指定）'}。")
+    else:
+        lines.append("未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。")
+    lines.append("冲突排序口径：" + RULE_TEXT)
+
+    has_fine = bool(by_scope["sku"] or by_scope["category"])
+    if by_scope["sku"]:
+        lines.append("SKU 级规定优先于品类与通用，适用：" + "、".join(_fmt(x) for x in by_scope["sku"]) + "。")
+        if by_scope["category"] or by_scope["general"]:
+            lines.append(
+                "因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，"
+                "作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。"
+            )
+    elif by_scope["category"]:
+        lines.append("品类级规定优先于通用，适用：" + "、".join(_fmt(x) for x in by_scope["category"]) + "。")
+        lines.append(
+            "因此本品类专项覆盖（优先于并取代其适用位置上的）通用规定，"
+            "作答须采用专类结论并说明依据，不得用通用规则替代或缩减专项时限。"
+        )
+    else:
+        lines.append("未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。")
+
+    return {
+        "has_finer_scope": has_fine,
+        "sku": sku,
+        "category": category,
+        "by_scope_doc_ids": {k: [x.get("doc_id") for x in v] for k, v in by_scope.items()},
+        "text": "\n".join(lines),
     }

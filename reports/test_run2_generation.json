@@ -1,0 +1,3332 @@
+{
+  "ok": true,
+  "split": "test",
+  "model": "qwen3.8-flash",
+  "summary": {
+    "split": "test",
+    "n_questions": 30,
+    "n_answerable": 25,
+    "n_refusal": 5,
+    "n_generation_ok": 30,
+    "n_generation_failed": 0,
+    "generation_failed_ids": [],
+    "citation": {
+      "metric": "sentence_precision",
+      "definition": "按句子算引用精度。系统回答中每个 [S#] 映射到证据句（doc_id+section_path+字符起止，与条款标注同一 documents.body 坐标系）；该句与任一金标条款跨度在同一章节下字符交集长度>0 视为正确。不对着检索改标注。可答题、生成成功的题目上统计。",
+      "n_answerable_generated": 25,
+      "n_with_citations": 25,
+      "n_without_citations": 0,
+      "macro_precision_over_questions_with_citations": 0.42517748917748915,
+      "macro_precision_missing_as_zero": 0.42517748917748915,
+      "macro_recall_over_questions_with_gold_sentences": 0.5908333333333333,
+      "micro_precision": 0.3170731707317073,
+      "micro_n_correct": 39,
+      "micro_n_cited": 123
+    },
+    "refusal": {
+      "n": 5,
+      "n_evaluated": 5,
+      "n_correct": 5,
+      "n_incorrect": 0,
+      "n_generation_failed": 0,
+      "correct_over_total": "5/5",
+      "incorrect_ids": [],
+      "generation_failed_ids": [],
+      "note": "小样本只报对了几道/共几道，不设 90% 目标。"
+    }
+  },
+  "items": [
+    {
+      "id": "Q042",
+      "type": "multi_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：星河手表 S3（SKU-HX-WATCH-S3）的质量保证期限为自签收之日起 24 个月，而非通用的 12 个月。**\n\n**依据与解析：**\n\n1.  **适用更细范围的 SKU 专项政策**\n    根据冲突排序口径，SKU 级规定优先于品类与通用规则。针对您购买的特定商品 `SKU-HX-WATCH-S3`，存在专门的《指定商品延保政策》，其中明确规定该 SKU 的质量保证期限为自签收之日起 24 个月 [S1]。此规定适用于 2025-06-01 当日及之后签收的订单 [S8][S14]。\n\n2.  **为何覆盖通用 12 个月规定**\n    虽然平台存在通用的 12 个月质保规定，但上述 SKU 级专项政策明确指出，其 24 个月的规定在本 SKU 上优先于并取代了平台《商品质量保证期限通则》中的通用 12 个月规定 [S2]。因此，对于星河手表 S3，应适用 24 个月的质保期，而不是 12 个月 [S4][S15]。\n\n3.  **质保范围说明**\n    *   **涵盖内容**：这 24 个月的质保主要涵盖手表主机的主要功能故障 [S9][S17]。\n    *   **不涵盖内容**：表带、充电线等附件仍按通用规则或商品说明执行 [S10][S18]；因进水、摔损、私拆造成的损坏不在本延保范围内 [S11][S19]。\n\n综上所述，您的星河手表 S3 享有 24 个月的主机质保服务，这是基于 SKU 级别的专项政策对通用规则的覆盖。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 2123,
+        "output_tokens": 391,
+        "total_tokens": 2514
+      },
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 140,
+          "char_end": 177,
+          "text": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月。"
+        },
+        {
+          "sid": "S8",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "4.生效日",
+          "char_start": 423,
+          "char_end": 478,
+          "text": "本政策自 2025-06-01 起生效，对该生效日当日及之后签收的 SKU-HX-WATCH-S3 订单适用。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 101,
+          "char_end": 180,
+          "text": "SKU-HX-WATCH-S3（星河手表 S3，品类：智能穿戴）的质量保证期限为自签收之日起 24 个月，适用于 2025-06-01 当日及之后签收的订单。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 177,
+          "char_end": 240,
+          "text": "该 24 个月规定覆盖（即在本 SKU 上优先于、并取代其适用位置上的）平台《商品质量保证期限通则》中的通用 12 个月规定。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 279,
+          "char_end": 332,
+          "text": "按冲突排序口径，范围比较时 SKU 级优先于通用，因此本 SKU 应适用 24 个月，而不是 12 个月。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 180,
+          "char_end": 246,
+          "text": "该 24 个月是 SKU 级专项规定，按冲突排序优先于通用 12 个月，因此本 SKU 应适用 24 个月，而不是通用 12 个月。"
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 345,
+          "char_end": 366,
+          "text": "24 个月质保涵盖手表主机的主要功能故障。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 284,
+          "char_end": 304,
+          "text": "24 个月质保涵盖手表主机主要功能故障；"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 366,
+          "char_end": 389,
+          "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 304,
+          "char_end": 327,
+          "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+        },
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 389,
+          "char_end": 411,
+          "text": "因进水、摔损、私拆造成的损坏不在本延保范围。"
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 327,
+          "char_end": 347,
+          "text": "进水、摔损、私拆造成的损坏不在延保范围。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 12,
+        "n_correct": 3,
+        "n_incorrect": 9,
+        "precision": 0.25,
+        "n_gold_sentences": 16,
+        "n_gold_hit": 3,
+        "recall": 0.1875,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": {
+        "question_id": "Q042",
+        "meets_expected": true,
+        "required_points": [
+          {
+            "id": "warranty_24_months",
+            "expected": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月",
+            "ok": true
+          },
+          {
+            "id": "sku_covers_general_12",
+            "expected": "按冲突排序应优先适用 SKU 级规定，24 个月覆盖通用 12 个月",
+            "ok": true
+          },
+          {
+            "id": "not_only_general_12",
+            "expected": "不得只回答通用 12 个月",
+            "ok": true
+          }
+        ]
+      },
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=SKU-HX-WATCH-S3，品类=（未指定）。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\nSKU 级规定优先于品类与通用，适用：P08《指定商品延保政策（SKU-HX-WATCH-S3）》（来源=政策，范围=sku：SKU-HX-WATCH-S3，生效日=2025-06-01）、F06《FAQ：星河手表 S3 的质保期限是多久？》（来源=FAQ，范围=sku：SKU-HX-WATCH-S3，生效日=2025-09-01）。\n因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。",
+      "by_scope_doc_ids": {
+        "sku": [
+          "P08",
+          "F06"
+        ],
+        "category": [],
+        "general": [
+          "P02",
+          "P04",
+          "P07",
+          "P01",
+          "M23",
+          "M03",
+          "F05",
+          "F12",
+          "F13",
+          "F11",
+          "F08"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q072",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：** 星河优选电子电器的通用质保期限为自签收之日起 **12 个月**。\n\n**依据简述：**\n根据平台通用政策，除法律另有规定、商品详情页或专项政策有更具体规定外，电子电器类及其他适用质保的商品，质量保证期限统一为自签收之日起 12 个月 [S6]。该条款属于通用范围政策 [S7]。在冲突排序中，若存在 SKU 级或品类级的更具体规定（如某些特定手表的 24 个月专项质保），应优先适用该更细范围的规定 [S8][S10][S16]；但在没有更具体的专项规定覆盖时，即适用此通用的 12 个月期限 [S23]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 2313,
+        "output_tokens": 158,
+        "total_tokens": 2471
+      },
+      "citations": [
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 27,
+          "char_end": 97,
+          "text": "除法律另有规定、商品详情页或专项政策另有更具体规定外，星河优选销售的电子电器类及其他适用质保的商品，质量保证期限为自签收之日起 12 个月。"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 97,
+          "char_end": 115,
+          "text": "本条规定是通用政策，适用范围为通用。"
+        },
+        {
+          "sid": "S8",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "3.与专项质保的关系",
+          "char_start": 225,
+          "char_end": 269,
+          "text": "某一 SKU 或某一品类如另有专项质保期限，按《平台售后总则与冲突排序口径》比较后适用。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "3.与专项质保的关系",
+          "char_start": 291,
+          "char_end": 335,
+          "text": "在同时存在通用 12 个月与某 SKU 更长或更短期限时，应优先适用该 SKU 级规定。"
+        },
+        {
+          "sid": "S16",
+          "valid_evidence": true,
+          "doc_id": "P01",
+          "section_path": "3.冲突排序口径",
+          "char_start": 353,
+          "char_end": 393,
+          "text": "1. 先比较适用范围：SKU 级规定优先于品类级规定，品类级规定优先于通用规定。"
+        },
+        {
+          "sid": "S23",
+          "valid_evidence": true,
+          "doc_id": "M03",
+          "section_path": "1.核对质保期限",
+          "char_start": 28,
+          "char_end": 88,
+          "text": "转办维修或鉴定前，先按冲突排序口径确定适用质保期限：有 SKU 专项的用 SKU 期限，其次品类，再次通用 12 个月。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 2,
+        "n_incorrect": 4,
+        "precision": 0.3333333333333333,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 2,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P02",
+          "P04",
+          "P18",
+          "P07",
+          "P01",
+          "M23",
+          "M03",
+          "M09",
+          "F05",
+          "F12",
+          "F11"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q073",
+      "type": "multi_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不能。** 您购买的“同一品类的另一款手表”无法直接享受 SKU-HX-WATCH-S3 的 24 个月延保政策。\n\n**依据说明：**\n\n1.  **专项政策仅限特定 SKU**：《指定商品延保政策（SKU-HX-WATCH-S3）》明确规定，该政策仅适用于 SKU 编码为 SKU-HX-WATCH-S3 的商品 [S5]。\n2.  **同品类其他商品不得援引**：政策条款中特别指出，“其他 SKU，包括同品类其他手表，不得直接援引本文件” [S7]。FAQ 中也重申了这一限制，即其他 SKU 不得直接援引该答复 [S14]。\n3.  **覆盖关系说明**：虽然 SKU-HX-WATCH-S3 的 24 个月质保规定覆盖了平台通用的 12 个月质保规则 [S2][S4]，但这种覆盖效力严格限定在该特定 SKU 范围内。对于非 SKU-HX-WATCH-S3 的其他手表，仍应适用其对应的品类或通用质保规则，而非该 SKU 的专项延保。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 2101,
+        "output_tokens": 244,
+        "total_tokens": 2345
+      },
+      "citations": [
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "1.适用范围",
+          "char_start": 40,
+          "char_end": 89,
+          "text": "本政策仅适用于 SKU 编码为 SKU-HX-WATCH-S3 的商品（商品名称：星河手表 S3；"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "1.适用范围",
+          "char_start": 100,
+          "char_end": 127,
+          "text": "其他 SKU，包括同品类其他手表，不得直接援引本文件。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 246,
+          "char_end": 273,
+          "text": "其他 SKU，包括同品类其他手表，不得直接援引本答复。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 177,
+          "char_end": 240,
+          "text": "该 24 个月规定覆盖（即在本 SKU 上优先于、并取代其适用位置上的）平台《商品质量保证期限通则》中的通用 12 个月规定。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 279,
+          "char_end": 332,
+          "text": "按冲突排序口径，范围比较时 SKU 级优先于通用，因此本 SKU 应适用 24 个月，而不是 12 个月。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 5,
+        "n_correct": 2,
+        "n_incorrect": 3,
+        "precision": 0.4,
+        "n_gold_sentences": 8,
+        "n_gold_hit": 2,
+        "recall": 0.25,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=SKU-HX-WATCH-S3，品类=（未指定）。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\nSKU 级规定优先于品类与通用，适用：P08《指定商品延保政策（SKU-HX-WATCH-S3）》（来源=政策，范围=sku：SKU-HX-WATCH-S3，生效日=2025-06-01）、F06《FAQ：星河手表 S3 的质保期限是多久？》（来源=FAQ，范围=sku：SKU-HX-WATCH-S3，生效日=2025-09-01）。\n因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。",
+      "by_scope_doc_ids": {
+        "sku": [
+          "P08",
+          "F06"
+        ],
+        "category": [],
+        "general": [
+          "P09",
+          "P18",
+          "P07",
+          "P01",
+          "M23",
+          "M03",
+          "M07",
+          "F05",
+          "F12",
+          "F11",
+          "F02",
+          "F14",
+          "F15",
+          "F13"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q074",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\nSKU-HX-WATCH-S3 的 24 个月延保（质量保证期限）从**签收之日**起开始计算 [S2][S12]。\n\n**依据说明：**\n1. **起算时间**：根据《指定商品延保政策（SKU-HX-WATCH-S3）》，该 SKU 的质量保证期限为自**签收之日起** 24 个月 [S2]。FAQ 也确认了这一口径，即适用于 2025-06-01 当日及之后签收的订单，质保期从签收日算起 [S12]。\n2. **适用范围与生效条件**：该政策仅适用于 SKU 编码为 SKU-HX-WATCH-S3 的商品，且对该政策生效日（2025-06-01）当日及之后签收的订单适用 [S1][S6]。\n3. **规则覆盖说明**：此 24 个月规定属于 SKU 级专项条款，优先于并取代了平台通用的 12 个月质量保证期限规定 [S3][S5][S13]。因此，不能按通用规则理解为其他起始时间或更短期限。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1968,
+        "output_tokens": 259,
+        "total_tokens": 2227
+      },
+      "citations": [
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 140,
+          "char_end": 177,
+          "text": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月。"
+        },
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 101,
+          "char_end": 180,
+          "text": "SKU-HX-WATCH-S3（星河手表 S3，品类：智能穿戴）的质量保证期限为自签收之日起 24 个月，适用于 2025-06-01 当日及之后签收的订单。"
+        },
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "4.生效日",
+          "char_start": 423,
+          "char_end": 478,
+          "text": "本政策自 2025-06-01 起生效，对该生效日当日及之后签收的 SKU-HX-WATCH-S3 订单适用。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "1.适用范围",
+          "char_start": 40,
+          "char_end": 89,
+          "text": "本政策仅适用于 SKU 编码为 SKU-HX-WATCH-S3 的商品（商品名称：星河手表 S3；"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 177,
+          "char_end": 240,
+          "text": "该 24 个月规定覆盖（即在本 SKU 上优先于、并取代其适用位置上的）平台《商品质量保证期限通则》中的通用 12 个月规定。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 279,
+          "char_end": 332,
+          "text": "按冲突排序口径，范围比较时 SKU 级优先于通用，因此本 SKU 应适用 24 个月，而不是 12 个月。"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 180,
+          "char_end": 246,
+          "text": "该 24 个月是 SKU 级专项规定，按冲突排序优先于通用 12 个月，因此本 SKU 应适用 24 个月，而不是通用 12 个月。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 7,
+        "n_correct": 1,
+        "n_incorrect": 6,
+        "precision": 0.14285714285714285,
+        "n_gold_sentences": 1,
+        "n_gold_hit": 1,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=SKU-HX-WATCH-S3，品类=（未指定）。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\nSKU 级规定优先于品类与通用，适用：P08《指定商品延保政策（SKU-HX-WATCH-S3）》（来源=政策，范围=sku：SKU-HX-WATCH-S3，生效日=2025-06-01）、F06《FAQ：星河手表 S3 的质保期限是多久？》（来源=FAQ，范围=sku：SKU-HX-WATCH-S3，生效日=2025-09-01）。\n因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。",
+      "by_scope_doc_ids": {
+        "sku": [
+          "P08",
+          "F06"
+        ],
+        "category": [],
+        "general": [
+          "P14",
+          "P06",
+          "P07",
+          "P01",
+          "M23",
+          "M03",
+          "M22",
+          "M01",
+          "M06",
+          "M12",
+          "M20",
+          "F05",
+          "F01",
+          "F11",
+          "F15",
+          "F12",
+          "F08",
+          "F13"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q075",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不是。** 星河手表 S3 的表带和充电线不享受 24 个月质保，而是按通用规则或商品说明执行（通常为 12 个月）。\n\n**依据简述：**\n虽然 SKU-HX-WATCH-S3（星河手表 S3）的主机享有 24 个月的专项质保 [S18]，但该专项规定明确仅涵盖“手表主机主要功能故障” [S14]。对于表带、充电线等附件，政策明确规定它们仍按通用规则或商品说明执行，而非适用主机的延保期限 [S15]。根据通用质保条款，电子电器类及其他适用质保的商品，质量保证期限通常为自签收之日起 12 个月 [S7]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 2205,
+        "output_tokens": 160,
+        "total_tokens": 2365
+      },
+      "citations": [
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "M23",
+          "section_path": "1.先核 SKU 再核期限",
+          "char_start": 50,
+          "char_end": 89,
+          "text": "仅 SKU-HX-WATCH-S3（星河手表 S3）适用 24 个月专项质保；"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "M23",
+          "section_path": "2.附件与除外责任",
+          "char_start": 165,
+          "char_end": 207,
+          "text": "即使是 SKU-HX-WATCH-S3，24 个月质保涵盖的是手表主机主要功能故障。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "M23",
+          "section_path": "2.附件与除外责任",
+          "char_start": 207,
+          "char_end": 230,
+          "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 27,
+          "char_end": 97,
+          "text": "除法律另有规定、商品详情页或专项政策另有更具体规定外，星河优选销售的电子电器类及其他适用质保的商品，质量保证期限为自签收之日起 12 个月。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 4,
+        "n_correct": 0,
+        "n_incorrect": 4,
+        "precision": 0.0,
+        "n_gold_sentences": 3,
+        "n_gold_hit": 0,
+        "recall": 0.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P11",
+          "P10",
+          "P18",
+          "P07",
+          "M23",
+          "M03",
+          "M10",
+          "F05",
+          "F12",
+          "F11",
+          "F14",
+          "F13"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q076",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不在 24 个月延保范围内。**\n\n**依据简述：**\n1.  **明确除外责任**：针对星河手表 S3（SKU-HX-WATCH-S3）的专项规定明确指出，因进水、摔损、私拆造成的损坏不在该延保范围 [S13]。\n2.  **质保覆盖内容限制**：即使是 SKU-HX-WATCH-S3，其 24 个月质保涵盖的是手表主机主要功能故障 [S11]，而进水、摔损或私拆通常属于人为使用不当或外力损坏，不属于主要功能故障的自然保修范畴。\n3.  **质量问题定义排除**：通用政策规定，可申请退货退款、换货或维修的情形需为“非因消费者使用不当导致的性能故障” [S3]。进水、摔损和私拆均属于消费者使用不当或人为破坏，因此不符合质量问题的退换修条件。\n4.  **适用规则说明**：虽然存在更细范围的 SKU 专项条款（如 M23），但根据冲突排序口径，当问题涉及具体损坏原因时，应优先适用该 SKU 下的除外责任条款 [S15][S18]，而非仅看通用的质保期限时长。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 2250,
+        "output_tokens": 264,
+        "total_tokens": 2514
+      },
+      "citations": [
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "M23",
+          "section_path": "2.附件与除外责任",
+          "char_start": 230,
+          "char_end": 252,
+          "text": "因进水、摔损、私拆造成的损坏不在该延保范围。"
+        },
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "M23",
+          "section_path": "2.附件与除外责任",
+          "char_start": 165,
+          "char_end": 207,
+          "text": "即使是 SKU-HX-WATCH-S3，24 个月质保涵盖的是手表主机主要功能故障。"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "1.质量问题范围",
+          "char_start": 26,
+          "char_end": 86,
+          "text": "商品存在本平台总则所定义的质量问题，或在质保期内出现非因消费者使用不当导致的性能故障，消费者可申请退货退款、换货或维修。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "M23",
+          "section_path": "1.先核 SKU 再核期限",
+          "char_start": 50,
+          "char_end": 89,
+          "text": "仅 SKU-HX-WATCH-S3（星河手表 S3）适用 24 个月专项质保；"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "M03",
+          "section_path": "1.核对质保期限",
+          "char_start": 88,
+          "char_end": 138,
+          "text": "例如 SKU-HX-WATCH-S3 应核对其 24 个月专项规定，而不是直接套用通用 12 个月。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 5,
+        "n_correct": 0,
+        "n_incorrect": 5,
+        "precision": 0.0,
+        "n_gold_sentences": 3,
+        "n_gold_hit": 0,
+        "recall": 0.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": true,
+        "ok": false
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P02",
+          "P04",
+          "P07",
+          "M23",
+          "M03",
+          "M13",
+          "F05",
+          "F12",
+          "F02",
+          "F11",
+          "F13",
+          "F14"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q077",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不按通用 12 个月质保计算，而是按商品本身的保质期执行。**\n\n**依据：**\n根据平台售后政策中关于“不计入或缩短的情形”的规定，食品保质期短于 12 个月的，按其保质期执行，不适用通用的 12 个月期限 [S9]。虽然通用政策规定电子电器及其他适用质保的商品质量保证期限为自签收之日起 12 个月 [S13]，但上述针对食品的特定情形属于更具体的规则，覆盖了通用 12 个月的规定 [S9]。此外，预包装食品在保质期内发现质量问题的，仍按质量问题规则处理 [S24]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 2203,
+        "output_tokens": 138,
+        "total_tokens": 2341
+      },
+      "citations": [
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "2.不计入或缩短的情形",
+          "char_start": 133,
+          "char_end": 208,
+          "text": "下列情形不适用本文件第 1 条的 12 个月期限，或按商品说明执行更短期限：消耗性附件、一次性卫生用品、食品保质期短于 12 个月的，按其保质期执行。"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 27,
+          "char_end": 97,
+          "text": "除法律另有规定、商品详情页或专项政策另有更具体规定外，星河优选销售的电子电器类及其他适用质保的商品，质量保证期限为自签收之日起 12 个月。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "M08",
+          "section_path": "3.预包装食品",
+          "char_start": 204,
+          "char_end": 250,
+          "text": "预包装食品在保质期内发现质量问题的，仍按质量问题规则处理，不得因“已开封即不可退”一概拒绝。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 3,
+        "n_correct": 1,
+        "n_incorrect": 2,
+        "precision": 0.3333333333333333,
+        "n_gold_sentences": 1,
+        "n_gold_hit": 1,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P04",
+          "P10",
+          "P18",
+          "P07",
+          "M03",
+          "M23",
+          "M08",
+          "F05",
+          "F11",
+          "F01",
+          "F13",
+          "F14"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q078",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：应按 24 个月核对质保期限。**\n\n**依据说明：**\n1.  **适用 SKU 专项规定**：针对 `SKU-HX-WATCH-S3`（星河手表 S3），其质量保证期限为自签收之日起 24 个月 [S1]。该规定适用于 2025-06-01 当日及之后签收的订单 [S5][S14]。\n2.  **覆盖一般规则**：此 24 个月为 SKU 级专项规定，按冲突排序口径，它优先于并取代了平台《商品质量保证期限通则》中的通用 12 个月规定 [S2][S4][S15]。因此，不能按通用的 12 个月计算。\n3.  **维修前提**：在适用的 24 个月质保期限内，若经判断属于适合维修的质量问题（如主机主要功能故障，且非进水、摔损、私拆导致），商家或指定网点应提供维修服务 [S9][S11][S21]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 2000,
+        "output_tokens": 230,
+        "total_tokens": 2230
+      },
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 140,
+          "char_end": 177,
+          "text": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "4.生效日",
+          "char_start": 423,
+          "char_end": 478,
+          "text": "本政策自 2025-06-01 起生效，对该生效日当日及之后签收的 SKU-HX-WATCH-S3 订单适用。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 101,
+          "char_end": 180,
+          "text": "SKU-HX-WATCH-S3（星河手表 S3，品类：智能穿戴）的质量保证期限为自签收之日起 24 个月，适用于 2025-06-01 当日及之后签收的订单。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 177,
+          "char_end": 240,
+          "text": "该 24 个月规定覆盖（即在本 SKU 上优先于、并取代其适用位置上的）平台《商品质量保证期限通则》中的通用 12 个月规定。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 279,
+          "char_end": 332,
+          "text": "按冲突排序口径，范围比较时 SKU 级优先于通用，因此本 SKU 应适用 24 个月，而不是 12 个月。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 180,
+          "char_end": 246,
+          "text": "该 24 个月是 SKU 级专项规定，按冲突排序优先于通用 12 个月，因此本 SKU 应适用 24 个月，而不是通用 12 个月。"
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 345,
+          "char_end": 366,
+          "text": "24 个月质保涵盖手表主机的主要功能故障。"
+        },
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 389,
+          "char_end": 411,
+          "text": "因进水、摔损、私拆造成的损坏不在本延保范围。"
+        },
+        {
+          "sid": "S21",
+          "valid_evidence": true,
+          "doc_id": "P11",
+          "section_path": "1.维修适用",
+          "char_start": 24,
+          "char_end": 62,
+          "text": "在适用的质保期限内，经判断适合维修的质量问题，商家或指定网点应提供维修服务。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 9,
+        "n_correct": 0,
+        "n_incorrect": 9,
+        "precision": 0.0,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 0,
+        "recall": 0.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=SKU-HX-WATCH-S3，品类=（未指定）。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\nSKU 级规定优先于品类与通用，适用：P08《指定商品延保政策（SKU-HX-WATCH-S3）》（来源=政策，范围=sku：SKU-HX-WATCH-S3，生效日=2025-06-01）、F06《FAQ：星河手表 S3 的质保期限是多久？》（来源=FAQ，范围=sku：SKU-HX-WATCH-S3，生效日=2025-09-01）。\n因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。",
+      "by_scope_doc_ids": {
+        "sku": [
+          "P08",
+          "F06"
+        ],
+        "category": [],
+        "general": [
+          "P11",
+          "P04",
+          "P18",
+          "P07",
+          "P20",
+          "M03",
+          "M23",
+          "M01",
+          "M06",
+          "M12",
+          "F05",
+          "F11",
+          "F15"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q079",
+      "type": "single_hop",
+      "cluster": "refund_timing",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "不能。同一订单在同一时间只能有一笔进行中的退款 [S5]。\n\n依据如下：\n1. **通用规则限制**：政策明确规定，同一订单在同一时间只能有一笔进行中的退款；仅在上一笔退款完结、取消或被驳回后，才能再次发起 [S5][S6]。\n2. **部分退款同样受限**：即使申请的是仅退配件、运费或价差的部分退款，也受“同一订单只能有一笔进行中退款”的约束 [S3]。若已有待审核或处理中的退款，不得再开一笔部分退款，应等待前一笔完结、取消或被驳回 [S22][S23]。\n3. **系统强制约束**：系统与操作层面均须保证同一订单只能有一笔进行中的退款 [S24]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1538,
+        "output_tokens": 171,
+        "total_tokens": 1709
+      },
+      "citations": [
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "1.申请与审核",
+          "char_start": 40,
+          "char_end": 61,
+          "text": "同一订单在同一时间只能有一笔进行中的退款；"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "1.申请与审核",
+          "char_start": 61,
+          "char_end": 86,
+          "text": "仅在上一笔退款完结、取消或被驳回后，才能再次发起。"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "4.部分退款",
+          "char_start": 270,
+          "char_end": 313,
+          "text": "仅退配件、运费或价差的，可以做部分退款，但仍受“同一订单只能有一笔进行中退款”的约束。"
+        },
+        {
+          "sid": "S22",
+          "valid_evidence": true,
+          "doc_id": "M19",
+          "section_path": "2.一笔进行中约束",
+          "char_start": 88,
+          "char_end": 115,
+          "text": "部分退款同样受“同一订单只能有一笔进行中退款”的约束。"
+        },
+        {
+          "sid": "S23",
+          "valid_evidence": true,
+          "doc_id": "M19",
+          "section_path": "2.一笔进行中约束",
+          "char_start": 115,
+          "char_end": 156,
+          "text": "已有待审核或处理中的退款时，不得再开一笔部分退款，应等待前一笔完结、取消或被驳回。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "M02",
+          "section_path": "1.一笔进行中退款",
+          "char_start": 29,
+          "char_end": 54,
+          "text": "系统与操作均须保证同一订单只能有一笔进行中的退款。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 2,
+        "n_incorrect": 4,
+        "precision": 0.3333333333333333,
+        "n_gold_sentences": 4,
+        "n_gold_hit": 2,
+        "recall": 0.5,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P09",
+          "P04",
+          "P19",
+          "P18",
+          "P13",
+          "M19",
+          "M02",
+          "M06",
+          "M16",
+          "M24",
+          "M17",
+          "M10",
+          "M05",
+          "M18",
+          "M11",
+          "M25",
+          "F08",
+          "F12",
+          "F14",
+          "F04",
+          "F02",
+          "F15",
+          "F11",
+          "F03"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q080",
+      "type": "single_hop",
+      "cluster": "refund_timing",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "商家应在消费者提交退款申请后 48 小时内处理 [S1]。若超时未处理，平台可按规则介入或自动达成约定结果 [S2]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1626,
+        "output_tokens": 37,
+        "total_tokens": 1663
+      },
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "2.审核时限",
+          "char_start": 122,
+          "char_end": 146,
+          "text": "商家应在消费者提交退款申请后 48 小时内处理。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "2.审核时限",
+          "char_start": 146,
+          "char_end": 171,
+          "text": "超时未处理的，平台可按规则介入或自动达成约定结果。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 2,
+        "n_correct": 2,
+        "n_incorrect": 0,
+        "precision": 1.0,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 2,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P09",
+          "P02",
+          "P19",
+          "P10",
+          "P04",
+          "P13",
+          "P20",
+          "M24",
+          "M12",
+          "M06",
+          "M14",
+          "M25",
+          "M11",
+          "M19",
+          "M02",
+          "M08",
+          "M21",
+          "F08",
+          "F15",
+          "F01",
+          "F13",
+          "F03"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q081",
+      "type": "single_hop",
+      "cluster": "refund_timing",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "退款审核通过后，货款原则上在 1 至 3 个工作日内按原路退回 [S5]。若银行或支付渠道另有结算周期，实际到账时间以渠道为准，平台应告知消费者 [S6]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1611,
+        "output_tokens": 49,
+        "total_tokens": 1660
+      },
+      "citations": [
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "3.到账时效",
+          "char_start": 184,
+          "char_end": 223,
+          "text": "退款审核通过且满足退款条件后，货款原则上在 1 至 3 个工作日内按原路退回；"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "3.到账时效",
+          "char_start": 223,
+          "char_end": 257,
+          "text": "银行或支付渠道另有结算周期的，以渠道实际到账时间为准并应告知消费者。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 2,
+        "n_correct": 2,
+        "n_incorrect": 0,
+        "precision": 1.0,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 2,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P09",
+          "P02",
+          "P10",
+          "P18",
+          "P13",
+          "P20",
+          "M24",
+          "M02",
+          "M19",
+          "M06",
+          "M14",
+          "M08",
+          "M25",
+          "M16",
+          "M10",
+          "M12",
+          "M17",
+          "F08",
+          "F11",
+          "F03",
+          "F14"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q082",
+      "type": "multi_hop",
+      "cluster": "refund_timing",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不可以。** 在上一笔退款申请处于“待审核”（即进行中）状态时，消费者不能通过更换理由或等待次日的方式再次发起新的退款申请。必须等到当前这笔退款完结、取消或被驳回后，才能再次发起。\n\n**依据：**\n1. **唯一进行中的限制**：同一订单在同一时间只能有一笔进行中的退款 [S6]。\n2. **再次发起的条件**：仅在上一笔退款完结、取消或被驳回后，才能再次发起 [S7]。\n3. **理由与时间的无效性**：改变申请理由或申请日期并不作为允许再发起退款的依据 [S8]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1593,
+        "output_tokens": 141,
+        "total_tokens": 1734
+      },
+      "citations": [
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "1.申请与审核",
+          "char_start": 40,
+          "char_end": 61,
+          "text": "同一订单在同一时间只能有一笔进行中的退款；"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "1.申请与审核",
+          "char_start": 61,
+          "char_end": 86,
+          "text": "仅在上一笔退款完结、取消或被驳回后，才能再次发起。"
+        },
+        {
+          "sid": "S8",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "1.申请与审核",
+          "char_start": 86,
+          "char_end": 109,
+          "text": "理由和申请日期不作为是否允许再发起的唯一依据。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 3,
+        "n_correct": 3,
+        "n_incorrect": 0,
+        "precision": 1.0,
+        "n_gold_sentences": 7,
+        "n_gold_hit": 3,
+        "recall": 0.42857142857142855,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P09",
+          "P19",
+          "P04",
+          "P02",
+          "P10",
+          "P13",
+          "P20",
+          "M02",
+          "M19",
+          "M06",
+          "M01",
+          "M11",
+          "M24",
+          "M16",
+          "M03",
+          "M12",
+          "M04",
+          "M07",
+          "M25",
+          "F08",
+          "F12",
+          "F03",
+          "F14",
+          "F13",
+          "F15"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q083",
+      "type": "single_hop",
+      "cluster": "refund_timing",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：是的，受限制。**\n\n仅退配件、运费或价差的退款申请，虽然属于部分退款，但仍受“同一订单只能有一笔进行中退款”的约束 [S3]。这意味着，如果该订单当前已有一笔进行中的退款，您必须等待上一笔退款完结、取消或被驳回后，才能再次发起新的退款申请 [S5][S6]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1582,
+        "output_tokens": 83,
+        "total_tokens": 1665
+      },
+      "citations": [
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "4.部分退款",
+          "char_start": 270,
+          "char_end": 313,
+          "text": "仅退配件、运费或价差的，可以做部分退款，但仍受“同一订单只能有一笔进行中退款”的约束。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "1.申请与审核",
+          "char_start": 40,
+          "char_end": 61,
+          "text": "同一订单在同一时间只能有一笔进行中的退款；"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "1.申请与审核",
+          "char_start": 61,
+          "char_end": 86,
+          "text": "仅在上一笔退款完结、取消或被驳回后，才能再次发起。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 3,
+        "n_correct": 1,
+        "n_incorrect": 2,
+        "precision": 0.3333333333333333,
+        "n_gold_sentences": 1,
+        "n_gold_hit": 1,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P05",
+          "P09",
+          "P04",
+          "P19",
+          "P03",
+          "P02",
+          "P13",
+          "M19",
+          "M02",
+          "M16",
+          "M18",
+          "M06",
+          "M17",
+          "M11",
+          "M04",
+          "M07",
+          "M24",
+          "M09",
+          "F08",
+          "F03",
+          "F13",
+          "F04",
+          "F02"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q084",
+      "type": "multi_hop",
+      "cluster": "refund_timing",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n1. 商家超过 48 小时未处理退款申请，平台可按规则介入或自动达成约定结果。\n2. 退款成立后，货款原则上在 1 至 3 个工作日内按原路退回，并非“当日到账”。\n\n**依据简述：**\n*   **关于超时处理：** 商家应在消费者提交退款申请后 48 小时内处理 [S3]；若超时未处理，平台可按规则介入或自动达成约定结果 [S4]。\n*   **关于到账时效：** 退款审核通过且满足退款条件后，货款原则上在 1 至 3 个工作日内按原路退回 [S1]；若银行或支付渠道另有结算周期，以实际到账时间为准并应告知消费者 [S2]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1683,
+        "output_tokens": 170,
+        "total_tokens": 1853
+      },
+      "citations": [
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "2.审核时限",
+          "char_start": 122,
+          "char_end": 146,
+          "text": "商家应在消费者提交退款申请后 48 小时内处理。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "2.审核时限",
+          "char_start": 146,
+          "char_end": 171,
+          "text": "超时未处理的，平台可按规则介入或自动达成约定结果。"
+        },
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "3.到账时效",
+          "char_start": 184,
+          "char_end": 223,
+          "text": "退款审核通过且满足退款条件后，货款原则上在 1 至 3 个工作日内按原路退回；"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P09",
+          "section_path": "3.到账时效",
+          "char_start": 223,
+          "char_end": 257,
+          "text": "银行或支付渠道另有结算周期的，以渠道实际到账时间为准并应告知消费者。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 4,
+        "n_correct": 4,
+        "n_incorrect": 0,
+        "precision": 1.0,
+        "n_gold_sentences": 7,
+        "n_gold_hit": 4,
+        "recall": 0.5714285714285714,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P09",
+          "P10",
+          "P19",
+          "P04",
+          "P02",
+          "P20",
+          "M24",
+          "M19",
+          "M02",
+          "M16",
+          "M14",
+          "M12",
+          "M06",
+          "M11",
+          "M25",
+          "F08",
+          "F15",
+          "F14",
+          "F01",
+          "F12"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q085",
+      "type": "single_hop",
+      "cluster": "apparel",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n服装鞋帽按七天无理由退货时，商品须满足以下完好标准：吊牌完整、未经水洗或穿着出门、鞋底无使用磨损 [S1]。试穿导致的轻微整理不影响完好认定，但明显穿着痕迹除外 [S2]。\n\n**依据说明：**\n1.  **适用规则优先级**：由于问题涉及“服装鞋帽”品类，根据冲突解析结论，品类级政策《服装鞋帽品类专项规定》（P17）优先于通用规定（如 P02），因此作答依据以 P17 为准 [S5][S6]。FAQ（F10）虽内容一致，但其来源优先级低于政策，且明确声明以 P17 为准 [S11][S12]。\n2.  **具体标准**：\n    *   **核心要求**：在通用七天无理由时限内，必须保证吊牌完整、未经水洗或穿着出门、鞋底无使用磨损 [S1]。\n    *   **例外情形**：仅因试穿产生的轻微整理痕迹是被允许的，不构成影响二次销售的瑕疵；但若存在明显的穿着痕迹，则不符合完好标准 [S2]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1727,
+        "output_tokens": 248,
+        "total_tokens": 1975
+      },
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P17",
+          "section_path": "2.无理由退货完好标准",
+          "char_start": 72,
+          "char_end": 123,
+          "text": "在通用七天无理由时限内，服装鞋帽须吊牌完整、未经水洗或穿着出门、鞋底无使用磨损，方可按无理由退货办理。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P17",
+          "section_path": "2.无理由退货完好标准",
+          "char_start": 123,
+          "char_end": 150,
+          "text": "试穿导致的轻微整理不影响完好认定，但明显穿着痕迹除外。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P17",
+          "section_path": "1.适用范围",
+          "char_start": 25,
+          "char_end": 44,
+          "text": "本规定适用于类目为“服装鞋帽”的商品。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P17",
+          "section_path": "1.适用范围",
+          "char_start": 44,
+          "char_end": 54,
+          "text": "本文件为品类级政策。"
+        },
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "F10",
+          "section_path": "3.说明",
+          "char_start": 223,
+          "char_end": 239,
+          "text": "以《服装鞋帽品类专项规定》为准。"
+        },
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "F10",
+          "section_path": "3.说明",
+          "char_start": 239,
+          "char_end": 267,
+          "text": "本 FAQ 是对品类规则的通俗转述，来源优先级低于政策。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 2,
+        "n_incorrect": 4,
+        "precision": 0.3333333333333333,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 2,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=（未指定），品类=服装鞋帽。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n品类级规定优先于通用，适用：P17《服装鞋帽品类专项规定》（来源=政策，范围=品类：服装鞋帽，生效日=2025-04-01）、F10《FAQ：衣服或鞋子尺码不合适可以换吗？》（来源=FAQ，范围=品类：服装鞋帽，生效日=2025-09-01）。\n因此本品类专项覆盖（优先于并取代其适用位置上的）通用规定，作答须采用专类结论并说明依据，不得用通用规则替代或缩减专项时限。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [
+          "P17",
+          "F10"
+        ],
+        "general": [
+          "P02",
+          "P10",
+          "P03",
+          "P19",
+          "P12",
+          "M09",
+          "M17",
+          "M05",
+          "M16",
+          "M14",
+          "M08",
+          "M15",
+          "F02",
+          "F01",
+          "F12",
+          "F13",
+          "F08",
+          "F03"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q086",
+      "type": "multi_hop",
+      "cluster": "apparel",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n1.  **能否免费换一次：** 可以。在签收之日起 7 日内，若商品完好（未水洗、无破损），可申请一次免费换货 [S14]。\n2.  **运费谁出：** 该次尺码换货的往返运费由商家承担 [S14]。\n3.  **是否延长七天无理由时限：** 不会。该便利措施不延长七天无理由退货的 7 日时限 [S15][S2]。\n\n**依据简述：**\n*   **关于换货资格与运费：** 根据品类专项规定，因尺码不合适且商品完好的，可在签收之日起 7 日内申请一次免费换货，换货往返运费由商家承担 [S14]。此规则覆盖了通用的“无理由退货运费由消费者承担”的规则 [S5]，因为这是针对尺码问题的特定便利政策 [S18]。\n*   **关于时限：** 会员身份或此类便利服务均不改变七天无理由的 7 日时限 [S2]。手册明确指出，该尺码换货便利不延长七天无理由时限 [S15]，且时限计算仍按通用总则执行，不得创设新的时限 [S21][S22]。\n*   **关于商品状态要求：** 已水洗或已破损的商品不适用此免费换货政策 [S15]，需核验吊牌与水洗情况 [S17]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1796,
+        "output_tokens": 311,
+        "total_tokens": 2107
+      },
+      "citations": [
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "M09",
+          "section_path": "2.尺码换货",
+          "char_start": 114,
+          "char_end": 162,
+          "text": "因尺码不合适且商品完好的，可在签收之日起 7 日内申请一次免费换货，换货往返运费由商家承担一次。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "M09",
+          "section_path": "2.尺码换货",
+          "char_start": 162,
+          "char_end": 197,
+          "text": "须告知消费者：该便利不延长七天无理由时限，已水洗或已破损的商品不适用。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P14",
+          "section_path": "2.增值服务内容",
+          "char_start": 153,
+          "char_end": 192,
+          "text": "会员身份不改变七天无理由 7 日时限，也不使定制类商品因此变得可以无理由退货。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "2.七天无理由退货的运费",
+          "char_start": 135,
+          "char_end": 185,
+          "text": "仅在七天无理由退货依法成立、且商品属于支持七天无理由的范围时，适用本条：消费者承担将商品寄回的运费；"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "M05",
+          "section_path": "3.食品生鲜与服装",
+          "char_start": 277,
+          "char_end": 296,
+          "text": "尺码问题可按品类规定提供一次免费换货。"
+        },
+        {
+          "sid": "S21",
+          "valid_evidence": true,
+          "doc_id": "M09",
+          "section_path": "3.与通用规则的关系",
+          "char_start": 214,
+          "char_end": 232,
+          "text": "时限计算仍按《七天无理由退货总则》。"
+        },
+        {
+          "sid": "S22",
+          "valid_evidence": true,
+          "doc_id": "M09",
+          "section_path": "3.与通用规则的关系",
+          "char_start": 232,
+          "char_end": 267,
+          "text": "本手册只落实品类专项中的完好标准与一次免费换货操作，不得创设新的时限。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "M05",
+          "section_path": "3.食品生鲜与服装",
+          "char_start": 263,
+          "char_end": 277,
+          "text": "服装鞋帽核验吊牌与水洗情况；"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 8,
+        "n_correct": 2,
+        "n_incorrect": 6,
+        "precision": 0.25,
+        "n_gold_sentences": 4,
+        "n_gold_hit": 2,
+        "recall": 0.5,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P10",
+          "P19",
+          "P03",
+          "M09",
+          "M05",
+          "M14",
+          "M04",
+          "M15",
+          "M11",
+          "M07",
+          "M17",
+          "F13",
+          "F02",
+          "F03",
+          "F12",
+          "F01",
+          "F04",
+          "F14",
+          "F08"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q087",
+      "type": "single_hop",
+      "cluster": "apparel",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不能。** 衣服已经下水洗过，不符合“商品完好”的标准，因此无法按尺码不合适申请那一次免费换货。\n\n**依据：**\n1. 根据通用政策，因尺码不合适申请的一次免费换货便利，明确要求商品必须处于“完好”状态 [S22]。\n2. 政策特别指出，该便利不延长七天无理由时限，且**已水洗**或已破损的商品不适用此条款 [S23]。\n3. 此外，无理由换货（含此类基于尺码的便利换货）须满足七天无理由的时限和完好标准；若条件不成立，不得按无理由换货办理 [S6][S7]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1708,
+        "output_tokens": 149,
+        "total_tokens": 1857
+      },
+      "citations": [
+        {
+          "sid": "S22",
+          "valid_evidence": true,
+          "doc_id": "M09",
+          "section_path": "2.尺码换货",
+          "char_start": 114,
+          "char_end": 162,
+          "text": "因尺码不合适且商品完好的，可在签收之日起 7 日内申请一次免费换货，换货往返运费由商家承担一次。"
+        },
+        {
+          "sid": "S23",
+          "valid_evidence": true,
+          "doc_id": "M09",
+          "section_path": "2.尺码换货",
+          "char_start": 162,
+          "char_end": 197,
+          "text": "须告知消费者：该便利不延长七天无理由时限，已水洗或已破损的商品不适用。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P10",
+          "section_path": "2.换货时限",
+          "char_start": 123,
+          "char_end": 145,
+          "text": "无理由换货须满足七天无理由的时限和完好标准；"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P10",
+          "section_path": "2.换货时限",
+          "char_start": 145,
+          "char_end": 164,
+          "text": "无理由不成立的，不得按无理由换货办理。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 4,
+        "n_correct": 0,
+        "n_incorrect": 4,
+        "precision": 0.0,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 0,
+        "recall": 0.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P10",
+          "P03",
+          "P04",
+          "P19",
+          "M09",
+          "M05",
+          "M14",
+          "M20",
+          "M15",
+          "M16",
+          "M17",
+          "M11",
+          "M07",
+          "M08",
+          "F02",
+          "F12",
+          "F13",
+          "F03",
+          "F14",
+          "F01",
+          "F11"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q088",
+      "type": "single_hop",
+      "cluster": "apparel",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n若仅为试穿整理且无“明显穿着痕迹”，通常可认定为商品完好；但最终判定以收货后的质检结果为准。\n\n**依据简述：**\n1.  **完好标准定义**：申请七天无理由退货要求商品完好，不影响二次销售 [S1]。完好通常指无使用痕迹、无损坏、无污染，且配件包装齐全 [S2]。\n2.  **试穿与整理的界定**：根据售后手册核验标准，试穿导致的轻微整理不影响完好认定，但存在明显穿着痕迹的除外 [S17]。对于服装鞋帽类，需核验是否未经水洗或穿着出门、鞋底有无磨损等 [S16]。\n3.  **最终判定权**：商品完好的具体判断，最终以商家收货后的质检结果为准 [S3]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1729,
+        "output_tokens": 175,
+        "total_tokens": 1904
+      },
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 328,
+          "char_end": 354,
+          "text": "申请七天无理由退货的，商品应当完好，不影响二次销售。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 354,
+          "char_end": 412,
+          "text": "完好通常指：商品本体、配件、赠品、包装、吊牌、序列号及附带的发票或电子凭证可一并退回，且无使用痕迹、无损坏、无污染。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "M09",
+          "section_path": "1.完好标准核验",
+          "char_start": 74,
+          "char_end": 101,
+          "text": "试穿导致的轻微整理不影响完好认定，但明显穿着痕迹除外。"
+        },
+        {
+          "sid": "S16",
+          "valid_evidence": true,
+          "doc_id": "M09",
+          "section_path": "1.完好标准核验",
+          "char_start": 27,
+          "char_end": 74,
+          "text": "服装鞋帽按七天无理由退货办理前，须核验吊牌是否完整、是否未经水洗或穿着出门、鞋底有无使用磨损。"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 412,
+          "char_end": 434,
+          "text": "商品完好的具体判断，以收货后的质检结果为准。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 5,
+        "n_correct": 0,
+        "n_incorrect": 5,
+        "precision": 0.0,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 0,
+        "recall": 0.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P02",
+          "P03",
+          "P19",
+          "P10",
+          "P04",
+          "P18",
+          "P13",
+          "M09",
+          "M16",
+          "M17",
+          "M22",
+          "M03",
+          "M11",
+          "M14",
+          "M13",
+          "M10",
+          "M05",
+          "M20",
+          "F13",
+          "F02",
+          "F14",
+          "F11",
+          "F03",
+          "F01",
+          "F04",
+          "F05",
+          "F12"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q089",
+      "type": "single_hop",
+      "cluster": "presale",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n消费者可以取消订单，并要求退回定金和尾款。\n\n**依据：**\n根据预售订单相关条款，商家迟延发货超过约定且无法协商新的交付时间的，消费者可以取消订单并要求退回定金和尾款 [S23]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1499,
+        "output_tokens": 55,
+        "total_tokens": 1554
+      },
+      "citations": [
+        {
+          "sid": "S23",
+          "valid_evidence": true,
+          "doc_id": "P18",
+          "section_path": "1.预售订单",
+          "char_start": 45,
+          "char_end": 88,
+          "text": "商家迟延发货超过约定且无法协商新的交付时间的，消费者可以取消订单并要求退回定金和尾款。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 1,
+        "n_correct": 1,
+        "n_incorrect": 0,
+        "precision": 1.0,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 1,
+        "recall": 0.5,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P11",
+          "P19",
+          "P02",
+          "P04",
+          "P09",
+          "P10",
+          "P18",
+          "P12",
+          "P07",
+          "P20",
+          "P01",
+          "M10",
+          "M17",
+          "M12",
+          "M02",
+          "M16",
+          "M13",
+          "M11",
+          "M24",
+          "M06",
+          "F14",
+          "F15",
+          "F13",
+          "F08"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q090",
+      "type": "multi_hop",
+      "cluster": "presale",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n预售商品尾款支付并实际签收后，售后时限从**签收当日**开始计算 [S6]。只要仍在签收之日起 7 日内，且商品不属于定制类等不适用情形，**可以**申请七天无理由退货 [S5][S19]；若已超过 7 日，则不能按无理由退货办理 [S9]。\n\n**依据简述：**\n1. **起算时间**：根据政策，消费者应当在签收之日起 7 日内提出七天无理由退货申请，起算日为签收当日 [S5][S6]。对于预售订单，尾款支付并实际签收后，售后时限仍按签收时间起算，适用七天无理由规则，不得再按“预售未完成”处理 [S19][S24]。\n2. **期限计算**：7 日期间含第 7 日，消费者最迟应在第 7 日 24:00 前在平台提交退货申请 [S7][S8]。时限是否届满以系统记录为准 [S11]。\n3. **例外情况**：如果商品属于定制类（如详情页标明“定制”或下单时有指定图案、刻字等），即使未过 7 天也不支持七天无理由退货 [S12][S14]。此外，会员权益不延长七天无理由的 7 日时限 [S2]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1827,
+        "output_tokens": 299,
+        "total_tokens": 2126
+      },
+      "citations": [
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 147,
+          "char_end": 159,
+          "text": "1. 起算日为签收当日。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 108,
+          "char_end": 145,
+          "text": "消费者应当在签收之日起 7 日内提出七天无理由退货申请，期限计算方式如下："
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "P18",
+          "section_path": "3.尾款支付后的售后",
+          "char_start": 185,
+          "char_end": 227,
+          "text": "尾款支付并实际签收后，售后时限仍按签收时间起算，适用七天无理由、质保和品类专项规则。"
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 206,
+          "char_end": 238,
+          "text": "3. 超过上述 7 日期限的，不得再依据七天无理由规则办理退货。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "M10",
+          "section_path": "3.签收后的售后",
+          "char_start": 199,
+          "char_end": 257,
+          "text": "尾款已支付并实际签收的，售后时限按签收时间起算，分别适用七天无理由、质保和品类专项规则，不得再按“预售未完成”处理。"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 160,
+          "char_end": 175,
+          "text": "2. 7 日期间含第 7 日；"
+        },
+        {
+          "sid": "S8",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 175,
+          "char_end": 205,
+          "text": "消费者最迟应在第 7 日 24:00 前在平台提交退货申请。"
+        },
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 270,
+          "char_end": 313,
+          "text": "4. 时限是否届满，以申请提交成功的系统时间与签收时间比较为准，不以客服口头承诺替代。"
+        },
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 26,
+          "char_end": 42,
+          "text": "定制类商品不支持七天无理由退货。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 99,
+          "char_end": 148,
+          "text": "定制类商品的认定，以商品详情页标明“定制”或下单时存在消费者指定的图案、尺寸、刻字、专项配置为准。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P14",
+          "section_path": "2.增值服务内容",
+          "char_start": 153,
+          "char_end": 192,
+          "text": "会员身份不改变七天无理由 7 日时限，也不使定制类商品因此变得可以无理由退货。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 11,
+        "n_correct": 2,
+        "n_incorrect": 9,
+        "precision": 0.18181818181818182,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 2,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": true,
+        "ok": false
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P02",
+          "P03",
+          "P04",
+          "P19",
+          "P18",
+          "P12",
+          "M10",
+          "M01",
+          "M13",
+          "M02",
+          "M16",
+          "M05",
+          "M07",
+          "M15",
+          "M09",
+          "M08",
+          "F01",
+          "F14",
+          "F12",
+          "F02",
+          "F13",
+          "F08"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q091",
+      "type": "single_hop",
+      "cluster": "presale",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：应当退回。**\n\n依据平台政策，若商品详情页明确将“定金”表述为“订金”且注明可退，则在取消预售订单时，商家应予以退回 [S11]。处理此类争议时，需首先核对详情页对定金的文字表述，确认其是否具备“订金”及“可退”的属性 [S18]。只要页面明确约定为可退的订金性质，取消订单时就应当执行退款操作 [S19]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1648,
+        "output_tokens": 106,
+        "total_tokens": 1754
+      },
+      "citations": [
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "P18",
+          "section_path": "2.定金",
+          "char_start": 99,
+          "char_end": 122,
+          "text": "若详情页明确定金为订金且可退，则取消时应退回。"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "M10",
+          "section_path": "2.定金核对",
+          "char_start": 104,
+          "char_end": 123,
+          "text": "处理取消时，先核对详情页对定金的表述。"
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "M10",
+          "section_path": "2.定金核对",
+          "char_start": 123,
+          "char_end": 144,
+          "text": "若页面明确定金为订金且可退，取消时应退回。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 3,
+        "n_correct": 1,
+        "n_incorrect": 2,
+        "precision": 0.3333333333333333,
+        "n_gold_sentences": 3,
+        "n_gold_hit": 1,
+        "recall": 0.3333333333333333,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P03",
+          "P09",
+          "P18",
+          "P13",
+          "M10",
+          "M08",
+          "M19",
+          "M06",
+          "M02",
+          "M04",
+          "M05",
+          "M01",
+          "M03",
+          "M16",
+          "M17",
+          "F14",
+          "F12",
+          "F04",
+          "F02",
+          "F01",
+          "F13",
+          "F03",
+          "F08",
+          "F11"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q092",
+      "type": "single_hop",
+      "cluster": "invoice",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：商家不能仅因您只有电子发票、没有纸质发票而拒绝质保期内的合理售后。**\n\n**依据：**\n根据平台保修凭证相关规定，电子订单、支付记录与电子发票均可作为有效的保修凭证 [S20]。政策明确指出，商家不得仅因消费者无法提供纸质发票而拒绝质保期内的合理售后申请 [S20]。此外，在商品质量保证期限内，消费者可就质量问题提出售后申请 [S4]，若存在非因使用不当导致的性能故障，可申请退货退款、换货或维修 [S9]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1629,
+        "output_tokens": 120,
+        "total_tokens": 1749
+      },
+      "citations": [
+        {
+          "sid": "S20",
+          "valid_evidence": true,
+          "doc_id": "P13",
+          "section_path": "2.保修凭证",
+          "char_start": 86,
+          "char_end": 138,
+          "text": "电子订单、支付记录与电子发票可作为保修凭证，商家不得仅因消费者无法提供纸质发票而拒绝质保期内的合理售后。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 108,
+          "char_end": 135,
+          "text": "在商品质量保证期限内，消费者可就质量问题提出售后申请。"
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "1.质量问题范围",
+          "char_start": 26,
+          "char_end": 86,
+          "text": "商品存在本平台总则所定义的质量问题，或在质保期内出现非因消费者使用不当导致的性能故障，消费者可申请退货退款、换货或维修。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 3,
+        "n_correct": 1,
+        "n_incorrect": 2,
+        "precision": 0.3333333333333333,
+        "n_gold_sentences": 1,
+        "n_gold_hit": 1,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P11",
+          "P04",
+          "P02",
+          "P19",
+          "P10",
+          "P18",
+          "P13",
+          "P07",
+          "P20",
+          "M06",
+          "M22",
+          "M17",
+          "M03",
+          "M12",
+          "M10",
+          "M08",
+          "F11",
+          "F05",
+          "F14",
+          "F12",
+          "F13",
+          "F15"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q093",
+      "type": "single_hop",
+      "cluster": "invoice",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n当前提供的适用政策条款中，未包含关于“退货退款完成后原发票如何处理”的具体规定。因此无法直接依据现有语料给出明确的操作指引（如是否需要退回纸质发票、电子发票是否自动作废等）。建议联系人工客服或查看订单详情页的售后说明以获取针对该订单的具体发票处理要求。\n\n**依据简述：**\n1.  **发票申请规则有限**：现有证据仅说明了消费者可以申请电子普通发票或增值税发票 [S24]，但未涉及退货后发票的冲红、作废或退回流程。\n2.  **商品完好标准提及发票**：在七天无理由退货的商品完好标准中，提到“附带的发票或电子凭证可一并退回” [S4]，但这主要作为判断商品是否影响二次销售的条件之一，并未明确规定退款完成后发票的最终处理方式（例如是必须物理退回还是系统自动处理）。\n3.  **无专项条款覆盖**：冲突解析显示未匹配到 SKU 或品类专项条款，且检索到的其他文档（如 P15, F07 等）因范围不符或为噪声已被排除，不得作为依据。\n\n鉴于语料未收录具体的发票后续处理政策，为避免误导，建议您通过星河优选官方客服渠道咨询具体操作。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1587,
+        "output_tokens": 267,
+        "total_tokens": 1854
+      },
+      "citations": [
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "P13",
+          "section_path": "1.发票",
+          "char_start": 23,
+          "char_end": 52,
+          "text": "消费者可以在订单中申请电子普通发票或按规定申请增值税发票。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 354,
+          "char_end": 412,
+          "text": "完好通常指：商品本体、配件、赠品、包装、吊牌、序列号及附带的发票或电子凭证可一并退回，且无使用痕迹、无损坏、无污染。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 2,
+        "n_correct": 1,
+        "n_incorrect": 1,
+        "precision": 0.5,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 1,
+        "recall": 0.5,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": true,
+        "ok": false
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P05",
+          "P02",
+          "P04",
+          "P19",
+          "P09",
+          "P13",
+          "M06",
+          "M22",
+          "M24",
+          "M17",
+          "M10",
+          "M19",
+          "M02",
+          "M11",
+          "M18",
+          "M04",
+          "F11",
+          "F03",
+          "F08",
+          "F02"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q094",
+      "type": "multi_hop",
+      "cluster": "invoice",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n电子订单、支付记录与电子发票均可作为保修凭证；客服不得仅因消费者无法提供纸质发票而拒绝质保期内的合理售后，也不能额外强制要求必须提供纸质发票。\n\n**依据简述：**\n1.  **关于保修凭证的有效性：** 政策明确规定，电子订单、支付记录与电子发票可作为保修凭证 [S13]。手册也指出，只要订单与支付记录可核验，电子订单、支付记录与电子发票均可作为保修凭证 [S20]。\n2.  **关于禁止强制要求纸质发票：** 政策规定商家不得仅因消费者无法提供纸质发票而拒绝质保期内的合理售后 [S13]。手册进一步强调，消费者无法提供纸质发票的，只要订单与支付记录可核验，不得仅以此为由拒绝质保期内的合理售后 [S21]，且序列号核验通过后，不得再额外要求仅承认纸质发票 [S19]。\n3.  **规则优先级说明：** 虽然存在操作手册（M06），但手册明确声明其仅指导凭证核验操作，若与政策表述不一致，以《发票、凭证与保修资质》政策为准 [S22][S23][S24]。因此，上述基于政策条款 [S13] 及符合政策精神的手册条款 [S20][S21][S19] 的结论具有最终效力。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1598,
+        "output_tokens": 301,
+        "total_tokens": 1899
+      },
+      "citations": [
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P13",
+          "section_path": "2.保修凭证",
+          "char_start": 86,
+          "char_end": 138,
+          "text": "电子订单、支付记录与电子发票可作为保修凭证，商家不得仅因消费者无法提供纸质发票而拒绝质保期内的合理售后。"
+        },
+        {
+          "sid": "S20",
+          "valid_evidence": true,
+          "doc_id": "M06",
+          "section_path": "2.保修凭证核对",
+          "char_start": 117,
+          "char_end": 140,
+          "text": "电子订单、支付记录与电子发票均可作为保修凭证。"
+        },
+        {
+          "sid": "S21",
+          "valid_evidence": true,
+          "doc_id": "M06",
+          "section_path": "2.保修凭证核对",
+          "char_start": 140,
+          "char_end": 185,
+          "text": "消费者无法提供纸质发票的，只要订单与支付记录可核验，不得仅以此为由拒绝质保期内的合理售后。"
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "M22",
+          "section_path": "3.与保修的关系",
+          "char_start": 158,
+          "char_end": 205,
+          "text": "序列号核验通过后，保修凭证仍可使用电子订单、支付记录与电子发票，不得再额外要求仅承认纸质发票。"
+        },
+        {
+          "sid": "S22",
+          "valid_evidence": true,
+          "doc_id": "M06",
+          "section_path": "3.与政策的关系",
+          "char_start": 200,
+          "char_end": 213,
+          "text": "本手册仅指导凭证核验操作。"
+        },
+        {
+          "sid": "S23",
+          "valid_evidence": true,
+          "doc_id": "M06",
+          "section_path": "3.与政策的关系",
+          "char_start": 213,
+          "char_end": 245,
+          "text": "发票种类、红冲及保修凭证效力以《发票、凭证与保修资质》政策为准；"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "M06",
+          "section_path": "3.与政策的关系",
+          "char_start": 245,
+          "char_end": 261,
+          "text": "若与本手册表述不一致，政策优先。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 7,
+        "n_correct": 4,
+        "n_incorrect": 3,
+        "precision": 0.5714285714285714,
+        "n_gold_sentences": 4,
+        "n_gold_hit": 4,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P11",
+          "P04",
+          "P02",
+          "P18",
+          "P13",
+          "P07",
+          "M22",
+          "M06",
+          "M17",
+          "M20",
+          "M16",
+          "M03",
+          "M05",
+          "M18",
+          "M07",
+          "M15",
+          "M12",
+          "M13",
+          "M01",
+          "F11",
+          "F05",
+          "F13",
+          "F14",
+          "F12",
+          "F01",
+          "F02",
+          "F15"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q095",
+      "type": "single_hop",
+      "cluster": "invoice",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n需要核验序列号的商品，售后时以**商品本体序列号与订单记载是否一致**为准；商家**不得**在售后阶段擅自变更序列号归属。\n\n**依据简述：**\n1.  **核验标准**：根据通用政策条款，对于需要核验序列号的商品，判定的核心依据是实物序列号与订单记录的一致性 [S17]。\n2.  **商家限制**：政策明确禁止商家在售后处理过程中单方面修改或变更序列号的归属关系 [S18]。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1670,
+        "output_tokens": 114,
+        "total_tokens": 1784
+      },
+      "citations": [
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "P13",
+          "section_path": "3.序列号",
+          "char_start": 150,
+          "char_end": 181,
+          "text": "需要核验序列号的商品，以商品本体序列号与订单记载是否一致为准。"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "P13",
+          "section_path": "3.序列号",
+          "char_start": 181,
+          "char_end": 200,
+          "text": "商家不得在售后阶段擅自变更序列号归属。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 2,
+        "n_correct": 2,
+        "n_incorrect": 0,
+        "precision": 1.0,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 2,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P02",
+          "P04",
+          "P18",
+          "P13",
+          "P07",
+          "P20",
+          "M22",
+          "M03",
+          "M10",
+          "M06",
+          "M17",
+          "M12",
+          "M07",
+          "M20",
+          "M05",
+          "M19",
+          "M23",
+          "F11",
+          "F14",
+          "F03",
+          "F08",
+          "F13",
+          "F15",
+          "F02",
+          "F12"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q096",
+      "type": "refusal",
+      "cluster": "refusal_test",
+      "should_refuse": true,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：当前提供的政策条款未涵盖海外直邮的关税、清关手续费承担方及滞关处理规则，无法直接回答该问题。建议转人工客服或查阅跨境购物专项协议。**\n\n**依据说明：**\n1.  **适用范围不符**：您询问的是“海外直邮”、“关税”和“清关手续费”，这属于跨境贸易及税务范畴。而本轮提供的适用证据句（[S1]-[S24]）主要涉及国内电商场景下的“七天无理由退货”、“质量问题退换货”、“运费险理赔”以及“定金/尾款售后”等通用售后与运费规则 [S1][S5][S14]。\n2.  **无相关条款**：在提供的证据中，没有任何条款提及“关税”、“清关”、“海关”或“海外直邮”的费用承担方式或异常处理流程。根据指令，若适用条款无法覆盖用户问题（如跨境关税等语料未收录事项），必须明确拒答，不得编造政策。\n3.  **排除干扰项**：虽然检索到部分文档被标记为排除（如 N03, F09 等），但即便这些文档存在，其内容也未显示包含跨境关税信息，且已被系统判定为噪声或范围不匹配，不得作为依据。\n\n因此，针对海外直邮的关税及清关问题，请通过星河优选官方客服渠道咨询具体的跨境服务协议。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1624,
+        "output_tokens": 301,
+        "total_tokens": 1925
+      },
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P06",
+          "section_path": "2.理赔范围",
+          "char_start": 96,
+          "char_end": 140,
+          "text": "运费险主要用于七天无理由退货成立时，对消费者寄回商品产生的合理运费给予约定额度内的赔付。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "M04",
+          "section_path": "1.判责顺序",
+          "char_start": 47,
+          "char_end": 62,
+          "text": "质量问题退货：运费由商家承担。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "1.质量问题导致的退换货",
+          "char_start": 30,
+          "char_end": 64,
+          "text": "因质量问题办理退货或换货的，退回运费及必要的再次发货运费由商家承担。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "P18",
+          "section_path": "3.尾款支付后的售后",
+          "char_start": 185,
+          "char_end": 227,
+          "text": "尾款支付并实际签收后，售后时限仍按签收时间起算，适用七天无理由、质保和品类专项规则。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 4,
+        "n_correct": 0,
+        "n_incorrect": 4,
+        "precision": 0.0,
+        "n_gold_sentences": 0,
+        "n_gold_hit": 0,
+        "recall": null,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": true,
+        "answer_looks_like_refusal": true,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P06",
+          "P05",
+          "P03",
+          "P19",
+          "P04",
+          "P18",
+          "P12",
+          "M14",
+          "M04",
+          "M11",
+          "M05",
+          "M13",
+          "M18",
+          "M20",
+          "M10",
+          "M03",
+          "M12",
+          "F03",
+          "F04",
+          "F14",
+          "F13",
+          "F15",
+          "F02",
+          "F11"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q097",
+      "type": "refusal",
+      "cluster": "refusal_test",
+      "should_refuse": true,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：无法回答。**\n\n**依据说明：**\n您咨询的“以旧换新旧机回收补贴计算方式”以及“是否影响退货金额”属于语料库中未收录的事项。当前提供的适用政策条款仅涵盖七天无理由退货时限、商品完好标准、质量问题退换货及运费险理赔规则，不包含以旧换新业务的具体补贴算法或财务抵扣逻辑 [S1]-[S24]。\n\n建议您联系星河优选官方客服或查阅以旧换新活动页面的具体协议条款，以获取准确的补贴计算规则和退款金额明细。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1752,
+        "output_tokens": 116,
+        "total_tokens": 1868
+      },
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P06",
+          "section_path": "3.理赔条件",
+          "char_start": 198,
+          "char_end": 249,
+          "text": "申请理赔须同时满足：订单已购买运费险、退货申请已被系统接受、寄回运单真实有效、理赔金额不超过约定上限。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "M17",
+          "section_path": "2.质量问题退货",
+          "char_start": 127,
+          "char_end": 157,
+          "text": "因质量问题退货的，应退回商品本体及与质量问题认定相关的配件；"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 2,
+        "n_correct": 0,
+        "n_incorrect": 2,
+        "precision": 0.0,
+        "n_gold_sentences": 0,
+        "n_gold_hit": 0,
+        "recall": null,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": true,
+        "answer_looks_like_refusal": true,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P06",
+          "P05",
+          "P04",
+          "P02",
+          "P09",
+          "P10",
+          "M17",
+          "M19",
+          "M09",
+          "M20",
+          "M05",
+          "M01",
+          "M03",
+          "M10",
+          "M08",
+          "M06",
+          "M04",
+          "F03",
+          "F11",
+          "F04",
+          "F13",
+          "F12",
+          "F05",
+          "F02"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q098",
+      "type": "refusal",
+      "cluster": "refusal_test",
+      "should_refuse": true,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "抱歉，当前提供的售后政策条款中未包含入驻商家货款结算周期的相关规定。该问题属于商家结算或财务政策范畴，不在本助手依据的售后规则覆盖范围内。建议您联系星河优选商家后台客服或查阅《商家合作协议》及平台财务结算指引以获取准确信息。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1536,
+        "output_tokens": 60,
+        "total_tokens": 1596
+      },
+      "citations": [],
+      "citation_score": {
+        "n_cited": 0,
+        "n_correct": 0,
+        "n_incorrect": 0,
+        "precision": null,
+        "n_gold_sentences": 0,
+        "n_gold_hit": 0,
+        "recall": null,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": true,
+        "answer_looks_like_refusal": true,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P09",
+          "P19",
+          "P02",
+          "P10",
+          "P18",
+          "P13",
+          "P07",
+          "P20",
+          "P01",
+          "M24",
+          "M19",
+          "M02",
+          "M25",
+          "M03",
+          "M12",
+          "M20",
+          "M10",
+          "M14",
+          "M11",
+          "F08",
+          "F15",
+          "F03",
+          "F12",
+          "F14",
+          "F13"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q099",
+      "type": "refusal",
+      "cluster": "refusal_test",
+      "should_refuse": true,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "结论：无法回答。星河优选当前的售后政策语料中未收录“官方召回名单”查询方法或“批次召回”相关条款，因此无法告知您如何查询序列号是否受特定批次召回影响。\n\n依据：\n1. 提供的适用证据句仅涵盖会员身份、维修适用、商品完好标准、处理方式选择、部分退款、序列号核验一致性（如[S12]、[S17]）、手机数码激活状态对七天无理由的影响（如[S19]-[S21]）以及保修凭证使用（如[S22]）。\n2. 没有任何一条证据句涉及“产品召回”、“批次缺陷”或“官方召回名单查询渠道”。\n3. 根据指令要求，若适用条款无法覆盖用户问题（例如...批次召回名单...等语料未收录事项），必须明确拒答或建议转人工/对应渠道，不得编造政策。\n\n建议：\n请您联系星河优选官方客服或访问品牌官方网站的“服务支持/召回公告”栏目进行查询，以获取关于特定批次手机召回的最新官方信息。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1893,
+        "output_tokens": 229,
+        "total_tokens": 2122
+      },
+      "citations": [
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P13",
+          "section_path": "3.序列号",
+          "char_start": 150,
+          "char_end": 181,
+          "text": "需要核验序列号的商品，以商品本体序列号与订单记载是否一致为准。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "M22",
+          "section_path": "1.核验标准",
+          "char_start": 22,
+          "char_end": 53,
+          "text": "需要核验序列号的商品，以商品本体序列号与订单记载是否一致为准。"
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "M05",
+          "section_path": "2.手机数码激活",
+          "char_start": 125,
+          "char_end": 146,
+          "text": "类目为“手机数码”的，必须核验是否已激活。"
+        },
+        {
+          "sid": "S21",
+          "valid_evidence": true,
+          "doc_id": "M05",
+          "section_path": "2.手机数码激活",
+          "char_start": 193,
+          "char_end": 219,
+          "text": "未激活且在 7 日内、商品完好的，仍可走通用无理由。"
+        },
+        {
+          "sid": "S22",
+          "valid_evidence": true,
+          "doc_id": "M22",
+          "section_path": "3.与保修的关系",
+          "char_start": 158,
+          "char_end": 205,
+          "text": "序列号核验通过后，保修凭证仍可使用电子订单、支付记录与电子发票，不得再额外要求仅承认纸质发票。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 5,
+        "n_correct": 0,
+        "n_incorrect": 5,
+        "precision": 0.0,
+        "n_gold_sentences": 0,
+        "n_gold_hit": 0,
+        "recall": null,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": true,
+        "answer_looks_like_refusal": true,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P11",
+          "P02",
+          "P04",
+          "P09",
+          "P13",
+          "P07",
+          "M22",
+          "M05",
+          "M17",
+          "M23",
+          "M20",
+          "M03",
+          "M09",
+          "M21",
+          "F11",
+          "F04",
+          "F12",
+          "F14",
+          "F03"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q100",
+      "type": "refusal",
+      "cluster": "refusal_test",
+      "should_refuse": true,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "无法回答。星河优选的售后政策仅涵盖面向消费者的通用退换货、质保及会员权益规则，未收录企业大额采购合同中的账期、违约金及专属退货条款等 B2B 商业合同约定内容 [S14]。建议您查阅具体的企业采购合同文本或联系对应的商务/法务渠道获取准确信息。",
+      "model": "qwen3.8-flash",
+      "usage": {
+        "input_tokens": 1715,
+        "output_tokens": 68,
+        "total_tokens": 1783
+      },
+      "citations": [
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "1.质量问题范围",
+          "char_start": 86,
+          "char_end": 95,
+          "text": "本文件为通用政策。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 1,
+        "n_correct": 0,
+        "n_incorrect": 1,
+        "precision": 0.0,
+        "n_gold_sentences": 0,
+        "n_gold_hit": 0,
+        "recall": null,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "refusal": {
+        "should_refuse": true,
+        "answer_looks_like_refusal": true,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P04",
+          "P03",
+          "P09",
+          "P02",
+          "P18",
+          "P13",
+          "P07",
+          "M10",
+          "M15",
+          "M18",
+          "M09",
+          "M17",
+          "M06",
+          "M24",
+          "M04",
+          "M07",
+          "F14",
+          "F12",
+          "F02",
+          "F08",
+          "F01",
+          "F15"
+        ]
+      },
+      "looks_like_refusal": true
+    }
+  ],
+  "q042": {
+    "answer": "**结论：星河手表 S3（SKU-HX-WATCH-S3）的质量保证期限为自签收之日起 24 个月，而非通用的 12 个月。**\n\n**依据与解析：**\n\n1.  **适用更细范围的 SKU 专项政策**\n    根据冲突排序口径，SKU 级规定优先于品类与通用规则。针对您购买的特定商品 `SKU-HX-WATCH-S3`，存在专门的《指定商品延保政策》，其中明确规定该 SKU 的质量保证期限为自签收之日起 24 个月 [S1]。此规定适用于 2025-06-01 当日及之后签收的订单 [S8][S14]。\n\n2.  **为何覆盖通用 12 个月规定**\n    虽然平台存在通用的 12 个月质保规定，但上述 SKU 级专项政策明确指出，其 24 个月的规定在本 SKU 上优先于并取代了平台《商品质量保证期限通则》中的通用 12 个月规定 [S2]。因此，对于星河手表 S3，应适用 24 个月的质保期，而不是 12 个月 [S4][S15]。\n\n3.  **质保范围说明**\n    *   **涵盖内容**：这 24 个月的质保主要涵盖手表主机的主要功能故障 [S9][S17]。\n    *   **不涵盖内容**：表带、充电线等附件仍按通用规则或商品说明执行 [S10][S18]；因进水、摔损、私拆造成的损坏不在本延保范围内 [S11][S19]。\n\n综上所述，您的星河手表 S3 享有 24 个月的主机质保服务，这是基于 SKU 级别的专项政策对通用规则的覆盖。",
+    "review": {
+      "question_id": "Q042",
+      "meets_expected": true,
+      "required_points": [
+        {
+          "id": "warranty_24_months",
+          "expected": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月",
+          "ok": true
+        },
+        {
+          "id": "sku_covers_general_12",
+          "expected": "按冲突排序应优先适用 SKU 级规定，24 个月覆盖通用 12 个月",
+          "ok": true
+        },
+        {
+          "id": "not_only_general_12",
+          "expected": "不得只回答通用 12 个月",
+          "ok": true
+        }
+      ]
+    },
+    "citations": [
+      {
+        "sid": "S1",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "2.质保期限",
+        "char_start": 140,
+        "char_end": 177,
+        "text": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月。"
+      },
+      {
+        "sid": "S8",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "4.生效日",
+        "char_start": 423,
+        "char_end": 478,
+        "text": "本政策自 2025-06-01 起生效，对该生效日当日及之后签收的 SKU-HX-WATCH-S3 订单适用。"
+      },
+      {
+        "sid": "S14",
+        "valid_evidence": true,
+        "doc_id": "F06",
+        "section_path": "2.答复口径",
+        "char_start": 101,
+        "char_end": 180,
+        "text": "SKU-HX-WATCH-S3（星河手表 S3，品类：智能穿戴）的质量保证期限为自签收之日起 24 个月，适用于 2025-06-01 当日及之后签收的订单。"
+      },
+      {
+        "sid": "S2",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "2.质保期限",
+        "char_start": 177,
+        "char_end": 240,
+        "text": "该 24 个月规定覆盖（即在本 SKU 上优先于、并取代其适用位置上的）平台《商品质量保证期限通则》中的通用 12 个月规定。"
+      },
+      {
+        "sid": "S4",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "2.质保期限",
+        "char_start": 279,
+        "char_end": 332,
+        "text": "按冲突排序口径，范围比较时 SKU 级优先于通用，因此本 SKU 应适用 24 个月，而不是 12 个月。"
+      },
+      {
+        "sid": "S15",
+        "valid_evidence": true,
+        "doc_id": "F06",
+        "section_path": "2.答复口径",
+        "char_start": 180,
+        "char_end": 246,
+        "text": "该 24 个月是 SKU 级专项规定，按冲突排序优先于通用 12 个月，因此本 SKU 应适用 24 个月，而不是通用 12 个月。"
+      },
+      {
+        "sid": "S9",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "3.覆盖内容",
+        "char_start": 345,
+        "char_end": 366,
+        "text": "24 个月质保涵盖手表主机的主要功能故障。"
+      },
+      {
+        "sid": "S17",
+        "valid_evidence": true,
+        "doc_id": "F06",
+        "section_path": "3.说明",
+        "char_start": 284,
+        "char_end": 304,
+        "text": "24 个月质保涵盖手表主机主要功能故障；"
+      },
+      {
+        "sid": "S10",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "3.覆盖内容",
+        "char_start": 366,
+        "char_end": 389,
+        "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+      },
+      {
+        "sid": "S18",
+        "valid_evidence": true,
+        "doc_id": "F06",
+        "section_path": "3.说明",
+        "char_start": 304,
+        "char_end": 327,
+        "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+      },
+      {
+        "sid": "S11",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "3.覆盖内容",
+        "char_start": 389,
+        "char_end": 411,
+        "text": "因进水、摔损、私拆造成的损坏不在本延保范围。"
+      },
+      {
+        "sid": "S19",
+        "valid_evidence": true,
+        "doc_id": "F06",
+        "section_path": "3.说明",
+        "char_start": 327,
+        "char_end": 347,
+        "text": "进水、摔损、私拆造成的损坏不在延保范围。"
+      }
+    ],
+    "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=SKU-HX-WATCH-S3，品类=（未指定）。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\nSKU 级规定优先于品类与通用，适用：P08《指定商品延保政策（SKU-HX-WATCH-S3）》（来源=政策，范围=sku：SKU-HX-WATCH-S3，生效日=2025-06-01）、F06《FAQ：星河手表 S3 的质保期限是多久？》（来源=FAQ，范围=sku：SKU-HX-WATCH-S3，生效日=2025-09-01）。\n因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。"
+  }
+}

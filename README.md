@@ -1,6 +1,6 @@
 # 政策问答系统
 
-电商售后政策问答系统。第一段交付了项目骨架、数据库表、语料导入和已锁定的 embedding；第二段补齐 70 篇语料、100 道评测题、条款跨度标注与映射，并在开发集上实测了 B0 基线；第三段完成了三种切分消融、BM25+RRF、gte-rerank 尝试、开发集 Recall@5 CI 门禁，以及测试集第一次评测；第四段接上查订单、查物流、退款和日报工具，跑通冰箱质量问题主路径，并实测对抗用例无错误副作用。多轮对话、句级引用、缓存、Langfuse 与模型级联标定不在本阶段。
+电商售后政策问答系统。第一段交付了项目骨架、数据库表、语料导入和已锁定的 embedding；第二段补齐 70 篇语料、100 道评测题、条款跨度标注与映射，并在开发集上实测了 B0 基线；第三段完成了三种切分消融、BM25+RRF、gte-rerank 尝试、开发集 Recall@5 CI 门禁，以及测试集第一次评测；第四段接上查订单、查物流、退款和日报工具，跑通冰箱质量问题主路径，并实测对抗用例无错误副作用；第五段补上多轮对话、句级引用与冲突消解收尾，并完成测试集第二次评测。缓存、Langfuse 与模型级联标定不在本阶段。
 
 技术栈（已锁定，后续阶段沿用）：Python、FastAPI、官方 SDK 加自写编排、Postgres + pgvector、应用层 `rank_bm25.BM25Okapi`（jieba，k1=1.5，b=0.75）、RRF 融合、gte-rerank API、qwen3.8-flash 级联升到 qwen-plus（原锁定 qwen-turbo，已于 2026-10-10 官方下线；DeepSeek 只作行判或备用）、Langfuse Cloud、Streamlit、Docker Compose。不使用 LangChain 全家桶，不在本地跑 reranker，不自建 Langfuse。
 
@@ -48,6 +48,12 @@ python db/migrate.py
 python scripts/seed_stage4.py
 python scripts/run_stage4_fridge_path.py
 python scripts/run_stage4_adversarial.py
+
+# 11. 第五段：多轮、句级引用、Q041 与开发集引用精度，以及测试集第二次评测
+python scripts/run_stage5_units.py
+python scripts/run_stage5_multiturn.py
+python scripts/run_stage5_dev.py
+python scripts/run_stage5_test.py   # 仅在引用与冲突模块收尾后跑一次，数字不参与调参
 ```
 
 ## 使用 Docker Compose 的环境
@@ -108,6 +114,15 @@ GitHub Actions 工作流：`.github/workflows/retrieval-ci.yml`。只卡开发�
 - `daily_report(action=query|generate, report_date?)`：query 只读实时聚合；generate 才按 Asia/Shanghai 自然日幂等写入 `daily_reports` 快照，不改订单或退款。
 
 主路径「这单冰箱买了 20 天质量问题还能退吗」必须先真实查订单，不能只凭用户口述。生成模型为 `qwen3.8-flash`（因 `qwen-turbo` 已于 2026-10-10 官方下线而替换，级联目标仍为 `qwen-plus`；调用时关闭默认思考模式）。种子脚本、主路径与对抗用例报告见 `reports/stage4_seed.json`、`reports/stage4_fridge_path.json`、`reports/stage4_adversarial.json`。
+
+## 第五段：多轮、句级引用与冲突消解
+
+生成模型仍为 `qwen3.8-flash`（兼容模式，`enable_thinking=False`），本段未升级到 `qwen-plus`，也未用 DeepSeek 顶替生成。
+
+- 多轮对话会复用本会话已查过的订单事实。冰箱主路径可复现追问见 `reports/stage5_multiturn.json`：先问「这单冰箱买了 20 天质量问题还能退吗」，再问「那运费呢？」「那会员能延长七天无理由吗？」，后两轮复用订单 `SO-FRIDGE-20D`，未重新丢上下文。
+- 回答带句级引用，落在 `doc_id + section_path + 字符起止`（与条款标注同一 `documents.body` 坐标系）。引用精度按句子算：系统输出的 `[S#]` 映射到证据句后，若该句与任一金标条款跨度在同一章节下字符交集长度大于 0 则计为正确。不对着检索结果改标注。开发集（60 道可答题，全部生成成功且均有引用）宏平均精度 0.4268，微平均精度 0.3810（144/378），宏平均句级召回 0.6066。详见 `reports/stage5_dev_citation.json`。
+- 冲突消解会说明更细范围为何覆盖更一般规则。开发集 Q041 实测按「手机数码」品类专项答对：激活后不适用七天无理由，仅支持质量问题，签收之日起 15 日内可申请退换，并写明品类规定优先于通用规则。报告见 `reports/stage5_q041.json`。
+- 测试集第二次评测（数字不参与调参）见 `reports/test_run2.json`。封存 sha256 仍为 `092576646b41d9c35a3390e330ea62c2e62b0f00ab4ab78a32cb0220b3fc6a59`，与第一次一致，题目未改。检索指标与第一次相同：Recall@5=0.9213，Hit@5=1.0（分母=25 道有金标切片的可答题）；错→对 0、对→错 0，无分歧题目，无法做 McNemar 检验。第一次只评检索，故生成/引用/拒答为首次实测：测试集可答题句级引用宏平均精度 0.4252、微平均 0.3171（39/123）；拒答 5/5。Q042（测试集）按 SKU 专项答 24 个月，并说明覆盖通用 12 个月。
 
 ## 密钥
 

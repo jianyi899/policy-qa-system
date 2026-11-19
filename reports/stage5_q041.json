@@ -1,0 +1,240 @@
+{
+  "ok": true,
+  "question_id": "Q041",
+  "question": "我买的是手机数码类的手机，已经完成激活了，还能不能按七天无理由退货？如果有质量问题，应该在多长时间内申请退换？",
+  "answer_points": [
+    "手机数码商品激活后不适用通用七天无理由退货",
+    "激活后仅支持质量问题售后",
+    "质量问题应在签收之日起 15 日内申请退货或换货"
+  ],
+  "model": "qwen3.8-flash",
+  "answer": "**结论：**\n1. **不能按七天无理由退货。** 手机数码类商品一旦完成激活，即不再支持七天无理由退货。\n2. **质量问题退换时限为签收之日起 15 日内。** 若超过 15 日但仍在质保期内，则按维修或质保规则处理。\n\n**依据说明：**\n由于您的商品属于“手机数码”品类，根据冲突排序口径，品类级专项规定优先于通用规定 [S8]。因此，本回答依据《手机数码品类专项规定》（P15）作答，该专项规定覆盖了通用的七天无理由退货规则 [S7][S8]。\n\n具体条款如下：\n*   **关于激活后退货：** 与平台通用的七天无理由退货规则不同，手机数码类商品一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货 [S1]。FAQ 也确认了这一口径 [S11]。\n*   **关于质量问题时效：** 激活后，消费者仅能就质量问题申请售后 [S3]。质量问题应在签收之日起 15 日内申请退货或换货 [S4]；超过 15 日但仍在质保期内的，按维修或质保规则处理 [S5]。\n*   **特别说明：** 这 15 日是本品类的特殊规定，不得用通用七天无理由时限替代或缩减 [S6]。",
+  "citations": [
+    {
+      "sid": "S8",
+      "valid_evidence": true,
+      "doc_id": "P15",
+      "section_path": "4.与通用规则的关系",
+      "char_start": 415,
+      "char_end": 451,
+      "text": "按冲突排序口径，品类级规定优先于通用规定，因此本类目应适用本节专项规则。"
+    },
+    {
+      "sid": "S7",
+      "valid_evidence": true,
+      "doc_id": "P15",
+      "section_path": "4.与通用规则的关系",
+      "char_start": 381,
+      "char_end": 415,
+      "text": "本文件与《七天无理由退货总则》在“激活后能否无理由退货”上存在差异。"
+    },
+    {
+      "sid": "S1",
+      "valid_evidence": true,
+      "doc_id": "P15",
+      "section_path": "2.激活后的特殊退货规则",
+      "char_start": 118,
+      "char_end": 191,
+      "text": "与平台通用的七天无理由退货规则不同：手机数码类商品一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货。"
+    },
+    {
+      "sid": "S11",
+      "valid_evidence": true,
+      "doc_id": "F07",
+      "section_path": "2.答复口径",
+      "char_start": 81,
+      "char_end": 142,
+      "text": "类目为“手机数码”的商品，一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货。"
+    },
+    {
+      "sid": "S3",
+      "valid_evidence": true,
+      "doc_id": "P15",
+      "section_path": "3.激活后的质量问题通道",
+      "char_start": 252,
+      "char_end": 271,
+      "text": "激活后，消费者仅能就质量问题申请售后。"
+    },
+    {
+      "sid": "S4",
+      "valid_evidence": true,
+      "doc_id": "P15",
+      "section_path": "3.激活后的质量问题通道",
+      "char_start": 271,
+      "char_end": 296,
+      "text": "质量问题应在签收之日起 15 日内申请退货或换货；"
+    },
+    {
+      "sid": "S5",
+      "valid_evidence": true,
+      "doc_id": "P15",
+      "section_path": "3.激活后的质量问题通道",
+      "char_start": 296,
+      "char_end": 323,
+      "text": "超过 15 日但仍在质保期内的，按维修或质保规则处理。"
+    },
+    {
+      "sid": "S6",
+      "valid_evidence": true,
+      "doc_id": "P15",
+      "section_path": "3.激活后的质量问题通道",
+      "char_start": 323,
+      "char_end": 364,
+      "text": "该 15 日质量问题退换期是本品类的特殊规定，不得用通用七天无理由时限替代或缩减。"
+    }
+  ],
+  "citation_score": {
+    "n_cited": 8,
+    "n_correct": 5,
+    "n_incorrect": 3,
+    "precision": 0.625,
+    "n_gold_sentences": 9,
+    "n_gold_hit": 5,
+    "recall": 0.5555555555555556,
+    "correct": [
+      {
+        "sid": "S1",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "2.激活后的特殊退货规则",
+        "char_start": 118,
+        "char_end": 191,
+        "text": "与平台通用的七天无理由退货规则不同：手机数码类商品一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货。",
+        "correct": true
+      },
+      {
+        "sid": "S3",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "3.激活后的质量问题通道",
+        "char_start": 252,
+        "char_end": 271,
+        "text": "激活后，消费者仅能就质量问题申请售后。",
+        "correct": true
+      },
+      {
+        "sid": "S4",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "3.激活后的质量问题通道",
+        "char_start": 271,
+        "char_end": 296,
+        "text": "质量问题应在签收之日起 15 日内申请退货或换货；",
+        "correct": true
+      },
+      {
+        "sid": "S5",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "3.激活后的质量问题通道",
+        "char_start": 296,
+        "char_end": 323,
+        "text": "超过 15 日但仍在质保期内的，按维修或质保规则处理。",
+        "correct": true
+      },
+      {
+        "sid": "S6",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "3.激活后的质量问题通道",
+        "char_start": 323,
+        "char_end": 364,
+        "text": "该 15 日质量问题退换期是本品类的特殊规定，不得用通用七天无理由时限替代或缩减。",
+        "correct": true
+      }
+    ],
+    "incorrect": [
+      {
+        "sid": "S8",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "4.与通用规则的关系",
+        "char_start": 415,
+        "char_end": 451,
+        "text": "按冲突排序口径，品类级规定优先于通用规定，因此本类目应适用本节专项规则。",
+        "correct": false
+      },
+      {
+        "sid": "S7",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "4.与通用规则的关系",
+        "char_start": 381,
+        "char_end": 415,
+        "text": "本文件与《七天无理由退货总则》在“激活后能否无理由退货”上存在差异。",
+        "correct": false
+      },
+      {
+        "sid": "S11",
+        "valid_evidence": true,
+        "doc_id": "F07",
+        "section_path": "2.答复口径",
+        "char_start": 81,
+        "char_end": 142,
+        "text": "类目为“手机数码”的商品，一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货。",
+        "correct": false
+      }
+    ],
+    "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+  },
+  "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=（未指定），品类=手机数码。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n品类级规定优先于通用，适用：P15《手机数码品类专项规定》（来源=政策，范围=品类：手机数码，生效日=2025-04-01）、F07《FAQ：手机激活后还能七天无理由退货吗？》（来源=FAQ，范围=品类：手机数码，生效日=2025-09-01）。\n因此本品类专项覆盖（优先于并取代其适用位置上的）通用规定，作答须采用专类结论并说明依据，不得用通用规则替代或缩减专项时限。",
+  "by_scope_doc_ids": {
+    "sku": [],
+    "category": [
+      "P15",
+      "F07"
+    ],
+    "general": [
+      "P03",
+      "P10",
+      "P02",
+      "P04",
+      "M05",
+      "M23",
+      "M16",
+      "M01",
+      "M08",
+      "M17",
+      "M07",
+      "F01",
+      "F02",
+      "F12",
+      "F13",
+      "F03"
+    ]
+  },
+  "review": {
+    "question_id": "Q041",
+    "meets_expected": true,
+    "required_points": [
+      {
+        "id": "activated_no_reason_denied",
+        "expected": "手机数码商品激活后不适用通用七天无理由退货",
+        "ok": true
+      },
+      {
+        "id": "quality_only_after_activation",
+        "expected": "激活后仅支持质量问题售后",
+        "ok": true
+      },
+      {
+        "id": "quality_window_15_days",
+        "expected": "质量问题应在签收之日起 15 日内申请退货或换货",
+        "ok": true
+      },
+      {
+        "id": "category_rule_explained",
+        "expected": "说明按品类专项规定作答，以及专类覆盖/优先于通用规则",
+        "ok": true
+      }
+    ]
+  },
+  "error_type": null,
+  "usage": {
+    "input_tokens": 1832,
+    "output_tokens": 303,
+    "total_tokens": 2135
+  },
+  "measured_at": "2026-11-19T08:27:51.895654+08:00",
+  "timezone": "Asia/Shanghai"
+}

@@ -1,6 +1,28 @@
 # 政策问答系统
 
-电商售后政策问答系统。第一段交付了项目骨架、数据库表、语料导入和已锁定的 embedding；第二段补齐 70 篇语料、100 道评测题、条款跨度标注与映射，并在开发集上实测了 B0 基线；第三段完成了三种切分消融、BM25+RRF、gte-rerank 尝试、开发集 Recall@5 CI 门禁，以及测试集第一次评测；第四段接上查订单、查物流、退款和日报工具，跑通冰箱质量问题主路径，并实测对抗用例无错误副作用；第五段补上多轮对话、句级引用与冲突消解收尾，并完成测试集第二次评测；第六段补上纯政策问答与检索缓存、Langfuse Cloud（日本区域）追踪，以及在开发集上标定的 qwen3.8-flash 升 qwen-plus 级联，并用开发集做了可复现流量回放。
+电商售后政策问答系统。下面是各阶段已经实测的关键指标，数字均来自当时报告，未改写。演示用视频（见文末第七段），不要把本开发机当成公网演示环境；若部署到自有云主机，密钥只放服务端。
+
+## 实测对比
+
+| 指标 | 实测值 | 来源 |
+| --- | --- | --- |
+| 开发集检索 Recall@5 / Hit@5（锁定 hybrid） | 0.8469 / 0.9333（n=60） | `reports/hybrid_dev.json`、`reports/locked_retrieval.json` |
+| 测试集检索 Recall@5 / Hit@5 | 0.9213 / 1.0（n=25） | 三次测试集相同：`reports/test_run1.json`、`test_run2.json`、`test_run3.json` |
+| 开发集句级引用宏平均精度 / 微平均 / 宏平均召回 | 0.4268 / 0.3810（144/378） / 0.6066 | `reports/stage5_dev_citation.json` |
+| 测试集句级引用宏平均精度 / 微平均（第二次） | 0.4252 / 0.3171（39/123） | `reports/test_run2.json` |
+| 测试集句级引用宏平均精度 / 微平均 / 宏平均召回（第三次，最终） | 0.4291 / 0.3190（37/116） / 0.5651 | `reports/test_run3.json` |
+| 拒答 | 开发集 10/10；测试集第二次 5/5、第三次 5/5 | `reports/stage5_dev_citation.json`、`test_run2.json`、`test_run3.json` |
+| 缓存命中率 | 0.5（70/140；冷启动 70 次未命中，原句重复 70 次命中） | `reports/stage6_cache.json` |
+| 同义变体误命中 | 0/8（不计入命中率分母） | `reports/stage6_cache.json` |
+| 工具题绕过缓存 | 7/7 | `reports/stage6_cache.json` |
+| 缓存命中首 token | 均值 10.62 ms，P50 10.39 ms，P95 12.47 ms，全部低于 800 ms；该路径本次请求 token 为 0 | `reports/stage6_replay.json` |
+| 级联阈值（top-1 RRF）与开发集 task_ok | 阈值 0.03225806；task_ok 64/70，与全走 flash 相同 | `reports/stage6_cascade.json` |
+| Q041（开发集，品类专项） | 4 项必查全部命中 | `reports/stage5_q041.json` |
+| Q042（测试集，SKU 24 个月覆盖通用 12 个月） | 第二次、第三次均答对，三项必查全部命中 | `reports/test_run2.json`、`reports/test_run3.json` |
+
+检索链路已锁定为 `section_window_400` + 密集检索与 BM25 的 RRF 融合，不采纳 rerank。生成默认 `qwen3.8-flash`（兼容模式，`enable_thinking=False`），达到阈值后升至 `qwen-plus`。测试集数字不参与调参。
+
+第一段交付了项目骨架、数据库表、语料导入和已锁定的 embedding；第二段补齐 70 篇语料、100 道评测题、条款跨度标注与映射，并在开发集上实测了 B0 基线；第三段完成了三种切分消融、BM25+RRF、gte-rerank 尝试、开发集 Recall@5 CI 门禁，以及测试集第一次评测；第四段接上查订单、查物流、退款和日报工具，跑通冰箱质量问题主路径，并实测对抗用例无错误副作用；第五段补上多轮对话、句级引用与冲突消解收尾，并完成测试集第二次评测；第六段补上纯政策问答与检索缓存、Langfuse Cloud（日本区域）追踪，以及在开发集上标定的 qwen3.8-flash 升 qwen-plus 级联，并用开发集做了可复现流量回放；第七段把对比表放在开篇，完成测试集最终一次评测，并用本机 Streamlit 真实界面录制约 90 秒五段演示视频。
 
 技术栈（已锁定，后续阶段沿用）：Python、FastAPI、官方 SDK 加自写编排、Postgres + pgvector、应用层 `rank_bm25.BM25Okapi`（jieba，k1=1.5，b=0.75）、RRF 融合、gte-rerank API、qwen3.8-flash 级联升到 qwen-plus（原锁定 qwen-turbo，已于 2026-10-10 官方下线；DeepSeek 只作行判或备用）、Langfuse Cloud、Streamlit、Docker Compose。不使用 LangChain 全家桶，不在本地跑 reranker，不自建 Langfuse。
 
@@ -62,6 +84,14 @@ python scripts/run_stage6_units.py
 python scripts/run_stage6_cache.py
 python scripts/calibrate_cascade.py
 python scripts/run_stage6_replay.py
+
+# 13. 第七段：最终测试集（只跑一次，数字不参与调参）与本机演示
+# 测试集数字不得用于调参。演示界面只监听 127.0.0.1，不要把本机暴露到公网。
+python scripts/run_stage7_test.py
+streamlit run app/streamlit_app.py --server.address 127.0.0.1 --server.port 8501
+# 浏览器打开 http://127.0.0.1:8501/ ，或 http://127.0.0.1:8501/?demo=1 自动连播五段。
+# 本机录制约 90 秒演示视频：
+# bash scripts/record_stage7_demo.sh
 ```
 
 ## 使用 Docker Compose 的环境
@@ -140,6 +170,18 @@ GitHub Actions 工作流：`.github/workflows/retrieval-ci.yml`。只卡开发�
 - Langfuse Cloud 使用官方日本区域 `https://jp.cloud.langfuse.com`，不自建。已用官方 API 回读真实 trace，例如缓存命中 `d2a59f7c6097829d512a9a7815ddefc5`（handle_ask），未缓存政策问答 `b6e038c4b46a92ecb24f3820d298ce1f`（含 hybrid_retrieve 与 generate_answer），工具调用 `c3d295935182264915a58876bc230de1`（query_order）。详见 `reports/stage6_replay.json`。
 - 级联阈值在开发集 70 题上按 top-1 RRF 升序均分成 5 箱标定。选定阈值 0.03225806（分数小于等于该值时升到 qwen-plus）。该阈值下开发集 task_ok 64/70（0.9143），与全走 flash 相同，宏平均引用召回 0.6106、要点覆盖召回 0.975，略高于全走 flash（0.6066 / 0.9694）；全走 plus 为 63/70，并不更好。箱内质量不是单调的：第 0 箱 plus 更差，第 1 箱 plus 更好。自评 confidence 对比实验里，阈值 0.95 时 task_ok 可到 66/70，但要额外调用一次快速模型，且全走 plus 本身没有增益，因此不把自评支路留在产品路径。标定过程见 `reports/stage6_cascade.json`，阈值见 `reports/cascade_threshold.json`。
 - 模拟流量回放在本机预发（uvicorn `127.0.0.1:8016`）测量。缓存命中的 20 道政策问答首 token：均值 10.62 ms，P50 10.39 ms，P95 12.47 ms，最小 8.72 ms，最大 16.07 ms，全部低于 800 ms；该路径本次请求 token 为 0。刊例价换算来源为阿里云百炼价格页（华北 2 北京，非思考模式）。报告见 `reports/stage6_replay.json`。
+
+## 第七段：对比表交付、最终测试集与演示视频
+
+本段不再把公网演示绑在这台开发机上。演示用视频，见 `docs/demo/policy-qa-demo-90s.mp4`（台本见 `docs/demo/SCRIPT.md`）。界面为 Streamlit，只监听 `127.0.0.1:8501`。若部署到自有云主机，密钥只放服务端环境变量，不要写入仓库，也不要提交到 GitHub Secrets 以外的明文位置。
+
+测试集第三次也是最后一次评测见 `reports/test_run3.json`。封存 sha256 仍为 `092576646b41d9c35a3390e330ea62c2e62b0f00ab4ab78a32cb0220b3fc6a59`，与第一、二次一致，题目未改。数字不参与调参。
+
+- 检索与前两次完全相同：Recall@5=0.9213，Hit@5=1.0（分母=25 道有金标切片的可答题）。相对 test_run1、test_run2 均为错→对 0、对→错 0，无分歧题目，无法做 McNemar 检验。高基线是好事。
+- 生成走产品路径：默认 `qwen3.8-flash`，按已标定阈值级联升至 `qwen-plus`（本次 30 题中 20 题走 flash、10 题升 plus）；评测时关闭问答缓存。可答题全部生成成功且都有引用：宏平均精度 0.4291，微平均 0.3190（37/116），宏平均句级召回 0.5651。拒答 5/5。
+- 与 test_run2 的生成对照（task_ok 口径与第六段开发集级联标定相同，用已保存的第二次回答重算，未重跑）：task_ok 由 27/30 变为 28/30（可答题 22/25→23/25，拒答两次都是 5/5）。错→对 2（Q076、Q090）、对→错 1（Q075），McNemar p=1.0，方向为正但未达显著。第一次测试集未跑生成，故生成项没有与 test_run1 的对照。
+- Q042 仍答对 24 个月，并说明 SKU 专项覆盖了通用 12 个月。三项必查全部命中。
+
 
 ## 密钥
 

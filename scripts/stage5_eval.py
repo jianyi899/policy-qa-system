@@ -81,6 +81,7 @@ def evaluate_generated(question: dict, result: dict) -> dict:
         "conflict_explanation": (result.get("conflict_resolution") or {}).get("explanation"),
         "by_scope_doc_ids": (result.get("conflict_resolution") or {}).get("by_scope_doc_ids"),
         "looks_like_refusal": is_refusal_answer(answer),
+        "cascade": result.get("cascade"),
     }
 
 
@@ -171,6 +172,9 @@ def run_generation_split(
     out_path: Path,
     pause_s: float = 0.4,
     ids: list[str] | None = None,
+    use_cascade: bool = False,
+    use_cache: bool = True,
+    model_label: str | None = None,
 ) -> dict:
     questions = load_questions(split)
     if ids is not None:
@@ -194,7 +198,12 @@ def run_generation_split(
             items.append(done[q["id"]])
             continue
         gold = q.get("relevant_spans") or []
-        result = answer_question(q["question"], gold_spans=gold)
+        result = answer_question(
+            q["question"],
+            gold_spans=gold,
+            use_cascade=use_cascade,
+            use_cache=use_cache,
+        )
         item = evaluate_generated(q, result)
         items.append(item)
         done[q["id"]] = item
@@ -221,7 +230,9 @@ def run_generation_split(
     report = {
         "ok": summary["n_generation_failed"] == 0,
         "split": split,
-        "model": "qwen3.8-flash",
+        "model": model_label or "qwen3.8-flash",
+        "use_cascade": use_cascade,
+        "use_cache": use_cache,
         "summary": summary,
         "items": items,
     }

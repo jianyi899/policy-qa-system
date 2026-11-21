@@ -7,18 +7,32 @@ from pathlib import Path
 
 import yaml
 
-ROOT = Path(__file__).resolve().parents[1]
+from app.config import repo_root
+
+ROOT = repo_root()
 CORPUS_DIRS = [
     ROOT / "corpus" / "policies",
     ROOT / "corpus" / "manuals",
     ROOT / "corpus" / "faqs",
     ROOT / "corpus" / "noise",
 ]
+# 第一段 15 篇：覆盖冰箱/大家电主路径所需通用条款，以及 Q041/Q042/Q025/Q039。
 EXPECTED_DOCS = (
-    [f"P{i:02d}" for i in range(1, 21)]
-    + [f"M{i:02d}" for i in range(1, 26)]
-    + [f"F{i:02d}" for i in range(1, 16)]
-    + [f"N{i:02d}" for i in range(1, 11)]
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P07",
+    "P08",
+    "P15",
+    "M01",
+    "M03",
+    "M05",
+    "F01",
+    "F02",
+    "F06",
+    "F07",
 )
 HEADING_RE = re.compile(r"^## (\d+)[ \t]+(.+?)\s*$", re.MULTILINE)
 FRONT_MATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n(.*)$", re.DOTALL)
@@ -81,10 +95,16 @@ def split_sections(body: str) -> list[dict]:
     return sections
 
 
+def iter_corpus_files() -> list[Path]:
+    files: list[Path] = []
+    for folder in CORPUS_DIRS:
+        if folder.is_dir():
+            files.extend(sorted(folder.glob("*.md")))
+    return sorted(files)
+
+
 def load_corpus() -> list[dict]:
-    files = sorted(p for d in CORPUS_DIRS for p in d.glob("*.md"))
-    if len(files) != 70:
-        raise ValueError(f"期望 70 篇语料，实际找到 {len(files)} 篇")
+    files = iter_corpus_files()
     docs = [parse_markdown(p) for p in files]
     ids = [d["doc_id"] for d in docs]
     if sorted(ids) != sorted(EXPECTED_DOCS):

@@ -1,0 +1,14 @@
+# 轻量版运行依赖。适用于 Python 3.11、3.12、3.13。
+# Windows x64 安装依据见 docs/windows-packages.md（2026-11-21 查 PyPI 文件列表）。
+# jieba 只有纯 Python sdist，可以安装；其余包均有 py3-none-any 或 win_amd64 wheel。
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic-settings>=2.6.0
+python-dotenv>=1.0.1
+pyyaml>=6.0.2
+httpx>=0.27.0
+dashscope>=1.20.0
+rank-bm25>=0.2.2
+jieba>=0.42.1
+streamlit>=1.40.0
+sqlite-vec>=0.1.9

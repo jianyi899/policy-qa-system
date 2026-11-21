@@ -1,8 +1,28 @@
-"""应用配置。密钥只从环境变量或进程环境读取，不写死在代码里。"""
+"""应用配置。密钥只从环境变量或本地 .env 读取，不写死在代码里，也不打印。"""
 
 from __future__ import annotations
 
+import os
+import sys
+from functools import lru_cache
+from pathlib import Path
+
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+def default_policy_qa_home() -> Path:
+    """安装与数据根目录。Windows 默认 D:/policy-qa，其他系统默认 ~/policy-qa。可用环境变量覆盖。"""
+    raw = os.environ.get("POLICY_QA_HOME", "").strip()
+    if raw:
+        return Path(raw).expanduser()
+    if sys.platform.startswith("win"):
+        return Path("D:/policy-qa")
+    return Path.home() / "policy-qa"
+
+
+def repo_root() -> Path:
+    return Path(__file__).resolve().parents[1]
 
 
 class Settings(BaseSettings):
@@ -12,57 +32,47 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    postgres_host: str = ""
-    postgres_port: int = 5432
-    postgres_db: str = "policy_qa"
-    postgres_user: str = "box"
-    postgres_password: str = ""
-
-    redis_host: str = "127.0.0.1"
-    redis_port: int = 6379
-    redis_db: int = 0
+    policy_qa_home: Path = Field(default_factory=default_policy_qa_home)
+    # 可选，覆盖默认的 <POLICY_QA_HOME>/data/policy_qa.sqlite
+    policy_qa_db_path: Path | None = None
 
     dashscope_api_key: str = ""
     dashscope_base_url: str = "https://dashscope.aliyuncs.com/compatible-mode/v1"
     deepseek_api_key: str = ""
     deepseek_base_url: str = "https://api.deepseek.com"
 
-    langfuse_public_key: str = ""
-    langfuse_secret_key: str = ""
-    # 官方日本区域；LANGFUSE_HOST 仅作兼容别名，优先使用 LANGFUSE_BASE_URL。
-    langfuse_base_url: str = "https://jp.cloud.langfuse.com"
-    langfuse_host: str = ""
-
-    embedding_model: str = ""
-    embedding_dim: int | None = None
+    # 模型名来自配置；维度也从配置读取，建表时不写死 1024。
+    embedding_model: str = "text-embedding-v4"
+    embedding_dim: int = 1024
     rerank_model: str = "gte-rerank"
+    # qwen-turbo 已于 2026-10-10 官方下线，默认改为 qwen3.8-flash。
     qwen_fast_model: str = "qwen3.8-flash"
     qwen_strong_model: str = "qwen-plus"
 
-    cache_ttl_seconds: int = 86400
-    cache_namespace: str = "policyqa:v1"
-
     app_host: str = "127.0.0.1"
     app_port: int = 8000
+    streamlit_host: str = "127.0.0.1"
+    streamlit_port: int = 8501
 
-    def dsn(self) -> str:
-        # 本机 peer 认证：POSTGRES_HOST 留空则走 Unix socket，无需密码。
-        if not self.postgres_host:
-            return (
-                f"postgresql://{self.postgres_user}@/{self.postgres_db}"
-                f"?host=/var/run/postgresql"
-            )
-        password = self.postgres_password or ""
-        auth = f"{self.postgres_user}:{password}" if password else self.postgres_user
-        return (
-            f"postgresql://{auth}@{self.postgres_host}:{self.postgres_port}"
-            f"/{self.postgres_db}"
-        )
+    def home_dir(self) -> Path:
+        return Path(self.policy_qa_home).expanduser()
 
-    def langfuse_url(self) -> str:
-        url = (self.langfuse_base_url or self.langfuse_host or "https://jp.cloud.langfuse.com").strip()
-        return url.rstrip("/")
+    def data_dir(self) -> Path:
+        return self.home_dir() / "data"
+
+    def db_path(self) -> Path:
+        if self.policy_qa_db_path is not None:
+            return Path(self.policy_qa_db_path).expanduser()
+        return self.data_dir() / "policy_qa.sqlite"
+
+    def log_dir(self) -> Path:
+        return self.home_dir() / "logs"
 
 
+@lru_cache(maxsize=1)
 def get_settings() -> Settings:
     return Settings()
+
+
+def clear_settings_cache() -> None:
+    get_settings.cache_clear()

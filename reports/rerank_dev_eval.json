@@ -1,7 +1,0 @@
-{
-  "ok": false,
-  "error_type": "AccessDenied",
-  "stage": "rerank",
-  "split": "dev",
-  "failed_question_id": "Q001"
-}

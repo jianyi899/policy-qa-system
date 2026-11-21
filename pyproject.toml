@@ -1,14 +1,12 @@
 [project]
 name = "policy-qa-system"
-version = "0.1.0"
-description = "电商售后政策问答系统（第一段地基）"
+version = "0.2.0"
+description = "电商售后政策问答系统（轻量版：SQLite + sqlite-vec）"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.11,<3.14"
 dependencies = [
   "fastapi>=0.115.0",
   "uvicorn[standard]>=0.32.0",
-  "psycopg[binary]>=3.2.0",
-  "redis>=5.2.0",
   "pydantic-settings>=2.6.0",
   "python-dotenv>=1.0.1",
   "pyyaml>=6.0.2",
@@ -16,8 +14,8 @@ dependencies = [
   "dashscope>=1.20.0",
   "rank-bm25>=0.2.2",
   "jieba>=0.42.1",
-  "langfuse>=2.60.0",
   "streamlit>=1.40.0",
+  "sqlite-vec>=0.1.9",
 ]
 
 [project.optional-dependencies]

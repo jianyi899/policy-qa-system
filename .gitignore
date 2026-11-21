@@ -34,3 +34,9 @@ reports/verify_latest.json
 
 # packaging artifacts
 *.egg-info/
+
+# sqlite runtime (also stored under POLICY_QA_HOME, not the repo)
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.db

@@ -3,7 +3,9 @@
 用法（在仓库根目录）：
 
     python -m app.start
+    python -m app.start --ingest-only
 
+`--ingest-only` 只建库并按指纹写入语料，不启动 FastAPI / Streamlit，便于在测试目录验收入库。
 第二次启动若语料、切分与 embedding 配置未变，不会重复写入，也不会再次调用 embedding 接口。
 Streamlit 固定监听 127.0.0.1。
 """
@@ -73,7 +75,13 @@ def _terminate(procs: list[subprocess.Popen]) -> None:
             proc.wait(timeout=3)
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    unknown = [a for a in argv if a not in {"--ingest-only"}]
+    if unknown:
+        print(f"未知参数: {unknown}。可用：--ingest-only", file=sys.stderr)
+        return 2
+    ingest_only = "--ingest-only" in argv
     try:
         sys.stdout.reconfigure(line_buffering=True)
         sys.stderr.reconfigure(line_buffering=True)
@@ -103,12 +111,19 @@ def main() -> int:
     }
     # 不把密钥写入报告。
     write_start_report(settings.log_dir() / "start-last.json", summary)
+    summary["ingest_only"] = ingest_only
     print(json.dumps(summary, ensure_ascii=False, indent=2))
+    skipped = ingest.get("skipped")
+    ingest_line = "已跳过语料写入与 embedding 调用" if skipped else "已写入语料并完成 embedding"
+    if ingest_only:
+        print(f"数据库: {db_path}\n仅完成建库与入库，未启动服务。{ingest_line}")
+        return 0
+
     print(
         f"数据库: {db_path}\n"
         f"FastAPI: http://{settings.app_host}:{settings.app_port}/health\n"
         f"Streamlit: http://{STREAMLIT_BIND_HOST}:{settings.streamlit_port} （仅监听 {STREAMLIT_BIND_HOST}）\n"
-        f"{'已跳过语料写入与 embedding 调用' if ingest.get('skipped') else '已写入语料并完成 embedding'}"
+        f"{ingest_line}"
     )
 
     env = os.environ.copy()

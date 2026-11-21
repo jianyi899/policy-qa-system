@@ -1,0 +1,9 @@
+{
+  "algorithm": "sha256",
+  "encoding": "utf-8",
+  "serialization": "json.dumps(obj, ensure_ascii=False, sort_keys=True, separators=(',', ':'))",
+  "scope": "测试集 12 题的稳定字段：id,type,cluster,question,answer_points,should_refuse,relevant_spans。不含 split 以外的运行时字段。题目按 id 排序，跨度按 doc_id/section_path/起止排序。",
+  "n_test_questions": 12,
+  "sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+  "note": "本阶段不在测试集上跑评测、不用测试集数字调参。若此后改动测试集，必须在提交说明中写明原因并更新本文件与 eval/seal.py 中的 EXPECTED_SHA256。"
+}

@@ -1,0 +1,46 @@
+{
+  "name": "stage2_ingest",
+  "measured_at": "2026-11-21T15:32:33+08:00",
+  "timezone": "Asia/Shanghai",
+  "policy_qa_home": "/tmp/policy-qa-stage2-test",
+  "db_path": "/tmp/policy-qa-stage2-test/data/policy_qa.sqlite",
+  "command": [
+    "POLICY_QA_HOME=/tmp/policy-qa-stage2-test",
+    "python -m app.start --ingest-only"
+  ],
+  "note": "测试目录从第一段 15 篇库复制而来，不修改 /tmp/policy-qa-foundation-test，也不连接 Postgres / Redis。向量表在本段改为 sqlite-vec cosine。",
+  "before": {
+    "n_docs": 15,
+    "n_chunks": 54,
+    "fingerprint": "4e3d9c9114ff766b42366dc944b68a62c68791306b6eba2de7837a7df24353bd",
+    "ingested_at": "2026-11-21T15:18:42+08:00",
+    "chunking_name": "section_window_400"
+  },
+  "first_run": {
+    "skipped": false,
+    "reason": "ingested",
+    "init_elapsed_seconds": 13.209,
+    "n_docs": 40,
+    "n_chunks": 130,
+    "n_embeddings": 130,
+    "embedding_model": "text-embedding-v4",
+    "embedding_dim": 1024,
+    "chunking_name": "section_window_400",
+    "fingerprint": "2c4329130cba3de3a9ecd85913766cacb9032f8c1ed433eaf93214b02bd3e743",
+    "ingested_at": "2026-11-21T15:32:33+08:00",
+    "embedding_api_calls": 13,
+    "embedding_texts_sent": 130
+  },
+  "second_run": {
+    "skipped": true,
+    "reason": "fingerprint_unchanged",
+    "init_elapsed_seconds": 0.014,
+    "n_docs": 40,
+    "n_chunks": 130,
+    "n_embeddings": 130,
+    "fingerprint": "2c4329130cba3de3a9ecd85913766cacb9032f8c1ed433eaf93214b02bd3e743",
+    "ingested_at": "2026-11-21T15:32:33+08:00",
+    "embedding_api_calls": 0,
+    "embedding_texts_sent": 0
+  }
+}

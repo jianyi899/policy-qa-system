@@ -96,18 +96,29 @@ def _vector_table_dim(conn: sqlite3.Connection) -> int | None:
         return None
 
 
+def _vector_table_sql(conn: sqlite3.Connection) -> str | None:
+    row = conn.execute(
+        "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = ?",
+        (VECTOR_TABLE,),
+    ).fetchone()
+    if not row or not row[0]:
+        return None
+    return str(row[0])
+
+
 def ensure_vector_table(conn: sqlite3.Connection, dim: int) -> None:
     dim = _require_positive_dim(dim)
-    current = _vector_table_dim(conn)
-    if current == dim:
-        return
-    if current is not None:
-        conn.execute(f"DROP TABLE IF EXISTS {VECTOR_TABLE}")
-    # 维度来自配置，不能写死为 1024。
-    conn.execute(
+    # 维度来自配置，不能写死为 1024。距离使用余弦，与文本 embedding 的常用比较方式一致。
+    expected_sql = (
         f"CREATE VIRTUAL TABLE {VECTOR_TABLE} "
-        f"USING vec0(chunk_id INTEGER PRIMARY KEY, embedding float[{dim}])"
+        f"USING vec0(chunk_id INTEGER PRIMARY KEY, embedding float[{dim}] distance_metric=cosine)"
     )
+    current_sql = _vector_table_sql(conn)
+    if current_sql == expected_sql:
+        return
+    if current_sql is not None:
+        conn.execute(f"DROP TABLE IF EXISTS {VECTOR_TABLE}")
+    conn.execute(expected_sql)
 
 
 def init_db(settings: Settings | None = None) -> Path:

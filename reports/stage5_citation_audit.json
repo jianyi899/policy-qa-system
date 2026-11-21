@@ -1,0 +1,82 @@
+{
+  "ok": true,
+  "name": "stage5_citation_audit",
+  "measured_at": "2026-11-21T16:04:00+08:00",
+  "timezone": "Asia/Shanghai",
+  "auditor": "human",
+  "source": "reports/stage5_dev_citation.json",
+  "metric_definition": "官方引用精度按句子与金标条款跨度在同一 doc_id+section_path 下字符交集长度>0 计算。人工抽查要真正读句子：既核对自动口径是否算对，也注明句子是否在语义上支持该回答。",
+  "n_sampled": 7,
+  "sample_ids": [
+    "Q001",
+    "Q002",
+    "Q011",
+    "Q017",
+    "Q025",
+    "Q039",
+    "Q041"
+  ],
+  "items": [
+    {
+      "id": "Q001",
+      "auto_precision": 0.3333,
+      "auto_n_correct": 2,
+      "auto_n_cited": 6,
+      "human_agrees_with_auto_overlap": true,
+      "human_notes": "读了 6 条引用句与 2 条金标句。S1、S3 与 P15「2.激活后的特殊退货规则」金标跨度相交，自动判对正确。S14（F07）几乎复述「未激活且 7 日内完好可按通用七天无理由」，但金标不在 FAQ，自动判错符合口径；语义上支持该回答。S9、S10、S24 分别讲品类优先、适用范围和商品完好，是相关背景，不是本题金标跨度。自动口径一致，语义支持宽于金标重合。"
+    },
+    {
+      "id": "Q002",
+      "auto_precision": 0.0,
+      "auto_n_correct": 0,
+      "auto_n_cited": 7,
+      "human_agrees_with_auto_overlap": true,
+      "human_notes": "金标是 P15 激活后 15 日内退换的专类规定。系统引用了 P04、P10、P03 的通用质保与质量问题条款，没有落到 P15 的 15 日句子。7 条引用句我都读了，确实与金标无交集。回答也未写出 15 日，task_ok 为否。自动与人工一致，这是真正漏引专类时限。"
+    },
+    {
+      "id": "Q011",
+      "auto_precision": 1.0,
+      "auto_n_correct": 6,
+      "auto_n_cited": 6,
+      "human_agrees_with_auto_overlap": true,
+      "human_notes": "读了 6 条引用句和 7 条金标句。引用的都是 P02「2.时限计算」中「起算日为签收当日」「含第 7 日 24:00」等原句，与金标重合，自动 6/6 正确。少引了金标里「该情形属于可明确答复的否定结论」那一句，召回 6/7，不影响本题精度。"
+    },
+    {
+      "id": "Q017",
+      "auto_precision": 0.0,
+      "auto_n_correct": 0,
+      "auto_n_cited": 3,
+      "human_agrees_with_auto_overlap": true,
+      "human_notes": "金标是 P01 术语里对「质量问题」的定义。系统引用的是 P04/P03 关于质量问题售后如何办理的句子，我读后确认与定义条款没有字符交集。自动判错符合口径。这些句子与「什么是质量问题」只是相关，不能代替定义句。"
+    },
+    {
+      "id": "Q025",
+      "auto_precision": 0.3158,
+      "auto_n_correct": 6,
+      "auto_n_cited": 19,
+      "human_agrees_with_auto_overlap": true,
+      "human_notes": "读了 19 条引用句。判对的 6 条确实是金标要点：定制类不支持七天无理由、质量问题运费由商家承担、无理由不成立故不得套用无理由运费规则。其余多条（如 P03 与运费规则的关系、手册同义句）语义上也支持答题要点，但未与金标跨度相交，自动判错符合口径。引用偏多，拉低了本题精度。回答本身覆盖了 Q025 的三点口径。"
+    },
+    {
+      "id": "Q039",
+      "auto_precision": 0.2857,
+      "auto_n_correct": 2,
+      "auto_n_cited": 7,
+      "human_agrees_with_auto_overlap": true,
+      "human_notes": "读了 7 条引用句。S12、S9 命中 P02 时限计算金标（7 日起算、超 7 日不得再按无理由退），自动判对正确。其余 5 条讲会员不延时、运费和质量问题救济，与本题「已超 7 天能不能按无理由退」不是金标跨度，自动判错正确。回答给出了可答的否定结论，没有被当成拒答。"
+    },
+    {
+      "id": "Q041",
+      "auto_precision": 0.4706,
+      "auto_n_correct": 8,
+      "auto_n_cited": 17,
+      "human_agrees_with_auto_overlap": true,
+      "human_notes": "读了 17 条引用句。命中的 8 条主要是 P15 激活后不支持无理由、仅支持质量问题、15 日退换、专类不得用通用七天替代等金标句，自动判对正确。F07 中多条几乎是同一口径的复述，因文档不同被自动判错，符合金标跨度口径，但语义上支持该回答。回答明确按品类专项作答并说明覆盖通用规则，四点核对通过。"
+    }
+  ],
+  "summary": {
+    "n_agree_with_auto_overlap": 7,
+    "n_disagree_with_auto_overlap": 0,
+    "finding": "7 题抽查中，自动句级精度与金标跨度重合口径全部一致，没有算错对错。常见分歧是：FAQ 或相邻章节的同义句在语义上支持回答，但不在金标条款跨度里，因此计入分母、不计正确，从而压低精度。真正的漏引出现在 Q002（未引 P15 的 15 日专类时限）和 Q017（未引 P01 定义句）。LLM 评判（deepseek-chat，另 5 题样本）更偏向「是否支持该回答中的说法」，几乎把同义句都判为支持，不能替代本官方金标重合口径，只作对照。"
+  }
+}

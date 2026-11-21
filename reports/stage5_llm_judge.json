@@ -1,0 +1,365 @@
+{
+  "ok": true,
+  "model": "deepseek-chat",
+  "sample_ids": [
+    "Q001",
+    "Q025",
+    "Q039",
+    "Q041",
+    "Q008"
+  ],
+  "n_judged": 5,
+  "n_sample": 5,
+  "note": "仅作对照，不参与调参，也不替代自动句级精度或人工抽查。",
+  "items": [
+    {
+      "id": "Q001",
+      "n_cited": 6,
+      "auto_precision": 0.3333333333333333,
+      "auto_n_correct": 2,
+      "judge": {
+        "S9": {
+          "sid": "S9",
+          "supports": true,
+          "reason": "品类级规定优先于通用规定，支持适用专项规则"
+        },
+        "S10": {
+          "sid": "S10",
+          "supports": true,
+          "reason": "明确适用于手机数码类商品，含手机平板"
+        },
+        "S1": {
+          "sid": "S1",
+          "supports": true,
+          "reason": "激活后不支持七天无理由，支持该说法"
+        },
+        "S3": {
+          "sid": "S3",
+          "supports": true,
+          "reason": "未激活7日内商品完好可按通用规则退货"
+        },
+        "S14": {
+          "sid": "S14",
+          "supports": true,
+          "reason": "FAQ确认未激活7日内完好可申请退货"
+        },
+        "S24": {
+          "sid": "S24",
+          "supports": true,
+          "reason": "商品完好不影响二次销售，符合要求"
+        },
+        "citation_ok": true
+      },
+      "error_type": null,
+      "raw": null
+    },
+    {
+      "id": "Q025",
+      "n_cited": 19,
+      "auto_precision": 0.3157894736842105,
+      "auto_n_correct": 6,
+      "judge": {
+        "type": "json_object",
+        "citation_ok": true,
+        "items": [
+          {
+            "sid": "S12",
+            "supports": true,
+            "reason": "定制类商品不支持七天无理由退货，直接支持。"
+          },
+          {
+            "sid": "S13",
+            "supports": true,
+            "reason": "7日内包装完好也不得无理由退货，支持。"
+          },
+          {
+            "sid": "S10",
+            "supports": true,
+            "reason": "质量问题退换货运费由商家承担，支持。"
+          },
+          {
+            "sid": "S16",
+            "supports": true,
+            "reason": "构成质量问题退货按质量问题规则处理，支持。"
+          },
+          {
+            "sid": "S18",
+            "supports": true,
+            "reason": "运费由商家承担，支持质量问题运费主张。"
+          },
+          {
+            "sid": "S5",
+            "supports": true,
+            "reason": "误走运费险应回退改由商家承担，支持。"
+          },
+          {
+            "sid": "S6",
+            "supports": true,
+            "reason": "无理由不成立不得适用无理由运费规则，支持。"
+          },
+          {
+            "sid": "S15",
+            "supports": true,
+            "reason": "无理由不成立不得适用买家承担或运费险条款，支持。"
+          },
+          {
+            "sid": "S2",
+            "supports": true,
+            "reason": "会员身份不使定制商品可无理由退货，支持。"
+          },
+          {
+            "sid": "S24",
+            "supports": true,
+            "reason": "刻字属定制认定标准，支持定制类认定。"
+          },
+          {
+            "sid": "S17",
+            "supports": true,
+            "reason": "可按商家责任要求退货退款，支持质量问题救济。"
+          },
+          {
+            "sid": "S19",
+            "supports": true,
+            "reason": "可选择退货退款、换货或维修，支持。"
+          },
+          {
+            "sid": "S22",
+            "supports": true,
+            "reason": "不适用无理由仍可主张质量问题退换修，支持。"
+          },
+          {
+            "sid": "S23",
+            "supports": true,
+            "reason": "不得理解为任何情况不可退，支持。"
+          },
+          {
+            "sid": "S8",
+            "supports": true,
+            "reason": "仅无理由成立时适用消费者承担运费，支持。"
+          },
+          {
+            "sid": "S9",
+            "supports": true,
+            "reason": "运费险赔付属无理由规则，支持。"
+          },
+          {
+            "sid": "S4",
+            "supports": true,
+            "reason": "质量问题商家承担运费且不优先运费险，支持。"
+          },
+          {
+            "sid": "S7",
+            "supports": true,
+            "reason": "质量问题成立由商家承担，支持。"
+          },
+          {
+            "sid": "S21",
+            "supports": true,
+            "reason": "运费适用质量问题条款，支持。"
+          }
+        ]
+      },
+      "error_type": null,
+      "raw": null
+    },
+    {
+      "id": "Q039",
+      "n_cited": 7,
+      "auto_precision": 0.2857142857142857,
+      "auto_n_correct": 2,
+      "judge": {
+        "type": "json_object",
+        "citations": [
+          {
+            "sid": "S12",
+            "supports": true,
+            "reason": "明确7日内提出申请"
+          },
+          {
+            "sid": "S9",
+            "supports": true,
+            "reason": "超7日不得无理由退货"
+          },
+          {
+            "sid": "S2",
+            "supports": true,
+            "reason": "会员不改变7日时限"
+          },
+          {
+            "sid": "S3",
+            "supports": true,
+            "reason": "超7日不适用无理由运费"
+          },
+          {
+            "sid": "S19",
+            "supports": true,
+            "reason": "不适用仍可主张质量问题"
+          },
+          {
+            "sid": "S4",
+            "supports": true,
+            "reason": "质量问题成立由商家承担"
+          },
+          {
+            "sid": "S18",
+            "supports": true,
+            "reason": "运费由商家承担"
+          }
+        ],
+        "citation_ok": true
+      },
+      "error_type": null,
+      "raw": null
+    },
+    {
+      "id": "Q041",
+      "n_cited": 17,
+      "auto_precision": 0.47058823529411764,
+      "auto_n_correct": 8,
+      "judge": {
+        "type": "json_object",
+        "value": {
+          "results": [
+            {
+              "sid": "S1",
+              "supports": true,
+              "reason": "明确手机数码激活后不支持七天无理由退货"
+            },
+            {
+              "sid": "S16",
+              "supports": true,
+              "reason": "同述激活后不再支持七天无理由退货"
+            },
+            {
+              "sid": "S4",
+              "supports": true,
+              "reason": "明确质量问题15日内申请退换货"
+            },
+            {
+              "sid": "S5",
+              "supports": true,
+              "reason": "明确超15日质保期内按维修处理"
+            },
+            {
+              "sid": "S20",
+              "supports": true,
+              "reason": "明确激活后质量问题15日内退换"
+            },
+            {
+              "sid": "S21",
+              "supports": true,
+              "reason": "明确超15日质保期内按维修处理"
+            },
+            {
+              "sid": "S9",
+              "supports": true,
+              "reason": "明确品类级规定优先于通用规定"
+            },
+            {
+              "sid": "S8",
+              "supports": true,
+              "reason": "说明专项与总则在激活退货上存在差异"
+            },
+            {
+              "sid": "S24",
+              "supports": true,
+              "reason": "明确以手机数码品类专项规定为准"
+            },
+            {
+              "sid": "S2",
+              "supports": true,
+              "reason": "未激活7日内完好可按通用规则"
+            },
+            {
+              "sid": "S10",
+              "supports": true,
+              "reason": "未激活7日内完好可按通用七天无理由"
+            },
+            {
+              "sid": "S17",
+              "supports": true,
+              "reason": "未激活7日内完好可按通用七天无理由"
+            },
+            {
+              "sid": "S3",
+              "supports": true,
+              "reason": "明确激活后仅能就质量问题申请售后"
+            },
+            {
+              "sid": "S18",
+              "supports": true,
+              "reason": "明确激活后仅能就质量问题申请"
+            },
+            {
+              "sid": "S6",
+              "supports": true,
+              "reason": "明确15日为特殊规定不得用七天替代"
+            },
+            {
+              "sid": "S7",
+              "supports": true,
+              "reason": "明确不得用通用七天时限替代或缩减"
+            },
+            {
+              "sid": "S22",
+              "supports": true,
+              "reason": "明确15日专项规定不得用七天替代"
+            }
+          ],
+          "citation_ok": true
+        }
+      },
+      "error_type": null,
+      "raw": null
+    },
+    {
+      "id": "Q008",
+      "n_cited": 7,
+      "auto_precision": 0.2857142857142857,
+      "auto_n_correct": 2,
+      "judge": {
+        "type": "json_object",
+        "citations": [
+          {
+            "sid": "S7",
+            "supports": true,
+            "reason": "直接说明定制类商品不支持七天无理由退货"
+          },
+          {
+            "sid": "S8",
+            "supports": true,
+            "reason": "说明7日内包装完好也不能以个人原因退货"
+          },
+          {
+            "sid": "S2",
+            "supports": true,
+            "reason": "说明会员身份不使定制商品可无理由退货"
+          },
+          {
+            "sid": "S11",
+            "supports": true,
+            "reason": "指出不得理解为任何情况下都不可退"
+          },
+          {
+            "sid": "S10",
+            "supports": true,
+            "reason": "说明不适用无理由时仍可因质量问题申请售后"
+          },
+          {
+            "sid": "S4",
+            "supports": true,
+            "reason": "说明质量问题成立时由商家承担运费"
+          },
+          {
+            "sid": "S13",
+            "supports": true,
+            "reason": "说明质量问题退货按质量问题规则处理运费"
+          }
+        ],
+        "citation_ok": true
+      },
+      "error_type": null,
+      "raw": null
+    }
+  ]
+}

@@ -1,0 +1,4478 @@
+{
+  "ok": true,
+  "split": "dev",
+  "model": "qwen3.8-flash",
+  "cascade_note": "级联阈值尚未标定，默认不升级（reason=no_threshold_always_fast）",
+  "summary": {
+    "split": "dev",
+    "n_questions": 28,
+    "n_answerable": 24,
+    "n_refusal": 4,
+    "n_generation_ok": 28,
+    "n_generation_failed": 0,
+    "generation_failed_ids": [],
+    "citation": {
+      "metric": "sentence_precision",
+      "definition": "按句子算引用精度。系统回答中每个 [S#] 映射到证据句（doc_id+section_path+字符起止，与条款标注同一 documents.body 坐标系）；该句与任一金标条款跨度在同一章节下字符交集长度>0 视为正确。不对着检索改标注。可答题、生成成功的题目上统计。",
+      "n_answerable_generated": 24,
+      "n_with_citations": 24,
+      "n_without_citations": 0,
+      "macro_precision_over_questions_with_citations": 0.45271372969708884,
+      "macro_precision_missing_as_zero": 0.45271372969708884,
+      "macro_recall_over_questions_with_gold_sentences": 0.5039321789321789,
+      "micro_precision": 0.4161849710982659,
+      "micro_n_correct": 72,
+      "micro_n_cited": 173
+    },
+    "answer_quality": {
+      "definition": "可答题：不得拒答，且至少引用到一条金标句或覆盖至少一条金标要点；要点覆盖见 app.quality.point_coverage。拒答另计。",
+      "n_answerable_generated": 24,
+      "n_task_ok": 21,
+      "n_task_fail": 3,
+      "task_ok_over_generated": "21/24",
+      "task_fail_ids": [
+        "Q002",
+        "Q009",
+        "Q012"
+      ],
+      "macro_point_coverage": 0.9375
+    },
+    "refusal": {
+      "n": 4,
+      "n_evaluated": 4,
+      "n_correct": 4,
+      "n_incorrect": 0,
+      "n_generation_failed": 0,
+      "correct_over_total": "4/4",
+      "incorrect_ids": [],
+      "generation_failed_ids": [],
+      "note": "小样本只报对了几道/共几道，不设 90% 目标。"
+    }
+  },
+  "items": [
+    {
+      "id": "Q001",
+      "type": "single_hop",
+      "cluster": "phone_digital",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：可以申请七天无理由退货。**\n\n**依据简述：**\n1.  **适用专项规则**：您咨询的商品属于“手机数码”类目，根据冲突排序口径，品类级规定优先于通用规定，因此应适用《手机数码品类专项规定》 [S9]。该规定明确适用于手机、平板等商品 [S10]。\n2.  **未激活且时限内**：虽然手机数码类商品一旦激活即不支持七天无理由退货 [S1]，但您的商品**尚未激活**，且签收仅5天（仍在7日内），包装和机身完好，符合“未激活且仍在签收之日起 7 日内、商品完好的，仍可按通用七天无理由规则申请退货”的条件 [S3]。FAQ中也确认了此口径 [S14]。\n3.  **商品完好标准**：申请退货需保证商品完好，不影响二次销售，您描述的“包装和机身都完好”符合这一要求 [S24]。\n\n综上，在满足未激活、7日内、商品完好的前提下，您可以按通用七天无理由规则申请退货。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.032018442622950824,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.032018442622950824,
+        "top2_rrf": 0.03200204813108039,
+        "margin_rrf": 1.639449187043618e-05,
+        "top1_dense": 0.8757869228720665,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1819,
+        "output_tokens": 236,
+        "total_tokens": 2055
+      },
+      "elapsed_ms": 5133,
+      "citations": [
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "4.与通用规则的关系",
+          "char_start": 415,
+          "char_end": 451,
+          "text": "按冲突排序口径，品类级规定优先于通用规定，因此本类目应适用本节专项规则。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "1.适用范围",
+          "char_start": 25,
+          "char_end": 65,
+          "text": "本规定适用于类目为“手机数码”的商品，包括手机、平板及以手机或平板为主体的套装。"
+        },
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 118,
+          "char_end": 191,
+          "text": "与平台通用的七天无理由退货规则不同：手机数码类商品一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货。"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 197,
+          "char_end": 233,
+          "text": "仍在签收之日起 7 日内、商品完好的，仍可按通用七天无理由规则申请退货。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 142,
+          "char_end": 178,
+          "text": "未激活且仍在签收之日起 7 日内、商品完好的，仍可按通用七天无理由申请。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 328,
+          "char_end": 354,
+          "text": "申请七天无理由退货的，商品应当完好，不影响二次销售。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 2,
+        "n_incorrect": 4,
+        "precision": 0.3333333333333333,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 1,
+        "recall": 0.5,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.5,
+        "citation_precision": 0.3333333333333333
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=（未指定），品类=手机数码。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n品类级规定优先于通用，适用：P15《手机数码品类专项规定》（来源=政策，范围=品类：手机数码，生效日=2025-04-01）、F07《FAQ：手机激活后还能七天无理由退货吗？》（来源=FAQ，范围=品类：手机数码，生效日=2025-09-01）。\n因此本品类专项覆盖（优先于并取代其适用位置上的）通用规定，作答须采用专类结论并说明依据，不得用通用规则替代或缩减专项时限。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [
+          "P15",
+          "F07"
+        ],
+        "general": [
+          "P02",
+          "P03",
+          "P10",
+          "P19",
+          "M05",
+          "M16",
+          "M23",
+          "M01",
+          "M14",
+          "F01",
+          "F02",
+          "F12",
+          "F05"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q002",
+      "type": "single_hop",
+      "cluster": "phone_digital",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n手机已激活不影响质量问题退换申请。只要商品处于**质量保证期限（质保期）内**，即可提出售后申请；若超出七天无理由退货时限，仍可按质量问题规则办理，不受七天限制约束 [S1][S4][S6][S17]。\n\n**依据简述：**\n1.  **质保期内可申请：** 根据通用政策，在商品质量保证期限内，消费者可就质量问题提出售后申请，包括退货退款、换货或维修 [S4][S6]。\n2.  **激活与七天无理由无关：** 即使商品已激活导致“七天无理由退货”不适用或过期，消费者仍可根据《质量问题退换货通则》就质量问题申请售后，不得将“不支持七天无理由”理解为“任何情况下都不可退” [S17][S18]。\n3.  **处理方式选择：** 在可行的前提下，消费者可以选择退货退款、换货或维修，且因质量问题选择退货时，已使用（如激活）不影响问题成立的，商家不得据此拒绝 [S12][S13]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.032266458495966696,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.032266458495966696,
+        "top2_rrf": 0.03200204813108039,
+        "margin_rrf": 0.0002644103648863083,
+        "top1_dense": 0.7465646266937256,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1831,
+        "output_tokens": 227,
+        "total_tokens": 2058
+      },
+      "elapsed_ms": 5286,
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P10",
+          "section_path": "2.换货时限",
+          "char_start": 108,
+          "char_end": 123,
+          "text": "质量问题换货在质保期内可申请。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 108,
+          "char_end": 135,
+          "text": "在商品质量保证期限内，消费者可就质量问题提出售后申请。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "1.质量问题范围",
+          "char_start": 26,
+          "char_end": 86,
+          "text": "商品存在本平台总则所定义的质量问题，或在质保期内出现非因消费者使用不当导致的性能故障，消费者可申请退货退款、换货或维修。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 293,
+          "char_end": 341,
+          "text": "商品不适用七天无理由退货的，消费者仍可根据《质量问题退换货通则》就质量问题申请退货、换货或维修。"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 341,
+          "char_end": 369,
+          "text": "不得将“不支持七天无理由”理解为“任何情况下都不可退”。"
+        },
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 291,
+          "char_end": 317,
+          "text": "在可行的前提下，消费者可以选择退货退款、换货或维修。"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 317,
+          "char_end": 352,
+          "text": "因质量问题选择退货退款的，已使用的不影响问题成立的，不得据此拒绝退货。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 7,
+        "n_correct": 0,
+        "n_incorrect": 7,
+        "precision": 0.0,
+        "n_gold_sentences": 4,
+        "n_gold_hit": 0,
+        "recall": 0.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": false,
+        "looks_like_refusal": true,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 0,
+          "recall": 0.0,
+          "hits": [
+            false
+          ]
+        },
+        "citation_recall": 0.0,
+        "citation_precision": 0.0
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": true,
+        "ok": false
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P10",
+          "P04",
+          "P02",
+          "P19",
+          "P03",
+          "P12",
+          "P07",
+          "M05",
+          "M01",
+          "M23",
+          "M03",
+          "M09",
+          "M13",
+          "M14",
+          "F02",
+          "F01",
+          "F03",
+          "F05",
+          "F12"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q003",
+      "type": "single_hop",
+      "cluster": "phone_digital",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n由于您的手机数码商品已激活且签收超过 15 天，**不能申请退货或换货**。鉴于仍在质保期内，您应依据质量问题条款申请**维修**。\n\n**依据说明：**\n\n1.  **关于退换货时限（已过）：**\n    根据《手机数码品类专项规定》，激活后的商品仅能就质量问题申请售后，且质量问题应在签收之日起 15 日内申请退货或换货 [S2]。该 15 日退换期是本品类的特殊规定，不得用通用七天无理由或其他规则替代或缩减 [S4][S16]。因您已超过 15 天，故无法按此通道进行退/换货。\n\n2.  **关于当前处理方式（维修）：**\n    对于超过 15 日但仍在质保期内的情况，明确规定应按维修或质保规则处理 [S3][S10]。同时，在商品质量保证期限内，消费者可就质量问题提出售后申请，可选择维修等方式 [S22][S24]。\n\n3.  **关于运费承担：**\n    若后续经检测确认为质量问题，相关售后产生的运费应由商家承担 [S19]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03252247488101534,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03252247488101534,
+        "top2_rrf": 0.03252247488101534,
+        "margin_rrf": 0.0,
+        "top1_dense": 0.7809197008609772,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1752,
+        "output_tokens": 258,
+        "total_tokens": 2010
+      },
+      "elapsed_ms": 4818,
+      "citations": [
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 271,
+          "char_end": 296,
+          "text": "质量问题应在签收之日起 15 日内申请退货或换货；"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 323,
+          "char_end": 355,
+          "text": "该 15 日质量问题退换期是本品类的特殊规定，不得用通用七天无理"
+        },
+        {
+          "sid": "S16",
+          "valid_evidence": true,
+          "doc_id": "F07",
+          "section_path": "3.说明",
+          "char_start": 252,
+          "char_end": 286,
+          "text": "上述 15 日是本品类专项规定，不得用通用七天无理由时限替代或缩减。"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 296,
+          "char_end": 323,
+          "text": "超过 15 日但仍在质保期内的，按维修或质保规则处理。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 214,
+          "char_end": 241,
+          "text": "超过 15 日但仍在质保期内的，按维修或质保规则处理。"
+        },
+        {
+          "sid": "S22",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 108,
+          "char_end": 135,
+          "text": "在商品质量保证期限内，消费者可就质量问题提出售后申请。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 291,
+          "char_end": 317,
+          "text": "在可行的前提下，消费者可以选择退货退款、换货或维修。"
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "3.无理由不成立时的运费",
+          "char_start": 330,
+          "char_end": 359,
+          "text": "该次售后因质量问题成立，应适用第 1 条，由商家承担运费。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 8,
+        "n_correct": 3,
+        "n_incorrect": 5,
+        "precision": 0.375,
+        "n_gold_sentences": 4,
+        "n_gold_hit": 2,
+        "recall": 0.5,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.5,
+        "citation_precision": 0.375
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=（未指定），品类=手机数码。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n品类级规定优先于通用，适用：P15《手机数码品类专项规定》（来源=政策，范围=品类：手机数码，生效日=2025-04-01）、F07《FAQ：手机激活后还能七天无理由退货吗？》（来源=FAQ，范围=品类：手机数码，生效日=2025-09-01）。\n因此本品类专项覆盖（优先于并取代其适用位置上的）通用规定，作答须采用专类结论并说明依据，不得用通用规则替代或缩减专项时限。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [
+          "P15",
+          "F07"
+        ],
+        "general": [
+          "P05",
+          "P04",
+          "P10",
+          "P02",
+          "P19",
+          "P12",
+          "P07",
+          "M05",
+          "M03",
+          "M23",
+          "M01",
+          "M16",
+          "F05",
+          "F01",
+          "F03",
+          "F02"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q004",
+      "type": "single_hop",
+      "cluster": "phone_digital",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n在手机数码品类中，“激活”包括以下三种情形：\n1. 首次开机并完成系统激活；\n2. 绑定账号；\n3. 写入运营商网络。\n\n**依据说明：**\n根据《手机数码品类专项规定》（P15）及对应FAQ（F07），手机数码类商品一旦完成上述任一形式的“激活”，即不再支持七天无理由退货 [S1][S12]。该品类级专项规定优先于平台通用的七天无理由退货规则，因此必须按此标准判定是否已激活 [S6][S7]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03200204813108039,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03200204813108039,
+        "top2_rrf": 0.031544957774465976,
+        "margin_rrf": 0.0004570903566144119,
+        "top1_dense": 0.7033333778381348,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 2078,
+        "output_tokens": 126,
+        "total_tokens": 2204
+      },
+      "elapsed_ms": 3842,
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 118,
+          "char_end": 191,
+          "text": "与平台通用的七天无理由退货规则不同：手机数码类商品一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货。"
+        },
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 81,
+          "char_end": 142,
+          "text": "类目为“手机数码”的商品，一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "4.与通用规则的关系",
+          "char_start": 381,
+          "char_end": 415,
+          "text": "本文件与《七天无理由退货总则》在“激活后能否无理由退货”上存在差异。"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "4.与通用规则的关系",
+          "char_start": 415,
+          "char_end": 451,
+          "text": "按冲突排序口径，品类级规定优先于通用规定，因此本类目应适用本节专项规则。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 4,
+        "n_correct": 1,
+        "n_incorrect": 3,
+        "precision": 0.25,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 1,
+        "recall": 0.5,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.5,
+        "citation_precision": 0.25
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=（未指定），品类=手机数码。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n品类级规定优先于通用，适用：P15《手机数码品类专项规定》（来源=政策，范围=品类：手机数码，生效日=2025-04-01）、F07《FAQ：手机激活后还能七天无理由退货吗？》（来源=FAQ，范围=品类：手机数码，生效日=2025-09-01）。\n因此本品类专项覆盖（优先于并取代其适用位置上的）通用规定，作答须采用专类结论并说明依据，不得用通用规则替代或缩减专项时限。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [
+          "P15",
+          "F07"
+        ],
+        "general": [
+          "P03",
+          "P07",
+          "P01",
+          "M05",
+          "M23",
+          "M16",
+          "M01",
+          "M02",
+          "F02"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q005",
+      "type": "multi_hop",
+      "cluster": "phone_digital",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不适用。**\n\n智能穿戴设备如果没有归入“手机数码”品类，则不执行《手机数码品类专项规定》中关于激活后不支持七天无理由退货的规则 [S4]。该专项规则仅适用于类目为“手机数码”的商品（包括手机、平板及以手机或平板为主体的套装） [S3]。对于未归入该品类的智能穿戴，应依据其实际所属类目的通用退货政策或对应专项政策处理，而非直接套用手机数码的激活限制条款 [S15]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03278688524590164,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03278688524590164,
+        "top2_rrf": 0.0315136476426799,
+        "margin_rrf": 0.00127323760322174,
+        "top1_dense": 0.8173961639404297,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1832,
+        "output_tokens": 113,
+        "total_tokens": 1945
+      },
+      "elapsed_ms": 3076,
+      "citations": [
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "1.适用范围",
+          "char_start": 65,
+          "char_end": 89,
+          "text": "智能穿戴、配件单卖如未归入该品类，不适用本文件。"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "1.适用范围",
+          "char_start": 25,
+          "char_end": 65,
+          "text": "本规定适用于类目为“手机数码”的商品，包括手机、平板及以手机或平板为主体的套装。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "F07",
+          "section_path": "3.说明",
+          "char_start": 313,
+          "char_end": 329,
+          "text": "以《手机数码品类专项规定》为准。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 3,
+        "n_correct": 2,
+        "n_incorrect": 1,
+        "precision": 0.6666666666666666,
+        "n_gold_sentences": 5,
+        "n_gold_hit": 2,
+        "recall": 0.4,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 2,
+          "n_hit": 1,
+          "recall": 0.5,
+          "hits": [
+            true,
+            false
+          ]
+        },
+        "citation_recall": 0.4,
+        "citation_precision": 0.6666666666666666
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=（未指定），品类=手机数码。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n品类级规定优先于通用，适用：P15《手机数码品类专项规定》（来源=政策，范围=品类：手机数码，生效日=2025-04-01）、F07《FAQ：手机激活后还能七天无理由退货吗？》（来源=FAQ，范围=品类：手机数码，生效日=2025-09-01）。\n因此本品类专项覆盖（优先于并取代其适用位置上的）通用规定，作答须采用专类结论并说明依据，不得用通用规则替代或缩减专项时限。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [
+          "P15",
+          "F07"
+        ],
+        "general": [
+          "P03",
+          "P04",
+          "P02",
+          "P07",
+          "M23",
+          "M05",
+          "M09",
+          "M01",
+          "M16",
+          "M03",
+          "F02",
+          "F12",
+          "F05",
+          "F01"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q006",
+      "type": "single_hop",
+      "cluster": "custom_returns",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n认定一件商品属于定制类，主要依据是**商品详情页是否标明“定制”**，或者**下单时是否存在消费者指定的图案、尺寸、刻字或专项配置** [S7][S8]。从定义上讲，这类商品是按消费者特定要求制作，且制作完成后难以向其他消费者转售的商品 [S22][S23]。\n\n**依据简述：**\n1.  **认定标准**：政策明确规定，定制类商品的认定以商品详情页标明“定制”或下单时存在消费者指定的图案、尺寸、刻字、专项配置为准 [S7][S8]。\n2.  **核心特征**：此类商品是根据消费者的个性化需求（如指定图案、尺寸等）进行制作的，其关键特征是制作完成后难以再次销售给其他消费者 [S22][S23]。\n3.  **售后影响**：一旦认定为定制类商品，即使仍在签收后7日内且包装完好，也不支持七天无理由退货，消费者不得仅以“不想要了”、“不喜欢”等理由要求退货 [S5][S6]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03252247488101534,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03252247488101534,
+        "top2_rrf": 0.03125763125763126,
+        "margin_rrf": 0.001264843623384082,
+        "top1_dense": 0.6970478296279907,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1832,
+        "output_tokens": 234,
+        "total_tokens": 2066
+      },
+      "elapsed_ms": 4243,
+      "citations": [
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 99,
+          "char_end": 134,
+          "text": "定制类商品的认定，以商品详情页标明“定制”或下单时存在消费者指定的图案"
+        },
+        {
+          "sid": "S8",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 110,
+          "char_end": 148,
+          "text": "品详情页标明“定制”或下单时存在消费者指定的图案、尺寸、刻字、专项配置为准。"
+        },
+        {
+          "sid": "S22",
+          "valid_evidence": true,
+          "doc_id": "P01",
+          "section_path": "2.术语",
+          "char_start": 179,
+          "char_end": 228,
+          "text": "定制类商品：按消费者指定的图案、尺寸、刻字、配置等要求制作，制作完成后难以向其他消费者转售的商品。"
+        },
+        {
+          "sid": "S23",
+          "valid_evidence": true,
+          "doc_id": "P01",
+          "section_path": "2.术语",
+          "char_start": 204,
+          "char_end": 228,
+          "text": "要求制作，制作完成后难以向其他消费者转售的商品。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 26,
+          "char_end": 42,
+          "text": "定制类商品不支持七天无理由退货。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 42,
+          "char_end": 97,
+          "text": "即使商品仍在签收后 7 日内，且包装完好，消费者也不得仅以“不想要了”“不喜欢”“拍错”等无理由情形要求退货。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 4,
+        "n_incorrect": 2,
+        "precision": 0.6666666666666666,
+        "n_gold_sentences": 3,
+        "n_gold_hit": 2,
+        "recall": 0.6666666666666666,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.6666666666666666,
+        "citation_precision": 0.6666666666666666
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P03",
+          "P02",
+          "P04",
+          "P19",
+          "P01",
+          "M05",
+          "M04",
+          "M01",
+          "M16",
+          "M23",
+          "M09",
+          "F02",
+          "F12",
+          "F03",
+          "F05",
+          "F01",
+          "F04"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q007",
+      "type": "single_hop",
+      "cluster": "custom_returns",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不可以。** 定制类商品不支持七天无理由退货，即使签收仅3天且包装完好，也不能以“不喜欢”为由申请无理由退货。\n\n**依据：**\n1. **定制商品排除规则**：根据政策规定，定制类商品明确不支持七天无理由退货 [S5]。即使商品仍在签收后7日内且包装完好，消费者也不得仅以“不想要了”、“不喜欢”等理由要求退货 [S6]。\n2. **会员权益限制**：会员身份不会改变七天无理由的时限，也不会使定制类商品变得可以无理由退货 [S2]。\n3. **运费责任说明**：由于属于定制类商品导致七天无理由不成立，不得适用无理由退货的运费规则 [S3]。若后续主张存在质量问题，则需转入质量问题流程处理，此时运费由商家承担 [S4][S22]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03252247488101534,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03252247488101534,
+        "top2_rrf": 0.032018442622950824,
+        "margin_rrf": 0.0005040322580645157,
+        "top1_dense": 0.7619999796152115,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1963,
+        "output_tokens": 188,
+        "total_tokens": 2151
+      },
+      "elapsed_ms": 4509,
+      "citations": [
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 26,
+          "char_end": 42,
+          "text": "定制类商品不支持七天无理由退货。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 42,
+          "char_end": 97,
+          "text": "即使商品仍在签收后 7 日内，且包装完好，消费者也不得仅以“不想要了”“不喜欢”“拍错”等无理由情形要求退货。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P14",
+          "section_path": "2.增值服务内容",
+          "char_start": 153,
+          "char_end": 192,
+          "text": "会员身份不改变七天无理由 7 日时限，也不使定制类商品因此变得可以无理由退货。"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "3.无理由不成立时的运费",
+          "char_start": 251,
+          "char_end": 329,
+          "text": "七天无理由不成立的（包括但不限于：属于定制类等不适用商品，或已超过 7 日时限，或商品完好性不符合无理由退货条件），不得适用本文件第 2 条无理由运费规则。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "3.无理由不成立时的运费",
+          "char_start": 329,
+          "char_end": 354,
+          "text": "若该次售后因质量问题成立，应适用第 1 条，由商家"
+        },
+        {
+          "sid": "S22",
+          "valid_evidence": true,
+          "doc_id": "M05",
+          "section_path": "1.定制订单",
+          "char_start": 77,
+          "char_end": 110,
+          "text": "若消费者主张质量问题，转入质量问题流程，运费按质量问题由商家承担。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 2,
+        "n_incorrect": 4,
+        "precision": 0.3333333333333333,
+        "n_gold_sentences": 3,
+        "n_gold_hit": 2,
+        "recall": 0.6666666666666666,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.6666666666666666,
+        "citation_precision": 0.3333333333333333
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P03",
+          "P02",
+          "P19",
+          "P04",
+          "P12",
+          "M05",
+          "M01",
+          "M09",
+          "M04",
+          "M13",
+          "M16",
+          "M14",
+          "F02",
+          "F01",
+          "F12"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q008",
+      "type": "single_hop",
+      "cluster": "custom_returns",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不是。定制商品虽然不支持“七天无理由退货”，但在存在质量问题的情况下，仍然可以申请退货、换货或维修。**\n\n**依据简述：**\n\n1.  **关于无理由退货的限制**：\n    政策明确规定，定制类商品不支持七天无理由退货 [S7]。即使商品在签收后7日内且包装完好，消费者也不能仅以“不想要了”、“不喜欢”等个人原因要求退货 [S8]。会员权益也不会改变这一规则，不会使定制商品变得可以无理由退货 [S2]。\n\n2.  **关于质量问题仍可申请售后**：\n    政策特别指出，不得将“不支持七天无理由”理解为“任何情况下都不可退” [S11]。如果商品不适用七天无理由退货（如定制商品），但存在质量问题，消费者仍可根据《质量问题退换货通则》申请退货、换货或维修 [S10]。\n\n3.  **关于运费承担**：\n    若因质量问题导致售后成立，运费应按质量问题规则处理，由商家承担，而不适用无理由退货中由买家承担运费的规则 [S4][S13]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.031754032258064516,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.031754032258064516,
+        "top2_rrf": 0.031099324975891997,
+        "margin_rrf": 0.0006547072821725189,
+        "top1_dense": 0.803909495472908,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1905,
+        "output_tokens": 241,
+        "total_tokens": 2146
+      },
+      "elapsed_ms": 5380,
+      "citations": [
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 26,
+          "char_end": 42,
+          "text": "定制类商品不支持七天无理由退货。"
+        },
+        {
+          "sid": "S8",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 42,
+          "char_end": 97,
+          "text": "即使商品仍在签收后 7 日内，且包装完好，消费者也不得仅以“不想要了”“不喜欢”“拍错”等无理由情形要求退货。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P14",
+          "section_path": "2.增值服务内容",
+          "char_start": 153,
+          "char_end": 192,
+          "text": "会员身份不改变七天无理由 7 日时限，也不使定制类商品因此变得可以无理由退货。"
+        },
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 341,
+          "char_end": 369,
+          "text": "不得将“不支持七天无理由”理解为“任何情况下都不可退”。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 293,
+          "char_end": 341,
+          "text": "商品不适用七天无理由退货的，消费者仍可根据《质量问题退换货通则》就质量问题申请退货、换货或维修。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "3.无理由不成立时的运费",
+          "char_start": 329,
+          "char_end": 354,
+          "text": "若该次售后因质量问题成立，应适用第 1 条，由商家"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "4.与运费规则的关系",
+          "char_start": 445,
+          "char_end": 470,
+          "text": "此时若构成质量问题退货，运费应按质量问题规则处理。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 7,
+        "n_correct": 2,
+        "n_incorrect": 5,
+        "precision": 0.2857142857142857,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 2,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 1.0,
+        "citation_precision": 0.2857142857142857
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P03",
+          "P02",
+          "M05",
+          "M04",
+          "M16",
+          "M01",
+          "M03",
+          "M14",
+          "F02",
+          "F12",
+          "F01",
+          "F04",
+          "F03"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q009",
+      "type": "single_hop",
+      "cluster": "custom_returns",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n若订单包含消费者指定的刻字，该商品属于“定制类商品”，**不支持七天无理由退货**。客服应告知消费者，即使商品在签收后7日内且包装完好，也不能以“不想要”、“不喜欢”或“拍错”等理由申请退货 [S12][S13]。\n\n**依据说明：**\n1.  **定制类商品的认定**：根据政策，下单时存在消费者指定的图案、尺寸、刻字或专项配置的商品，即认定为定制类商品 [S5][S14]。\n2.  **排除七天无理由权利**：定制类商品明确不支持七天无理由退货 [S12]。即便仍在7日时限内，消费者也不得仅以个人喜好等非质量原因要求退货 [S13]。\n3.  **例外情况（质量问题）**：如果消费者主张的是**质量问题**（如刻字错误、商品本身瑕疵等），则不受上述限制。此时应按质量问题处理，消费者可要求补发、换货或退货退款，且退回运费由商家承担 [S10][S11][S18]。但需注意，这不属于“七天无理由”范畴，而是基于质量责任的售后通道 [S19]。\n\n**操作建议：**\n*   核实消费者退货原因。\n*   若为“无理由/不喜欢/拍错”：拒绝七天无理由退货申请，解释定制商品规则 [S12][S13]。\n*   若为“质量问题”：引导通过质量问题通道申请，并确认运费由商家承担 [S10][S11]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03252247488101534,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03252247488101534,
+        "top2_rrf": 0.032266458495966696,
+        "margin_rrf": 0.00025601638504864355,
+        "top1_dense": 0.7214197814464569,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1720,
+        "output_tokens": 344,
+        "total_tokens": 2064
+      },
+      "elapsed_ms": 7025,
+      "citations": [
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 26,
+          "char_end": 42,
+          "text": "定制类商品不支持七天无理由退货。"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 42,
+          "char_end": 97,
+          "text": "即使商品仍在签收后 7 日内，且包装完好，消费者也不得仅以“不想要了”“不喜欢”“拍错”等无理由情形要求退货。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 110,
+          "char_end": 148,
+          "text": "品详情页标明“定制”或下单时存在消费者指定的图案、尺寸、刻字、专项配置为准。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 99,
+          "char_end": 134,
+          "text": "定制类商品的认定，以商品详情页标明“定制”或下单时存在消费者指定的图案"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 111,
+          "char_end": 151,
+          "text": "上述情形按商家责任处理，消费者可以要求补发、换货或退货退款，不必改走七天无理由。"
+        },
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 151,
+          "char_end": 164,
+          "text": "因此产生的运费由商家承担。"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 108,
+          "char_end": 135,
+          "text": "在商品质量保证期限内，消费者可就质量问题提出售后申请。"
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 135,
+          "char_end": 192,
+          "text": "收货后的合理检验期内发现的外观或配件缺失问题，也应按质量问题或少件错件规则处理，不得强制要求消费者改走七天无理由。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 8,
+        "n_correct": 0,
+        "n_incorrect": 8,
+        "precision": 0.0,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 0,
+        "recall": 0.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": false,
+        "looks_like_refusal": true,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.0,
+        "citation_precision": 0.0
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": true,
+        "ok": false
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P05",
+          "P02",
+          "P03",
+          "P19",
+          "P04",
+          "P10",
+          "P01",
+          "M05",
+          "M01",
+          "M02",
+          "M16",
+          "M03",
+          "F02",
+          "F01",
+          "F12",
+          "F03",
+          "F04",
+          "F05"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q010",
+      "type": "multi_hop",
+      "cluster": "custom_returns",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n1. **已下载的数字化商品或充值类商品，不支持七天无理由退货。**\n2. **如果充值未到账，属于服务质量/履约问题，可以依据质量问题或商家责任条款申请退款，不受“不支持七天无理由”的限制。**\n\n**依据说明：**\n\n*   **关于七天无理由退货资格：**\n    根据通用政策，在线下载或拆封后的数字化商品、充值类商品明确列为不适用七天无理由退货的范围 [S7][S10][S11]。这意味着即使您在签收后7日内提出，也不能以“不想要了”等个人原因要求无理由退货 [S13]。会员权益也不会改变这一时限或使此类商品变得可无理由退货 [S2]。\n\n*   **关于充值未到账的处理：**\n    “不支持七天无理由”并不等同于“任何情况下都不可退” [S19]。若充值未到账，这属于商家未履行服务义务或存在质量/履约瑕疵的情形。根据规定，上述情形按商家责任处理，消费者可以要求补发、换货或退货退款，不必改走七天无理由流程 [S20]。因此产生的运费（如有）由商家承担 [S21]。此外，若售后因质量问题成立，应适用相关条款由商家承担责任 [S4]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.032266458495966696,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.032266458495966696,
+        "top2_rrf": 0.0315136476426799,
+        "margin_rrf": 0.000752810853286795,
+        "top1_dense": 0.8641836792230606,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1894,
+        "output_tokens": 275,
+        "total_tokens": 2169
+      },
+      "elapsed_ms": 5832,
+      "citations": [
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "2.其他不适用商品",
+          "char_start": 164,
+          "char_end": 181,
+          "text": "下列商品同样不支持七天无理由退货："
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "2.其他不适用商品",
+          "char_start": 248,
+          "char_end": 270,
+          "text": "3. 在线下载或拆封后的数字化商品、充值类商"
+        },
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "2.其他不适用商品",
+          "char_start": 246,
+          "char_end": 272,
+          "text": "。\n3. 在线下载或拆封后的数字化商品、充值类商品。"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 42,
+          "char_end": 97,
+          "text": "即使商品仍在签收后 7 日内，且包装完好，消费者也不得仅以“不想要了”“不喜欢”“拍错”等无理由情形要求退货。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P14",
+          "section_path": "2.增值服务内容",
+          "char_start": 153,
+          "char_end": 192,
+          "text": "会员身份不改变七天无理由 7 日时限，也不使定制类商品因此变得可以无理由退货。"
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 341,
+          "char_end": 369,
+          "text": "不得将“不支持七天无理由”理解为“任何情况下都不可退”。"
+        },
+        {
+          "sid": "S20",
+          "valid_evidence": true,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 111,
+          "char_end": 151,
+          "text": "上述情形按商家责任处理，消费者可以要求补发、换货或退货退款，不必改走七天无理由。"
+        },
+        {
+          "sid": "S21",
+          "valid_evidence": true,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 151,
+          "char_end": 164,
+          "text": "因此产生的运费由商家承担。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "3.无理由不成立时的运费",
+          "char_start": 329,
+          "char_end": 354,
+          "text": "若该次售后因质量问题成立，应适用第 1 条，由商家"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 9,
+        "n_correct": 4,
+        "n_incorrect": 5,
+        "precision": 0.4444444444444444,
+        "n_gold_sentences": 9,
+        "n_gold_hit": 2,
+        "recall": 0.2222222222222222,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 2,
+          "n_hit": 2,
+          "recall": 1.0,
+          "hits": [
+            true,
+            true
+          ]
+        },
+        "citation_recall": 0.2222222222222222,
+        "citation_precision": 0.4444444444444444
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P03",
+          "P02",
+          "P19",
+          "M16",
+          "M04",
+          "M05",
+          "M01",
+          "F12",
+          "F01",
+          "F02",
+          "F03",
+          "F04",
+          "F05"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q011",
+      "type": "single_hop",
+      "cluster": "returns_time",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：** 七天无理由退货的期限从**签收当日**开始计算 [S8]。\n\n**依据简述：**\n1.  **起算点**：消费者应当在签收之日起 7 日内提出申请，且明确规定的起算日为签收当日 [S7][S8]。\n2.  **截止点**：7 日期间包含第 7 日，消费者最迟应在第 7 日的 24:00 前在平台提交退货申请 [S9][S10]。\n3.  **判定标准**：时限是否届满，以系统记录的“申请提交成功时间”与“签收时间”进行比较为准，不以客服口头承诺替代 [S15]。\n4.  **过期后果**：若超过上述 7 日期限，不得再依据七天无理由规则办理退货 [S13]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03278688524590164,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03278688524590164,
+        "top2_rrf": 0.03200204813108039,
+        "margin_rrf": 0.0007848371148212532,
+        "top1_dense": 0.8324218243360519,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1920,
+        "output_tokens": 185,
+        "total_tokens": 2105
+      },
+      "elapsed_ms": 4467,
+      "citations": [
+        {
+          "sid": "S8",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 147,
+          "char_end": 159,
+          "text": "1. 起算日为签收当日。"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 108,
+          "char_end": 145,
+          "text": "消费者应当在签收之日起 7 日内提出七天无理由退货申请，期限计算方式如下："
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 160,
+          "char_end": 175,
+          "text": "2. 7 日期间含第 7 日；"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 175,
+          "char_end": 205,
+          "text": "消费者最迟应在第 7 日 24:00 前在平台提交退货申请。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 270,
+          "char_end": 313,
+          "text": "4. 时限是否届满，以申请提交成功的系统时间与签收时间比较为准，不以客服口头承诺替代。"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 206,
+          "char_end": 238,
+          "text": "3. 超过上述 7 日期限的，不得再依据七天无理由规则办理退货。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 6,
+        "n_incorrect": 0,
+        "precision": 1.0,
+        "n_gold_sentences": 7,
+        "n_gold_hit": 6,
+        "recall": 0.8571428571428571,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.8571428571428571,
+        "citation_precision": 1.0
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P02",
+          "P03",
+          "P12",
+          "M09",
+          "M01",
+          "M16",
+          "M02",
+          "M13",
+          "M04",
+          "F01",
+          "F12",
+          "F02",
+          "F04",
+          "F03"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q012",
+      "type": "single_hop",
+      "cluster": "returns_time",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：可以提交。**\n\n在签收后的第 7 天晚上 11 点（即 23:00），仍在七天无理由退货的有效时限内，消费者可以在平台提交申请。\n\n**依据：**\n根据通用政策关于时限计算的规定，七天无理由退货的期限包含第 7 日 [S5]，且消费者最迟应在第 7 日的 24:00 前在平台提交退货申请 [S6]。由于晚上 11 点早于当日 24:00 的截止时间，因此该时间点仍属于有效申请窗口 [S3][S4]。\n\n*注：最终能否成功办理退货，还需确保商品符合“完好”标准（不影响二次销售）[S17][S18]，且不属于定制类等不适用商品 [S12]。若超过第 7 日 24:00 未提交，则不得再依据七天无理由规则办理退货 [S9]。*",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03177805800756621,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03177805800756621,
+        "top2_rrf": 0.031544957774465976,
+        "margin_rrf": 0.00023310023310023353,
+        "top1_dense": 0.834697499871254,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1905,
+        "output_tokens": 214,
+        "total_tokens": 2119
+      },
+      "elapsed_ms": 5803,
+      "citations": [
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 160,
+          "char_end": 175,
+          "text": "2. 7 日期间含第 7 日；"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 175,
+          "char_end": 205,
+          "text": "消费者最迟应在第 7 日 24:00 前在平台提交退货申请。"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 108,
+          "char_end": 145,
+          "text": "消费者应当在签收之日起 7 日内提出七天无理由退货申请，期限计算方式如下："
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 147,
+          "char_end": 159,
+          "text": "1. 起算日为签收当日。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 328,
+          "char_end": 354,
+          "text": "申请七天无理由退货的，商品应当完好，不影响二次销售。"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 354,
+          "char_end": 412,
+          "text": "完好通常指：商品本体、配件、赠品、包装、吊牌、序列号及附带的发票或电子凭证可一并退回，且无使用痕迹、无损坏、无污染。"
+        },
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 26,
+          "char_end": 42,
+          "text": "定制类商品不支持七天无理由退货。"
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 206,
+          "char_end": 238,
+          "text": "3. 超过上述 7 日期限的，不得再依据七天无理由规则办理退货。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 8,
+        "n_correct": 5,
+        "n_incorrect": 3,
+        "precision": 0.625,
+        "n_gold_sentences": 7,
+        "n_gold_hit": 5,
+        "recall": 0.7142857142857143,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": false,
+        "looks_like_refusal": true,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.7142857142857143,
+        "citation_precision": 0.625
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": true,
+        "ok": false
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P05",
+          "P02",
+          "P03",
+          "P19",
+          "P04",
+          "P12",
+          "M01",
+          "M16",
+          "M05",
+          "M02",
+          "M09",
+          "M13",
+          "F01",
+          "F02",
+          "F12"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q013",
+      "type": "multi_hop",
+      "cluster": "returns_time",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：** 七天无理由退货的时限起算点以**物流显示妥投（即签收）**为准，而非您在平台手动确认收货的时间。\n\n**依据简述：**\n1.  **起算标准明确为“签收”**：政策规定消费者应当在“签收之日”起 7 日内提出退货申请 [S15]，且起算日为“签收当日” [S16]。\n2.  **判定逻辑基于系统时间比较**：时限是否届满，是以“申请提交成功的系统时间”与“签收时间”进行比较来确定的 [S14]。这里的“签收时间”在电商售后语境下通常指物流轨迹显示的妥投时间，因为这是商品实际交付消费者的客观节点。\n3.  **排除口头或主观操作干扰**：规则强调以系统时间与签收时间的客观比较为准，不以客服口头承诺替代 [S10][S14]，这意味着用户单方面在平台点击“确认收货”的操作并不改变法定的“签收”事实起点。若物流已显示妥投，即便用户未点击确认收货，7天倒计时也已开始；反之，若物流未显示妥投，仅凭用户提前确认收货通常不能视为有效签收起点（具体需结合平台技术实现，但政策核心锚点是“签收”这一物流状态）。\n\n**注意：**\n*   最迟需在签收后第 7 日的 24:00 前在平台提交退货申请 [S18]。\n*   超过该期限的，不得再依据七天无理由规则办理退货 [S12]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03278688524590164,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03278688524590164,
+        "top2_rrf": 0.03125763125763126,
+        "margin_rrf": 0.0015292539882703834,
+        "top1_dense": 0.8409920930862427,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1746,
+        "output_tokens": 335,
+        "total_tokens": 2081
+      },
+      "elapsed_ms": 8010,
+      "citations": [
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 108,
+          "char_end": 145,
+          "text": "消费者应当在签收之日起 7 日内提出七天无理由退货申请，期限计算方式如下："
+        },
+        {
+          "sid": "S16",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 147,
+          "char_end": 159,
+          "text": "1. 起算日为签收当日。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 270,
+          "char_end": 313,
+          "text": "4. 时限是否届满，以申请提交成功的系统时间与签收时间比较为准，不以客服口头承诺替代。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 289,
+          "char_end": 313,
+          "text": "统时间与签收时间比较为准，不以客服口头承诺替代。"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 175,
+          "char_end": 205,
+          "text": "消费者最迟应在第 7 日 24:00 前在平台提交退货申请。"
+        },
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 206,
+          "char_end": 238,
+          "text": "3. 超过上述 7 日期限的，不得再依据七天无理由规则办理退货。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 6,
+        "n_incorrect": 0,
+        "precision": 1.0,
+        "n_gold_sentences": 11,
+        "n_gold_hit": 5,
+        "recall": 0.45454545454545453,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 2,
+          "n_hit": 2,
+          "recall": 1.0,
+          "hits": [
+            true,
+            true
+          ]
+        },
+        "citation_recall": 0.45454545454545453,
+        "citation_precision": 1.0
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P06",
+          "P05",
+          "P02",
+          "P03",
+          "P04",
+          "P19",
+          "P12",
+          "P01",
+          "M13",
+          "M01",
+          "M02",
+          "M16",
+          "M14",
+          "F01",
+          "F04",
+          "F03",
+          "F12",
+          "F02"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q014",
+      "type": "single_hop",
+      "cluster": "returns_time",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n申请七天无理由退货时，商品应当完好且不影响二次销售。具体而言，“完好”通常指商品本体、配件、赠品、包装、吊牌、序列号及附带的发票或电子凭证可一并退回，且无使用痕迹、无损坏、无污染 [S7][S8]。最终是否判定为“完好”，以商家收货后的质检结果为准 [S9]。\n\n**依据简述：**\n1.  **基本标准**：政策明确规定，申请七天无理由退货的商品必须保持完好状态，确保不影响二次销售 [S7]。\n2.  **具体定义**：完好的具体内涵包括所有随附物品（如配件、赠品、包装、吊牌等）齐全，且商品本身没有因使用产生的痕迹、损坏或污染 [S8]。\n3.  **判定方式**：消费者自行判断仅供参考，最终的完好性认定权在于商家收到退货商品后进行的质检环节 [S9]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.032018442622950824,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.032018442622950824,
+        "top2_rrf": 0.03200204813108039,
+        "margin_rrf": 1.639449187043618e-05,
+        "top1_dense": 0.8826289549469948,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1848,
+        "output_tokens": 202,
+        "total_tokens": 2050
+      },
+      "elapsed_ms": 6632,
+      "citations": [
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 328,
+          "char_end": 354,
+          "text": "申请七天无理由退货的，商品应当完好，不影响二次销售。"
+        },
+        {
+          "sid": "S8",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 354,
+          "char_end": 412,
+          "text": "完好通常指：商品本体、配件、赠品、包装、吊牌、序列号及附带的发票或电子凭证可一并退回，且无使用痕迹、无损坏、无污染。"
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 412,
+          "char_end": 434,
+          "text": "商品完好的具体判断，以收货后的质检结果为准。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 3,
+        "n_correct": 3,
+        "n_incorrect": 0,
+        "precision": 1.0,
+        "n_gold_sentences": 3,
+        "n_gold_hit": 3,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 1.0,
+        "citation_precision": 1.0
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P06",
+          "P05",
+          "P02",
+          "P03",
+          "P10",
+          "P04",
+          "P12",
+          "M09",
+          "M01",
+          "M16",
+          "M05",
+          "F02",
+          "F01",
+          "F12",
+          "F03",
+          "F04",
+          "F05"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q015",
+      "type": "single_hop",
+      "cluster": "returns_time",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不可以。客服的口头承诺不能代替或延长系统规定的七天无理由退货时限。**\n\n**依据：**\n1.  **时限以系统记录为准，口头承诺无效**：判断七天无理由退货申请是否逾期，严格以平台系统记录的提交时间与签收时间进行比较，明确规定“不以客服口头承诺替代” [S8] [S14]。\n2.  **禁止系统外另开时限**：政策规定客服不得在系统之外另行开设与本规则冲突的时限 [S10]。\n3.  **超期后果**：一旦超过7日期限，消费者不得再依据七天无理由规则办理退货 [S6]。若此时强行申请，属于“无理由不成立”，因此产生的运费也不适用无理由退货的运费规则 [S3]。\n\n**补充说明：**\n如果商品存在**质量问题**，则不受七天无理由时限的限制。只要在质量保证期限内，消费者可就质量问题提出售后申请（如换货、维修或退货退款），且由此产生的运费由商家承担 [S17] [S15] [S16]。但这是基于“质量问题”条款，而非“七天无理由”条款的宽限。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03200204813108039,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03200204813108039,
+        "top2_rrf": 0.03200204813108039,
+        "margin_rrf": 0.0,
+        "top1_dense": 0.773981899023056,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1841,
+        "output_tokens": 247,
+        "total_tokens": 2088
+      },
+      "elapsed_ms": 5856,
+      "citations": [
+        {
+          "sid": "S8",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 270,
+          "char_end": 313,
+          "text": "4. 时限是否届满，以申请提交成功的系统时间与签收时间比较为准，不以客服口头承诺替代。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 289,
+          "char_end": 313,
+          "text": "统时间与签收时间比较为准，不以客服口头承诺替代。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "4.申请方式",
+          "char_start": 487,
+          "char_end": 507,
+          "text": "客服不得在系统外另开与本规则冲突的时限。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 206,
+          "char_end": 238,
+          "text": "3. 超过上述 7 日期限的，不得再依据七天无理由规则办理退货。"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "3.无理由不成立时的运费",
+          "char_start": 251,
+          "char_end": 329,
+          "text": "七天无理由不成立的（包括但不限于：属于定制类等不适用商品，或已超过 7 日时限，或商品完好性不符合无理由退货条件），不得适用本文件第 2 条无理由运费规则。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 108,
+          "char_end": 135,
+          "text": "在商品质量保证期限内，消费者可就质量问题提出售后申请。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 111,
+          "char_end": 151,
+          "text": "上述情形按商家责任处理，消费者可以要求补发、换货或退货退款，不必改走七天无理由。"
+        },
+        {
+          "sid": "S16",
+          "valid_evidence": true,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 151,
+          "char_end": 164,
+          "text": "因此产生的运费由商家承担。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 8,
+        "n_correct": 3,
+        "n_incorrect": 5,
+        "precision": 0.375,
+        "n_gold_sentences": 7,
+        "n_gold_hit": 2,
+        "recall": 0.2857142857142857,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.2857142857142857,
+        "citation_precision": 0.375
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P02",
+          "P10",
+          "P19",
+          "P04",
+          "M01",
+          "M09",
+          "M16",
+          "M02",
+          "M14",
+          "M04",
+          "F01",
+          "F12",
+          "F02",
+          "F03"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q016",
+      "type": "multi_hop",
+      "cluster": "returns_time",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n客服应明确告知消费者已超过七天无理由退货时限，不能按无理由规则办理退货；同时，必须继续评估商品是否存在质量问题，若存在质量问题，消费者仍可申请退换或维修。\n\n**依据简述：**\n\n1.  **关于七天无理由超期的答复：**\n    超过 7 日期限的，不得再依据七天无理由规则办理退货 [S4]。客服应明确告知“已超过 7 天无理由时限，不能按无理由退货办理” [S24]。该情形属于可明确答复的否定结论 [S5]。时限是否届满，以申请提交成功的系统时间与签收时间比较为准，不以客服口头承诺替代 [S6][S20]。\n\n2.  **关于是否继续查看质量问题：**\n    在告知无法按无理由退货后，应继续评估是否存在质量问题通道 [S24]。即使商品不适用七天无理由退货（包括已过期），消费者仍可根据《质量问题退换货通则》就质量问题申请退货、换货或维修 [S9]。不得将“不支持七天无理由”理解为“任何情况下都不可退” [S10]。\n\n3.  **质量问题的处理原则：**\n    在商品质量保证期限内，消费者可就质量问题提出售后申请 [S7]。若确认为质量问题，消费者可以选择退货退款、换货或维修 [S15]。因质量问题产生的运费由商家承担 [S14]，且适用《退换货运费承担规则》中的质量问题条款 [S17]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03200204813108039,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03200204813108039,
+        "top2_rrf": 0.0315136476426799,
+        "margin_rrf": 0.0004884004884004867,
+        "top1_dense": 0.7736502140760422,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1785,
+        "output_tokens": 319,
+        "total_tokens": 2104
+      },
+      "elapsed_ms": 5491,
+      "citations": [
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 206,
+          "char_end": 238,
+          "text": "3. 超过上述 7 日期限的，不得再依据七天无理由规则办理退货。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "M01",
+          "section_path": "2.时限核对",
+          "char_start": 154,
+          "char_end": 206,
+          "text": "已超期的，应明确告知“已超过 7 天无理由时限，不能按无理由退货办理”，并继续评估是否存在质量问题通道。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 238,
+          "char_end": 269,
+          "text": "该情形属于可明确答复的否定结论，不属于无法可依或应拒答的问题。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 270,
+          "char_end": 313,
+          "text": "4. 时限是否届满，以申请提交成功的系统时间与签收时间比较为准，不以客服口头承诺替代。"
+        },
+        {
+          "sid": "S20",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 289,
+          "char_end": 313,
+          "text": "统时间与签收时间比较为准，不以客服口头承诺替代。"
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 293,
+          "char_end": 341,
+          "text": "商品不适用七天无理由退货的，消费者仍可根据《质量问题退换货通则》就质量问题申请退货、换货或维修。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 341,
+          "char_end": 369,
+          "text": "不得将“不支持七天无理由”理解为“任何情况下都不可退”。"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 108,
+          "char_end": 135,
+          "text": "在商品质量保证期限内，消费者可就质量问题提出售后申请。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 291,
+          "char_end": 317,
+          "text": "在可行的前提下，消费者可以选择退货退款、换货或维修。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 151,
+          "char_end": 164,
+          "text": "因此产生的运费由商家承担。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 352,
+          "char_end": 378,
+          "text": "运费承担适用《退换货运费承担规则》中的质量问题条款。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 11,
+        "n_correct": 5,
+        "n_incorrect": 6,
+        "precision": 0.45454545454545453,
+        "n_gold_sentences": 10,
+        "n_gold_hit": 4,
+        "recall": 0.4,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 3,
+          "n_hit": 3,
+          "recall": 1.0,
+          "hits": [
+            true,
+            true,
+            true
+          ]
+        },
+        "citation_recall": 0.4,
+        "citation_precision": 0.45454545454545453
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P02",
+          "P04",
+          "P03",
+          "P19",
+          "P12",
+          "P07",
+          "M01",
+          "M05",
+          "M04",
+          "M16",
+          "M03",
+          "M02",
+          "F01",
+          "F12",
+          "F02",
+          "F03",
+          "F04",
+          "F05"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q017",
+      "type": "single_hop",
+      "cluster": "quality_general",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n平台所说的“质量问题”主要指商品存在本平台总则所定义的质量缺陷，或在质保期内出现非因消费者使用不当导致的性能故障 [S5]。此外，收货后在合理检验期内发现的外观或配件缺失问题，也应按质量问题处理 [S14]。\n\n**依据简述：**\n1.  **核心定义**：根据通用政策，质量问题的范围包括符合平台总则定义的质量缺陷，以及质保期内非人为因素造成的性能故障 [S5]。\n2.  **外观与配件**：如果在收货后的合理检验期内发现外观瑕疵或配件缺失，这些情况也被归类为质量问题（或少件错件），不得强制要求消费者走七天无理由退货流程 [S14]。\n3.  **适用性说明**：即使商品不适用七天无理由退货，只要属于上述质量问题范畴，消费者仍可申请退货、换货或维修 [S15]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.031754032258064516,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.031754032258064516,
+        "top2_rrf": 0.02976190476190476,
+        "margin_rrf": 0.0019921274961597554,
+        "top1_dense": 0.5956158638000488,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1728,
+        "output_tokens": 195,
+        "total_tokens": 1923
+      },
+      "elapsed_ms": 3428,
+      "citations": [
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "1.质量问题范围",
+          "char_start": 26,
+          "char_end": 86,
+          "text": "商品存在本平台总则所定义的质量问题，或在质保期内出现非因消费者使用不当导致的性能故障，消费者可申请退货退款、换货或维修。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 135,
+          "char_end": 192,
+          "text": "收货后的合理检验期内发现的外观或配件缺失问题，也应按质量问题或少件错件规则处理，不得强制要求消费者改走七天无理由。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 293,
+          "char_end": 341,
+          "text": "商品不适用七天无理由退货的，消费者仍可根据《质量问题退换货通则》就质量问题申请退货、换货或维修。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 3,
+        "n_correct": 0,
+        "n_incorrect": 3,
+        "precision": 0.0,
+        "n_gold_sentences": 4,
+        "n_gold_hit": 0,
+        "recall": 0.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.0,
+        "citation_precision": 0.0
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P04",
+          "P03",
+          "P02",
+          "P10",
+          "P12",
+          "P07",
+          "P01",
+          "M03",
+          "M01",
+          "M16",
+          "M05",
+          "M13",
+          "F03",
+          "F04",
+          "F12",
+          "F01",
+          "F05",
+          "F02"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q018",
+      "type": "single_hop",
+      "cluster": "quality_general",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n质量问题可以在**商品质量保证期限内**提出售后申请 [S4]。\n\n**依据简述：**\n1.  **主张期限**：根据通用政策，消费者在商品质量保证期限内，可就质量问题提出售后申请 [S4]。\n2.  **适用范围**：只要商品存在定义的质量问题，或在质保期内出现非因消费者使用不当导致的性能故障，即可申请退货退款、换货或维修 [S13]。\n3.  **与七天无理由的区别**：七天无理由退货的时限为签收之日起 7 日内 [S6][S9]，超过该期限不得再依据七天无理由规则办理 [S22]；但质量问题的售后申请不受此 7 天限制，而是依据质保期 [S4]。\n4.  **特殊情形**：收货后合理检验期内发现的外观或配件缺失问题，也应按质量问题处理，不得强制要求走七天无理由通道 [S5]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03200204813108039,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03200204813108039,
+        "top2_rrf": 0.0315136476426799,
+        "margin_rrf": 0.0004884004884004867,
+        "top1_dense": 0.7210436761379242,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1674,
+        "output_tokens": 203,
+        "total_tokens": 1877
+      },
+      "elapsed_ms": 4225,
+      "citations": [
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 108,
+          "char_end": 135,
+          "text": "在商品质量保证期限内，消费者可就质量问题提出售后申请。"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "1.质量问题范围",
+          "char_start": 26,
+          "char_end": 86,
+          "text": "商品存在本平台总则所定义的质量问题，或在质保期内出现非因消费者使用不当导致的性能故障，消费者可申请退货退款、换货或维修。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 108,
+          "char_end": 145,
+          "text": "消费者应当在签收之日起 7 日内提出七天无理由退货申请，期限计算方式如下："
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 175,
+          "char_end": 205,
+          "text": "消费者最迟应在第 7 日 24:00 前在平台提交退货申请。"
+        },
+        {
+          "sid": "S22",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 206,
+          "char_end": 238,
+          "text": "3. 超过上述 7 日期限的，不得再依据七天无理由规则办理退货。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 135,
+          "char_end": 192,
+          "text": "收货后的合理检验期内发现的外观或配件缺失问题，也应按质量问题或少件错件规则处理，不得强制要求消费者改走七天无理由。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 2,
+        "n_incorrect": 4,
+        "precision": 0.3333333333333333,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 2,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 1.0,
+        "citation_precision": 0.3333333333333333
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P04",
+          "P02",
+          "P19",
+          "P10",
+          "P03",
+          "P07",
+          "M01",
+          "M23",
+          "M14",
+          "M03",
+          "F01",
+          "F12",
+          "F05",
+          "F02",
+          "F03",
+          "F04"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q019",
+      "type": "single_hop",
+      "cluster": "quality_general",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：如果鉴定结果属于质量问题，鉴定费用由商家承担。**\n\n**依据：**\n根据平台售后政策中关于凭证与鉴定的规定，对于争议较大的故障，平台或商家可以安排鉴定；若鉴定确认属于质量问题，相应的鉴定费用应由商家承担 [S13][S14]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03278688524590164,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03278688524590164,
+        "top2_rrf": 0.03225806451612903,
+        "margin_rrf": 0.0005288207297726097,
+        "top1_dense": 0.7159868478775024,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1750,
+        "output_tokens": 64,
+        "total_tokens": 1814
+      },
+      "elapsed_ms": 2229,
+      "citations": [
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "3.凭证与鉴定",
+          "char_start": 235,
+          "char_end": 256,
+          "text": "对争议较大的故障，平台或商家可以安排鉴定；"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "3.凭证与鉴定",
+          "char_start": 256,
+          "char_end": 276,
+          "text": "鉴定属于质量问题的，鉴定费用由商家承担。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 2,
+        "n_correct": 2,
+        "n_incorrect": 0,
+        "precision": 1.0,
+        "n_gold_sentences": 3,
+        "n_gold_hit": 2,
+        "recall": 0.6666666666666666,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.6666666666666666,
+        "citation_precision": 1.0
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P06",
+          "P05",
+          "P04",
+          "P03",
+          "P12",
+          "P07",
+          "P01",
+          "M03",
+          "M14",
+          "M05",
+          "M04",
+          "M13",
+          "M01",
+          "F03",
+          "F04",
+          "F02",
+          "F01"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q020",
+      "type": "single_hop",
+      "cluster": "quality_general",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不需要必须先维修。在可行的前提下，您可以自主选择退货退款、换货或维修。**\n\n**依据简述：**\n1.  **选择权归属消费者**：根据通用政策规定，在可行的前提下，消费者可以选择退货退款、换货或维修 [S4]。\n2.  **质量问题可申请退换修**：若商品存在定义的质量问题或在质保期内出现非人为导致的性能故障，消费者有权申请退货退款、换货或维修 [S7]。\n3.  **已使用不影响退货权利**：因质量问题选择退货退款的，即使商品已使用，只要不影响问题成立，商家不得据此拒绝退货 [S5]。\n4.  **运费承担**：若选择退货或换货，退回及再次发货的运费由商家承担 [S1]；若涉及争议鉴定且确认为质量问题，鉴定费用也由商家承担 [S20]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03278688524590164,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03278688524590164,
+        "top2_rrf": 0.031746031746031744,
+        "margin_rrf": 0.0010408534998698968,
+        "top1_dense": 0.8556611090898514,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1680,
+        "output_tokens": 191,
+        "total_tokens": 1871
+      },
+      "elapsed_ms": 6611,
+      "citations": [
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 291,
+          "char_end": 317,
+          "text": "在可行的前提下，消费者可以选择退货退款、换货或维修。"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "1.质量问题范围",
+          "char_start": 26,
+          "char_end": 86,
+          "text": "商品存在本平台总则所定义的质量问题，或在质保期内出现非因消费者使用不当导致的性能故障，消费者可申请退货退款、换货或维修。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 317,
+          "char_end": 352,
+          "text": "因质量问题选择退货退款的，已使用的不影响问题成立的，不得据此拒绝退货。"
+        },
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "1.质量问题导致的退换货",
+          "char_start": 30,
+          "char_end": 64,
+          "text": "因质量问题办理退货或换货的，退回运费及必要的再次发货运费由商家承担。"
+        },
+        {
+          "sid": "S20",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "3.凭证与鉴定",
+          "char_start": 256,
+          "char_end": 276,
+          "text": "鉴定属于质量问题的，鉴定费用由商家承担。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 5,
+        "n_correct": 2,
+        "n_incorrect": 3,
+        "precision": 0.4,
+        "n_gold_sentences": 3,
+        "n_gold_hit": 2,
+        "recall": 0.6666666666666666,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.6666666666666666,
+        "citation_precision": 0.4
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P05",
+          "P04",
+          "P03",
+          "P10",
+          "P19",
+          "P02",
+          "P07",
+          "P01",
+          "M03",
+          "M14",
+          "M01",
+          "M05",
+          "M16",
+          "M04",
+          "F03",
+          "F01",
+          "F02",
+          "F12",
+          "F04",
+          "F05"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q021",
+      "type": "multi_hop",
+      "cluster": "quality_general",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n1. 商家**不能**强制要求您改走七天无理由退货。刚收货发现的外观瑕疵或配件缺失，应按质量问题或少件错件规则处理 [S12]。\n2. 若按质量问题退货，运费由**商家承担** [S5][S14]。\n\n**依据简述：**\n*   **关于售后路径选择：** 政策明确规定，在收货后的合理检验期内发现的外观或配件缺失问题，应按质量问题或少件错件规则处理，不得强制要求消费者改走七天无理由 [S12]。此类情形属于商家责任，消费者可要求补发、换货或退货退款，不必改走七天无理由 [S13]。即使商品不适用七天无理由（如已过期或不符合完好标准），消费者仍可根据《质量问题退换货通则》就质量问题申请售后 [S17][S18]。\n*   **关于运费承担：** 因质量问题办理退货或换货的，退回运费及必要的再次发货运费由商家承担 [S5]。质量问题退货应由商家承担运费，不优先消耗运费险额度 [S2]；若已误走运费险，应回退并改由商家承担 [S3]。因此产生的运费由商家承担 [S14]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03177805800756621,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03177805800756621,
+        "top2_rrf": 0.02964426877470356,
+        "margin_rrf": 0.00213378923286265,
+        "top1_dense": 0.788691058754921,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1803,
+        "output_tokens": 269,
+        "total_tokens": 2072
+      },
+      "elapsed_ms": 5678,
+      "citations": [
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 135,
+          "char_end": 192,
+          "text": "收货后的合理检验期内发现的外观或配件缺失问题，也应按质量问题或少件错件规则处理，不得强制要求消费者改走七天无理由。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "1.质量问题导致的退换货",
+          "char_start": 30,
+          "char_end": 64,
+          "text": "因质量问题办理退货或换货的，退回运费及必要的再次发货运费由商家承担。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 151,
+          "char_end": 164,
+          "text": "因此产生的运费由商家承担。"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 111,
+          "char_end": 151,
+          "text": "上述情形按商家责任处理，消费者可以要求补发、换货或退货退款，不必改走七天无理由。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 293,
+          "char_end": 341,
+          "text": "商品不适用七天无理由退货的，消费者仍可根据《质量问题退换货通则》就质量问题申请退货、换货或维修。"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 341,
+          "char_end": 369,
+          "text": "不得将“不支持七天无理由”理解为“任何情况下都不可退”。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P06",
+          "section_path": "2.理赔范围",
+          "char_start": 140,
+          "char_end": 166,
+          "text": "质量问题退货应由商家承担运费，不优先消耗运费险额度；"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P06",
+          "section_path": "2.理赔范围",
+          "char_start": 166,
+          "char_end": 185,
+          "text": "已误走运费险的，应回退并改由商家承担。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 8,
+        "n_correct": 2,
+        "n_incorrect": 6,
+        "precision": 0.25,
+        "n_gold_sentences": 4,
+        "n_gold_hit": 2,
+        "recall": 0.5,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 2,
+          "n_hit": 2,
+          "recall": 1.0,
+          "hits": [
+            true,
+            true
+          ]
+        },
+        "citation_recall": 0.5,
+        "citation_precision": 0.25
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P06",
+          "P05",
+          "P04",
+          "P19",
+          "P03",
+          "P02",
+          "P12",
+          "P01",
+          "M04",
+          "M05",
+          "M13",
+          "M14",
+          "M03",
+          "M16",
+          "F02",
+          "F04",
+          "F01",
+          "F12",
+          "F03"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q025",
+      "type": "multi_hop",
+      "cluster": "custom_returns",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n1. **不能走七天无理由退货。** 定制刻字商品属于不支持七天无理由退货的范围，即使仍在7日内且包装完好，仅因“不想要”等个人原因无法申请无理由退货 [S12][S13]。\n2. **若存在质量问题，运费由商家承担。** 如果商品确实存在质量问题，您可以依据质量问题条款申请退换或维修，此时退回及再次发货的运费均由商家承担 [S10][S16][S18]。\n3. **不能按无理由退货的运费规则处理。** 由于无理由退货不成立，不得适用“买家承担运费”或“优先使用运费险赔付”的规则；若误走了运费险，应回退并改由商家承担 [S5][S6][S15]。\n\n**依据简述：**\n*   **关于无理由退货资格：** 政策明确规定定制类商品（含刻字）不支持七天无理由退货，会员权益也不改变这一限制 [S2][S12][S13][S24]。\n*   **关于质量问题救济：** 虽然不支持无理由退货，但消费者仍可根据《质量问题退换货通则》就质量问题申请退货、换货或维修，不得将“不支持七天无理由”理解为“任何情况下都不可退” [S17][S19][S22][S23]。\n*   **关于运费承担逻辑：**\n    *   七天无理由退货成立时，才适用消费者承担运费或运费险赔付的规则 [S8][S9]。\n    *   当无理由退货不成立（如定制商品），该运费规则失效 [S6][S15]。\n    *   若售后原因是质量问题，则强制适用质量问题运费规则：商家承担运费，且不优先消耗运费险额度 [S4][S7][S10][S16][S21]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.032266458495966696,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.032266458495966696,
+        "top2_rrf": 0.0304147465437788,
+        "margin_rrf": 0.001851711952187897,
+        "top1_dense": 0.8680698871612549,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1897,
+        "output_tokens": 404,
+        "total_tokens": 2301
+      },
+      "elapsed_ms": 9176,
+      "citations": [
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 26,
+          "char_end": 42,
+          "text": "定制类商品不支持七天无理由退货。"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 42,
+          "char_end": 97,
+          "text": "即使商品仍在签收后 7 日内，且包装完好，消费者也不得仅以“不想要了”“不喜欢”“拍错”等无理由情形要求退货。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "1.质量问题导致的退换货",
+          "char_start": 30,
+          "char_end": 64,
+          "text": "因质量问题办理退货或换货的，退回运费及必要的再次发货运费由商家承担。"
+        },
+        {
+          "sid": "S16",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "4.与运费规则的关系",
+          "char_start": 445,
+          "char_end": 470,
+          "text": "此时若构成质量问题退货，运费应按质量问题规则处理。"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 151,
+          "char_end": 164,
+          "text": "因此产生的运费由商家承担。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P06",
+          "section_path": "2.理赔范围",
+          "char_start": 166,
+          "char_end": 185,
+          "text": "已误走运费险的，应回退并改由商家承担。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "3.无理由不成立时的运费",
+          "char_start": 251,
+          "char_end": 329,
+          "text": "七天无理由不成立的（包括但不限于：属于定制类等不适用商品，或已超过 7 日时限，或商品完好性不符合无理由退货条件），不得适用本文件第 2 条无理由运费规则。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "4.与运费规则的关系",
+          "char_start": 386,
+          "char_end": 445,
+          "text": "当七天无理由依法或依本政策不成立时，不得适用《退换货运费承担规则》中关于“无理由退货运费由买家承担或走运费险”的条款。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P14",
+          "section_path": "2.增值服务内容",
+          "char_start": 153,
+          "char_end": 192,
+          "text": "会员身份不改变七天无理由 7 日时限，也不使定制类商品因此变得可以无理由退货。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 110,
+          "char_end": 148,
+          "text": "品详情页标明“定制”或下单时存在消费者指定的图案、尺寸、刻字、专项配置为准。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 111,
+          "char_end": 151,
+          "text": "上述情形按商家责任处理，消费者可以要求补发、换货或退货退款，不必改走七天无理由。"
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 291,
+          "char_end": 317,
+          "text": "在可行的前提下，消费者可以选择退货退款、换货或维修。"
+        },
+        {
+          "sid": "S22",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 293,
+          "char_end": 341,
+          "text": "商品不适用七天无理由退货的，消费者仍可根据《质量问题退换货通则》就质量问题申请退货、换货或维修。"
+        },
+        {
+          "sid": "S23",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 341,
+          "char_end": 369,
+          "text": "不得将“不支持七天无理由”理解为“任何情况下都不可退”。"
+        },
+        {
+          "sid": "S8",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "2.七天无理由退货的运费",
+          "char_start": 135,
+          "char_end": 185,
+          "text": "仅在七天无理由退货依法成立、且商品属于支持七天无理由的范围时，适用本条：消费者承担将商品寄回的运费；"
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "2.七天无理由退货的运费",
+          "char_start": 185,
+          "char_end": 232,
+          "text": "若该订单已购买运费险且符合理赔条件，按《运费险使用规则》赔付，不再向消费者重复收取已赔付部分。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P06",
+          "section_path": "2.理赔范围",
+          "char_start": 140,
+          "char_end": 166,
+          "text": "质量问题退货应由商家承担运费，不优先消耗运费险额度；"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "3.无理由不成立时的运费",
+          "char_start": 329,
+          "char_end": 354,
+          "text": "若该次售后因质量问题成立，应适用第 1 条，由商家"
+        },
+        {
+          "sid": "S21",
+          "valid_evidence": true,
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 352,
+          "char_end": 378,
+          "text": "运费承担适用《退换货运费承担规则》中的质量问题条款。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 19,
+        "n_correct": 6,
+        "n_incorrect": 13,
+        "precision": 0.3157894736842105,
+        "n_gold_sentences": 11,
+        "n_gold_hit": 4,
+        "recall": 0.36363636363636365,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 3,
+          "n_hit": 3,
+          "recall": 1.0,
+          "hits": [
+            true,
+            true,
+            true
+          ]
+        },
+        "citation_recall": 0.36363636363636365,
+        "citation_precision": 0.3157894736842105
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P06",
+          "P05",
+          "P03",
+          "P19",
+          "P04",
+          "M05",
+          "M04",
+          "M14",
+          "M16",
+          "M01",
+          "F02",
+          "F12",
+          "F01",
+          "F03",
+          "F04"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q039",
+      "type": "single_hop",
+      "cluster": "returns_time",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不能按七天无理由退货。**\n\n**依据：**\n1. 根据通用规则，消费者应当在签收之日起 7 日内提出七天无理由退货申请，超过上述 7 日期限的，不得再依据七天无理由规则办理退货 [S12][S9]。\n2. 即使您是有效会员，会员身份也不改变七天无理由 7 日时限 [S2]。\n3. 由于已超过 7 日时限，该次售后属于“七天无理由不成立”的情形，不得适用无理由运费规则 [S3]。\n\n**补充说明：**\n虽然无法按“七天无理由”退货，但如果商品存在**质量问题**，您仍可根据《质量问题退换货通则》就质量问题申请退货、换货或维修，且因此产生的运费由商家承担 [S19][S4][S18]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03131881575727918,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03131881575727918,
+        "top2_rrf": 0.030798389007344232,
+        "margin_rrf": 0.0005204267499349449,
+        "top1_dense": 0.8326938897371292,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1931,
+        "output_tokens": 180,
+        "total_tokens": 2111
+      },
+      "elapsed_ms": 4570,
+      "citations": [
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 108,
+          "char_end": 145,
+          "text": "消费者应当在签收之日起 7 日内提出七天无理由退货申请，期限计算方式如下："
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 206,
+          "char_end": 238,
+          "text": "3. 超过上述 7 日期限的，不得再依据七天无理由规则办理退货。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P14",
+          "section_path": "2.增值服务内容",
+          "char_start": 153,
+          "char_end": 192,
+          "text": "会员身份不改变七天无理由 7 日时限，也不使定制类商品因此变得可以无理由退货。"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "3.无理由不成立时的运费",
+          "char_start": 251,
+          "char_end": 329,
+          "text": "七天无理由不成立的（包括但不限于：属于定制类等不适用商品，或已超过 7 日时限，或商品完好性不符合无理由退货条件），不得适用本文件第 2 条无理由运费规则。"
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 293,
+          "char_end": 341,
+          "text": "商品不适用七天无理由退货的，消费者仍可根据《质量问题退换货通则》就质量问题申请退货、换货或维修。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "3.无理由不成立时的运费",
+          "char_start": 329,
+          "char_end": 354,
+          "text": "若该次售后因质量问题成立，应适用第 1 条，由商家"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 151,
+          "char_end": 164,
+          "text": "因此产生的运费由商家承担。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 7,
+        "n_correct": 2,
+        "n_incorrect": 5,
+        "precision": 0.2857142857142857,
+        "n_gold_sentences": 7,
+        "n_gold_hit": 2,
+        "recall": 0.2857142857142857,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 3,
+          "n_hit": 3,
+          "recall": 1.0,
+          "hits": [
+            true,
+            true,
+            true
+          ]
+        },
+        "citation_recall": 0.2857142857142857,
+        "citation_precision": 0.2857142857142857
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P03",
+          "P02",
+          "P19",
+          "P12",
+          "M01",
+          "M16",
+          "M02",
+          "M05",
+          "M04",
+          "M13",
+          "F01",
+          "F02",
+          "F12",
+          "F03",
+          "F04"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q041",
+      "type": "multi_hop",
+      "cluster": "phone_digital",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n1. **不能按七天无理由退货。** 手机数码类商品一旦完成激活，即不再支持七天无理由退货 [S1][S16]。\n2. **质量问题退换时限为签收之日起 15 日内。** 若存在质量问题，应在签收之日起 15 日内申请退货或换货；超过 15 日但仍在质保期内的，按维修或质保规则处理 [S4][S5][S20][S21]。\n\n**依据说明：**\n*   **为何适用此规则（范围覆盖）：** 您的问题涉及“手机数码”品类。根据冲突解析，品类级专项规定优先于通用规则 [S9]。因此，本回答依据《手机数码品类专项规定》及对应 FAQ 作答，而非通用的七天无理由退货总则 [S8][S9][S24]。\n*   **关于激活后退货：** 平台通用规则与手机数码品类专项规定在“激活后能否无理由退货”上存在差异，专项规定明确：手机数码类商品一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货 [S1][S16]。只有未激活且仍在签收之日起 7 日内、商品完好的，才可按通用规则申请 [S2][S10][S17]。\n*   **关于质量问题时限：** 激活后，消费者仅能就质量问题申请售后 [S3][S18]。该品类特殊规定要求质量问题应在签收之日起 15 日内申请退货或换货 [S4][S20]。这 15 日是本品类的特殊规定，不得用通用七天无理由时限替代或缩减 [S6][S7][S22]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.032266458495966696,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.032266458495966696,
+        "top2_rrf": 0.032018442622950824,
+        "margin_rrf": 0.00024801587301587213,
+        "top1_dense": 0.85787433385849,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1725,
+        "output_tokens": 381,
+        "total_tokens": 2106
+      },
+      "elapsed_ms": 4361,
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 118,
+          "char_end": 191,
+          "text": "与平台通用的七天无理由退货规则不同：手机数码类商品一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货。"
+        },
+        {
+          "sid": "S16",
+          "valid_evidence": true,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 81,
+          "char_end": 142,
+          "text": "类目为“手机数码”的商品，一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 271,
+          "char_end": 296,
+          "text": "质量问题应在签收之日起 15 日内申请退货或换货；"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 296,
+          "char_end": 323,
+          "text": "超过 15 日但仍在质保期内的，按维修或质保规则处理。"
+        },
+        {
+          "sid": "S20",
+          "valid_evidence": true,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 178,
+          "char_end": 214,
+          "text": "激活后仅能就质量问题申请售后：应在签收之日起 15 日内申请退货或换货；"
+        },
+        {
+          "sid": "S21",
+          "valid_evidence": true,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 214,
+          "char_end": 241,
+          "text": "超过 15 日但仍在质保期内的，按维修或质保规则处理。"
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "4.与通用规则的关系",
+          "char_start": 415,
+          "char_end": 451,
+          "text": "按冲突排序口径，品类级规定优先于通用规定，因此本类目应适用本节专项规则。"
+        },
+        {
+          "sid": "S8",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "4.与通用规则的关系",
+          "char_start": 381,
+          "char_end": 415,
+          "text": "本文件与《七天无理由退货总则》在“激活后能否无理由退货”上存在差异。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "F07",
+          "section_path": "3.说明",
+          "char_start": 313,
+          "char_end": 329,
+          "text": "以《手机数码品类专项规定》为准。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 193,
+          "char_end": 221,
+          "text": "未激活且仍在签收之日起 7 日内、商品完好的，仍可按通用"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 197,
+          "char_end": 233,
+          "text": "仍在签收之日起 7 日内、商品完好的，仍可按通用七天无理由规则申请退货。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 142,
+          "char_end": 178,
+          "text": "未激活且仍在签收之日起 7 日内、商品完好的，仍可按通用七天无理由申请。"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 252,
+          "char_end": 271,
+          "text": "激活后，消费者仅能就质量问题申请售后。"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 178,
+          "char_end": 190,
+          "text": "激活后仅能就质量问题申请"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 323,
+          "char_end": 355,
+          "text": "该 15 日质量问题退换期是本品类的特殊规定，不得用通用七天无理"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 331,
+          "char_end": 364,
+          "text": "问题退换期是本品类的特殊规定，不得用通用七天无理由时限替代或缩减。"
+        },
+        {
+          "sid": "S22",
+          "valid_evidence": true,
+          "doc_id": "F07",
+          "section_path": "3.说明",
+          "char_start": 252,
+          "char_end": 286,
+          "text": "上述 15 日是本品类专项规定，不得用通用七天无理由时限替代或缩减。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 17,
+        "n_correct": 8,
+        "n_incorrect": 9,
+        "precision": 0.47058823529411764,
+        "n_gold_sentences": 9,
+        "n_gold_hit": 4,
+        "recall": 0.4444444444444444,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 3,
+          "n_hit": 3,
+          "recall": 1.0,
+          "hits": [
+            true,
+            true,
+            true
+          ]
+        },
+        "citation_recall": 0.4444444444444444,
+        "citation_precision": 0.47058823529411764
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": {
+        "question_id": "Q041",
+        "meets_expected": true,
+        "required_points": [
+          {
+            "id": "activated_no_reason_denied",
+            "expected": "手机数码商品激活后不适用通用七天无理由退货",
+            "ok": true
+          },
+          {
+            "id": "quality_only_after_activation",
+            "expected": "激活后仅支持质量问题售后",
+            "ok": true
+          },
+          {
+            "id": "quality_window_15_days",
+            "expected": "质量问题应在签收之日起 15 日内申请退货或换货",
+            "ok": true
+          },
+          {
+            "id": "category_rule_explained",
+            "expected": "说明按品类专项规定作答，以及专类覆盖/优先于通用规则",
+            "ok": true
+          }
+        ]
+      },
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=（未指定），品类=手机数码。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n品类级规定优先于通用，适用：P15《手机数码品类专项规定》（来源=政策，范围=品类：手机数码，生效日=2025-04-01）、F07《FAQ：手机激活后还能七天无理由退货吗？》（来源=FAQ，范围=品类：手机数码，生效日=2025-09-01）。\n因此本品类专项覆盖（优先于并取代其适用位置上的）通用规定，作答须采用专类结论并说明依据，不得用通用规则替代或缩减专项时限。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [
+          "P15",
+          "F07"
+        ],
+        "general": [
+          "P14",
+          "P03",
+          "P02",
+          "P10",
+          "P04",
+          "M05",
+          "M16",
+          "M23",
+          "M01",
+          "F01",
+          "F02",
+          "F12",
+          "F03",
+          "F04",
+          "F05"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q062",
+      "type": "refusal",
+      "cluster": "refusal_privacy",
+      "should_refuse": true,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：无法回答。**\n\n**依据：**\n您咨询的“永久删除星河优选账号及名下全部个人信息”属于平台账号注销与数据隐私保护范畴，而当前提供的适用证据句仅涵盖商品售后政策（如七天无理由退货、质量问题质保、运费承担等） [S3][S6][S12][S14]。语料中未收录关于账号注销流程或个人信息保留期限的相关条款。\n\n根据系统指令，若适用条款无法覆盖用户问题（例如账号注销等事项），必须明确拒答或建议转人工/对应渠道，不得编造政策。建议您联系星河优选官方客服或通过APP内的“设置-账号与安全”页面查询具体的隐私政策与注销指引。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03278688524590164,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03278688524590164,
+        "top2_rrf": 0.031754032258064516,
+        "margin_rrf": 0.0010328529878371254,
+        "top1_dense": 0.6432735323905945,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 2111,
+        "output_tokens": 150,
+        "total_tokens": 2261
+      },
+      "elapsed_ms": 3789,
+      "citations": [
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "1.适用范围",
+          "char_start": 24,
+          "char_end": 86,
+          "text": "除法律另有规定以及本平台《七天无理由不适用情形》列明的商品外，消费者在星河优选购买的商品，可依照本节规则申请七天无理由退货。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 206,
+          "char_end": 238,
+          "text": "3. 超过上述 7 日期限的，不得再依据七天无理由规则办理退货。"
+        },
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 27,
+          "char_end": 97,
+          "text": "除法律另有规定、商品详情页或专项政策另有更具体规定外，星河优选销售的电子电器类及其他适用质保的商品，质量保证期限为自签收之日起 12 个月。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "4.质保期内的服务",
+          "char_start": 351,
+          "char_end": 423,
+          "text": "在适用的质保期限内，非因消费者使用不当导致的性能故障，商家应提供维修、换货或退货，具体方式按《质量问题退换货通则》和《维修与上门服务规则》执行。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 4,
+        "n_correct": 0,
+        "n_incorrect": 4,
+        "precision": 0.0,
+        "n_gold_sentences": 0,
+        "n_gold_hit": 0,
+        "recall": null,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": true,
+        "point_coverage": {
+          "n": 0,
+          "n_hit": 0,
+          "recall": null,
+          "hits": []
+        },
+        "citation_recall": null,
+        "citation_precision": 0.0
+      },
+      "refusal": {
+        "should_refuse": true,
+        "answer_looks_like_refusal": true,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P02",
+          "P04",
+          "P07",
+          "P01",
+          "M23",
+          "M02",
+          "M05",
+          "M03",
+          "F12",
+          "F05",
+          "F01",
+          "F02"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q063",
+      "type": "refusal",
+      "cluster": "refusal_privacy",
+      "should_refuse": true,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：无法回答。**\n\n**依据说明：**\n您咨询的是关于“用户浏览记录与隐私数据共享”的问题，这属于平台隐私政策或数据安全范畴。当前提供的适用证据句（[S1] 至 [S24]）仅涵盖售后规则、会员权益、运费险理赔、质量问题退换货及质保条款等内容，未包含任何关于用户数据处理、隐私保护或广告精准投放的政策条款。\n\n根据助手职责要求，若适用条款无法覆盖用户问题（如语料未收录的隐私政策事项），必须明确拒答，不得编造政策。建议您查阅星河优选平台的《隐私政策》章节，或联系人工客服获取关于数据使用的具体官方说明。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.032018442622950824,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.032018442622950824,
+        "top2_rrf": 0.030776515151515152,
+        "margin_rrf": 0.001241927471435672,
+        "top1_dense": 0.47136253118515015,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1931,
+        "output_tokens": 146,
+        "total_tokens": 2077
+      },
+      "elapsed_ms": 4052,
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P14",
+          "section_path": "3.与其他规则的关系",
+          "char_start": 209,
+          "char_end": 234,
+          "text": "会员增值服务是附加便利，不是更高优先级的实体规则。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "M16",
+          "section_path": "2.质量或发货失败",
+          "char_start": 104,
+          "char_end": 171,
+          "text": "充值未到账、数字化商品无法下载或与描述严重不符的，按质量问题或履约失败处理，可为消费者补发或退款，不得将其理解为“任何情况都不可退”。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 2,
+        "n_correct": 0,
+        "n_incorrect": 2,
+        "precision": 0.0,
+        "n_gold_sentences": 0,
+        "n_gold_hit": 0,
+        "recall": null,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": true,
+        "point_coverage": {
+          "n": 0,
+          "n_hit": 0,
+          "recall": null,
+          "hits": []
+        },
+        "citation_recall": null,
+        "citation_precision": 0.0
+      },
+      "refusal": {
+        "should_refuse": true,
+        "answer_looks_like_refusal": true,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P06",
+          "P05",
+          "P04",
+          "P12",
+          "P07",
+          "P01",
+          "M03",
+          "M16",
+          "M13",
+          "M23",
+          "M02",
+          "F03",
+          "F12",
+          "F04",
+          "F02",
+          "F01",
+          "F05"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q064",
+      "type": "refusal",
+      "cluster": "refusal_privacy",
+      "should_refuse": true,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：无法回答。**\n\n**依据说明：**\n您咨询的问题涉及“订单数据存放服务器所在国家”及“跨境传输”情况，这属于平台的数据存储架构、隐私政策或跨境合规范畴。当前提供的适用证据句（[S1]-[S24]）仅涵盖会员权益、运费险规则、七天无理由退货时限、质量问题退换货及运费承担等售后业务规则，未包含任何关于数据存储地点或跨境数据传输的政策条款。\n\n根据助手职责要求，若适用条款无法覆盖用户问题（如语料未收录事项），必须明确拒答，不得编造政策。建议您联系星河优选官方客服或查阅平台的《隐私政策》/《数据安全声明》以获取准确信息。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.032018442622950824,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.032018442622950824,
+        "top2_rrf": 0.028949545078577336,
+        "margin_rrf": 0.0030688975443734882,
+        "top1_dense": 0.5260559022426605,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1665,
+        "output_tokens": 151,
+        "total_tokens": 1816
+      },
+      "elapsed_ms": 4026,
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P14",
+          "section_path": "1.会员身份",
+          "char_start": 23,
+          "char_end": 70,
+          "text": "订单查询应返回下单用户在申请售后时是否为有效会员（以 users 中的会员字段及有效期为准）。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 270,
+          "char_end": 313,
+          "text": "4. 时限是否届满，以申请提交成功的系统时间与签收时间比较为准，不以客服口头承诺替代。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 2,
+        "n_correct": 0,
+        "n_incorrect": 2,
+        "precision": 0.0,
+        "n_gold_sentences": 0,
+        "n_gold_hit": 0,
+        "recall": null,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": true,
+        "point_coverage": {
+          "n": 0,
+          "n_hit": 0,
+          "recall": null,
+          "hits": []
+        },
+        "citation_recall": null,
+        "citation_precision": 0.0
+      },
+      "refusal": {
+        "should_refuse": true,
+        "answer_looks_like_refusal": true,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P06",
+          "P05",
+          "P04",
+          "P02",
+          "P10",
+          "P07",
+          "M05",
+          "M01",
+          "M04",
+          "M02",
+          "M14",
+          "M03",
+          "M16",
+          "M09",
+          "F04",
+          "F12",
+          "F02",
+          "F05",
+          "F03"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q065",
+      "type": "refusal",
+      "cluster": "refusal_finance",
+      "should_refuse": true,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：星河优选售后政策助手无法回答关于平台消费分期贷款的利率和手续费问题，建议转接人工客服或咨询平台金融/支付相关渠道。**\n\n**依据说明：**\n1.  **服务范围限制**：本助手仅负责处理订单售后、退换货、质保及运费等政策咨询。用户询问的“消费分期贷款利率和手续费”属于金融信贷业务范畴，不在当前提供的售后政策语料覆盖范围内 [S1]。\n2.  **无适用条款**：提供的证据句（[S1]-[S24]）均涉及七天无理由退货时限、质量问题运费承担、物流责任、质保期限及申请流程等售后规则，未包含任何关于分期付款、贷款利率或手续费的政策信息。\n3.  **禁止编造**：根据指令，若适用条款无法覆盖用户问题（如金融利率等语料未收录事项），必须明确拒答，不得编造政策 [S2]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.02749719416386083,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.02749719416386083,
+        "top2_rrf": 0.027263007840342125,
+        "margin_rrf": 0.0002341863235187057,
+        "top1_dense": 0.41112208366394043,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1867,
+        "output_tokens": 199,
+        "total_tokens": 2066
+      },
+      "elapsed_ms": 5376,
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P14",
+          "section_path": "3.与其他规则的关系",
+          "char_start": 209,
+          "char_end": 234,
+          "text": "会员增值服务是附加便利，不是更高优先级的实体规则。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "4.质保期内的服务",
+          "char_start": 351,
+          "char_end": 423,
+          "text": "在适用的质保期限内，非因消费者使用不当导致的性能故障，商家应提供维修、换货或退货，具体方式按《质量问题退换货通则》和《维修与上门服务规则》执行。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P14",
+          "section_path": "3.与其他规则的关系",
+          "char_start": 234,
+          "char_end": 256,
+          "text": "冲突仍按《平台售后总则与冲突排序口径》处理。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 3,
+        "n_correct": 0,
+        "n_incorrect": 3,
+        "precision": 0.0,
+        "n_gold_sentences": 0,
+        "n_gold_hit": 0,
+        "recall": null,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": true,
+        "point_coverage": {
+          "n": 0,
+          "n_hit": 0,
+          "recall": null,
+          "hits": []
+        },
+        "citation_recall": null,
+        "citation_precision": 0.0
+      },
+      "refusal": {
+        "should_refuse": true,
+        "answer_looks_like_refusal": true,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P05",
+          "P04",
+          "P02",
+          "P12",
+          "P07",
+          "M05",
+          "M16",
+          "M03",
+          "M04",
+          "M02",
+          "M13",
+          "F12",
+          "F03",
+          "F01",
+          "F05",
+          "F02"
+        ]
+      },
+      "looks_like_refusal": true
+    }
+  ],
+  "q041": {
+    "answer": "**结论：**\n1. **不能按七天无理由退货。** 手机数码类商品一旦完成激活，即不再支持七天无理由退货 [S1][S16]。\n2. **质量问题退换时限为签收之日起 15 日内。** 若存在质量问题，应在签收之日起 15 日内申请退货或换货；超过 15 日但仍在质保期内的，按维修或质保规则处理 [S4][S5][S20][S21]。\n\n**依据说明：**\n*   **为何适用此规则（范围覆盖）：** 您的问题涉及“手机数码”品类。根据冲突解析，品类级专项规定优先于通用规则 [S9]。因此，本回答依据《手机数码品类专项规定》及对应 FAQ 作答，而非通用的七天无理由退货总则 [S8][S9][S24]。\n*   **关于激活后退货：** 平台通用规则与手机数码品类专项规定在“激活后能否无理由退货”上存在差异，专项规定明确：手机数码类商品一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货 [S1][S16]。只有未激活且仍在签收之日起 7 日内、商品完好的，才可按通用规则申请 [S2][S10][S17]。\n*   **关于质量问题时限：** 激活后，消费者仅能就质量问题申请售后 [S3][S18]。该品类特殊规定要求质量问题应在签收之日起 15 日内申请退货或换货 [S4][S20]。这 15 日是本品类的特殊规定，不得用通用七天无理由时限替代或缩减 [S6][S7][S22]。",
+    "review": {
+      "question_id": "Q041",
+      "meets_expected": true,
+      "required_points": [
+        {
+          "id": "activated_no_reason_denied",
+          "expected": "手机数码商品激活后不适用通用七天无理由退货",
+          "ok": true
+        },
+        {
+          "id": "quality_only_after_activation",
+          "expected": "激活后仅支持质量问题售后",
+          "ok": true
+        },
+        {
+          "id": "quality_window_15_days",
+          "expected": "质量问题应在签收之日起 15 日内申请退货或换货",
+          "ok": true
+        },
+        {
+          "id": "category_rule_explained",
+          "expected": "说明按品类专项规定作答，以及专类覆盖/优先于通用规则",
+          "ok": true
+        }
+      ]
+    },
+    "citations": [
+      {
+        "sid": "S1",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "2.激活后的特殊退货规则",
+        "char_start": 118,
+        "char_end": 191,
+        "text": "与平台通用的七天无理由退货规则不同：手机数码类商品一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货。"
+      },
+      {
+        "sid": "S16",
+        "valid_evidence": true,
+        "doc_id": "F07",
+        "section_path": "2.答复口径",
+        "char_start": 81,
+        "char_end": 142,
+        "text": "类目为“手机数码”的商品，一旦完成激活（包括首次开机并完成系统激活、绑定账号或写入运营商网络），即不再支持七天无理由退货。"
+      },
+      {
+        "sid": "S4",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "3.激活后的质量问题通道",
+        "char_start": 271,
+        "char_end": 296,
+        "text": "质量问题应在签收之日起 15 日内申请退货或换货；"
+      },
+      {
+        "sid": "S5",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "3.激活后的质量问题通道",
+        "char_start": 296,
+        "char_end": 323,
+        "text": "超过 15 日但仍在质保期内的，按维修或质保规则处理。"
+      },
+      {
+        "sid": "S20",
+        "valid_evidence": true,
+        "doc_id": "F07",
+        "section_path": "2.答复口径",
+        "char_start": 178,
+        "char_end": 214,
+        "text": "激活后仅能就质量问题申请售后：应在签收之日起 15 日内申请退货或换货；"
+      },
+      {
+        "sid": "S21",
+        "valid_evidence": true,
+        "doc_id": "F07",
+        "section_path": "2.答复口径",
+        "char_start": 214,
+        "char_end": 241,
+        "text": "超过 15 日但仍在质保期内的，按维修或质保规则处理。"
+      },
+      {
+        "sid": "S9",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "4.与通用规则的关系",
+        "char_start": 415,
+        "char_end": 451,
+        "text": "按冲突排序口径，品类级规定优先于通用规定，因此本类目应适用本节专项规则。"
+      },
+      {
+        "sid": "S8",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "4.与通用规则的关系",
+        "char_start": 381,
+        "char_end": 415,
+        "text": "本文件与《七天无理由退货总则》在“激活后能否无理由退货”上存在差异。"
+      },
+      {
+        "sid": "S24",
+        "valid_evidence": true,
+        "doc_id": "F07",
+        "section_path": "3.说明",
+        "char_start": 313,
+        "char_end": 329,
+        "text": "以《手机数码品类专项规定》为准。"
+      },
+      {
+        "sid": "S2",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "2.激活后的特殊退货规则",
+        "char_start": 193,
+        "char_end": 221,
+        "text": "未激活且仍在签收之日起 7 日内、商品完好的，仍可按通用"
+      },
+      {
+        "sid": "S10",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "2.激活后的特殊退货规则",
+        "char_start": 197,
+        "char_end": 233,
+        "text": "仍在签收之日起 7 日内、商品完好的，仍可按通用七天无理由规则申请退货。"
+      },
+      {
+        "sid": "S17",
+        "valid_evidence": true,
+        "doc_id": "F07",
+        "section_path": "2.答复口径",
+        "char_start": 142,
+        "char_end": 178,
+        "text": "未激活且仍在签收之日起 7 日内、商品完好的，仍可按通用七天无理由申请。"
+      },
+      {
+        "sid": "S3",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "3.激活后的质量问题通道",
+        "char_start": 252,
+        "char_end": 271,
+        "text": "激活后，消费者仅能就质量问题申请售后。"
+      },
+      {
+        "sid": "S18",
+        "valid_evidence": true,
+        "doc_id": "F07",
+        "section_path": "2.答复口径",
+        "char_start": 178,
+        "char_end": 190,
+        "text": "激活后仅能就质量问题申请"
+      },
+      {
+        "sid": "S6",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "3.激活后的质量问题通道",
+        "char_start": 323,
+        "char_end": 355,
+        "text": "该 15 日质量问题退换期是本品类的特殊规定，不得用通用七天无理"
+      },
+      {
+        "sid": "S7",
+        "valid_evidence": true,
+        "doc_id": "P15",
+        "section_path": "3.激活后的质量问题通道",
+        "char_start": 331,
+        "char_end": 364,
+        "text": "问题退换期是本品类的特殊规定，不得用通用七天无理由时限替代或缩减。"
+      },
+      {
+        "sid": "S22",
+        "valid_evidence": true,
+        "doc_id": "F07",
+        "section_path": "3.说明",
+        "char_start": 252,
+        "char_end": 286,
+        "text": "上述 15 日是本品类专项规定，不得用通用七天无理由时限替代或缩减。"
+      }
+    ],
+    "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=（未指定），品类=手机数码。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n品类级规定优先于通用，适用：P15《手机数码品类专项规定》（来源=政策，范围=品类：手机数码，生效日=2025-04-01）、F07《FAQ：手机激活后还能七天无理由退货吗？》（来源=FAQ，范围=品类：手机数码，生效日=2025-09-01）。\n因此本品类专项覆盖（优先于并取代其适用位置上的）通用规定，作答须采用专类结论并说明依据，不得用通用规则替代或缩减专项时限。"
+  }
+}

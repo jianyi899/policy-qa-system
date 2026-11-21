@@ -1,6 +1,6 @@
-"""第四段单轮主路径：必须先真实查订单，注入冲突解析，再按锁定检索链路作答。
+"""单轮与工具入口：必须先真实查订单（若需要），注入冲突解析，再按锁定检索链路作答。
 
-多轮与句级引用留给第五段。不接入 Langfuse，不做缓存。
+多轮与句级引用见 app.dialogue。不接入 Langfuse，不做缓存。
 生成默认 qwen3.8-flash，若已标定级联阈值则可能升到 qwen-plus；未标定时不升级，并如实记录。
 """
 
@@ -9,6 +9,7 @@ from __future__ import annotations
 import time
 
 from app.cascade import choose_model, retrieval_score
+from app.citation import evidence_sentences
 from app.clock import iso, now_shanghai
 from app.conflict import context_for_resolve, explain_conflict, resolve
 from app.context import MissingSessionContext, SessionContext
@@ -284,6 +285,7 @@ def answer_after_sales(
         "excluded": [_compact_chunk(x) for x in resolution["excluded"]],
     }
     try:
+        sentences = evidence_sentences(resolution["applicable"][:max_evidence], max_sentences=24)
         gen = generate_answer(
             question=question,
             order_facts=facts,
@@ -291,6 +293,7 @@ def answer_after_sales(
             excluded=resolution["excluded"],
             conflict_rule=resolution["rule"],
             conflict_explanation=explanation["text"],
+            evidence_sentences=sentences,
             model=cascade["model"],
             max_evidence=max_evidence,
         )
@@ -312,6 +315,7 @@ def answer_after_sales(
         )
 
     review = check_fridge_answer(gen["answer"], facts) if "冰箱" in question else None
+    citations = gen.get("citations") or []
     cited = []
     for item in resolution["applicable"][:max_evidence]:
         cited.append(
@@ -335,6 +339,18 @@ def answer_after_sales(
         retrieval=retrieval_block,
         conflict_resolution=conflict_block,
         cited_policies=cited,
+        evidence_sentences=[
+            {
+                "sid": s["sid"],
+                "doc_id": s["doc_id"],
+                "section_path": s["section_path"],
+                "char_start": s["char_start"],
+                "char_end": s["char_end"],
+                "text": s["text"],
+            }
+            for s in sentences
+        ],
+        citations=citations,
         cascade=cascade,
         model=gen["model"],
         cascaded=bool(cascade.get("upgraded")),
@@ -451,6 +467,7 @@ def answer_policy_only(
     score_info = retrieval_score(search_result["hits"])
     cascade = choose_model(score_info["score"])
     try:
+        sentences = evidence_sentences(resolution["applicable"][:max_evidence], max_sentences=24)
         gen = generate_answer(
             question=question,
             order_facts=facts,
@@ -458,6 +475,7 @@ def answer_policy_only(
             excluded=resolution["excluded"],
             conflict_rule=resolution["rule"],
             conflict_explanation=explanation["text"],
+            evidence_sentences=sentences,
             model=cascade["model"],
             max_evidence=max_evidence,
         )
@@ -474,6 +492,7 @@ def answer_policy_only(
             model=cascade["model"],
             cascaded=bool(cascade.get("upgraded")),
         )
+    citations = gen.get("citations") or []
     cited = [
         {
             "doc_id": item.get("doc_id"),
@@ -496,10 +515,24 @@ def answer_policy_only(
             "n_applicable": resolution["n_applicable"],
             "n_excluded": resolution["n_excluded"],
             "explanation": explanation["text"],
+            "has_finer_scope": explanation["has_finer_scope"],
+            "by_scope_doc_ids": explanation["by_scope_doc_ids"],
             "applicable": [_compact_chunk(x) for x in resolution["applicable"]],
             "excluded": [_compact_chunk(x) for x in resolution["excluded"]],
         },
         cited_policies=cited,
+        evidence_sentences=[
+            {
+                "sid": s["sid"],
+                "doc_id": s["doc_id"],
+                "section_path": s["section_path"],
+                "char_start": s["char_start"],
+                "char_end": s["char_end"],
+                "text": s["text"],
+            }
+            for s in sentences
+        ],
+        citations=citations,
         cascade=cascade,
         model=gen["model"],
         cascaded=bool(cascade.get("upgraded")),
@@ -515,7 +548,7 @@ def handle_question(
     top_k: int = 40,
     max_evidence: int = 12,
 ) -> dict:
-    """单轮入口：按问题路由到查订单、查物流或政策问答。不从对话文本解析身份。"""
+    """单轮入口：按问题路由到查订单、查物流或政策问答。政策路径产出句级引用。不从对话文本解析身份。多轮请使用 DialogueSession。"""
     started = time.perf_counter()
     route = classify(question)
     if route.intent == "unsupported_write":
@@ -530,14 +563,14 @@ def handle_question(
         )
     if route.intent == "tool":
         return _tool_query(question, ctx, route, started)
-    if wants_order(question):
-        return answer_after_sales(
-            question,
-            ctx,  # type: ignore[arg-type]
-            keyword=keyword_for_question(question),
-            order_no=extract_order_no(question),
-            top_k=top_k,
-            max_evidence=max_evidence,
-        )
-    result = answer_policy_only(question, ctx, top_k=top_k, max_evidence=max_evidence)
-    return result
+    # 政策路径（含需要先查订单的售后题）走多轮模块的单轮入口，统一产出句级引用。
+    from app.dialogue import answer_question
+
+    return answer_question(
+        question,
+        ctx=ctx,
+        keyword=keyword_for_question(question),
+        order_no=extract_order_no(question),
+        top_k=top_k,
+        max_evidence=max_evidence,
+    )

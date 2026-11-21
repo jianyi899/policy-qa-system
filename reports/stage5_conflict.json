@@ -1,0 +1,158 @@
+{
+  "ok": true,
+  "policy_qa_home": "/tmp/policy-qa-stage5-test",
+  "errors": [],
+  "q041": {
+    "inferred": {
+      "sku": null,
+      "category": "手机数码",
+      "inferred": true,
+      "source": "question_inferred"
+    },
+    "first_docs": [
+      {
+        "doc_id": "P15",
+        "scope_match": "category",
+        "source_type": "policy",
+        "scope_value": "手机数码",
+        "effective_date": "2025-04-01",
+        "conflict_rank": 1
+      },
+      {
+        "doc_id": "F07",
+        "scope_match": "category",
+        "source_type": "faq",
+        "scope_value": "手机数码",
+        "effective_date": "2025-09-01",
+        "conflict_rank": 7
+      },
+      {
+        "doc_id": "P14",
+        "scope_match": "general",
+        "source_type": "policy",
+        "scope_value": null,
+        "effective_date": "2025-07-01",
+        "conflict_rank": 11
+      },
+      {
+        "doc_id": "P03",
+        "scope_match": "general",
+        "source_type": "policy",
+        "scope_value": null,
+        "effective_date": "2025-03-01",
+        "conflict_rank": 12
+      },
+      {
+        "doc_id": "P02",
+        "scope_match": "general",
+        "source_type": "policy",
+        "scope_value": null,
+        "effective_date": "2025-03-01",
+        "conflict_rank": 13
+      },
+      {
+        "doc_id": "P10",
+        "scope_match": "general",
+        "source_type": "policy",
+        "scope_value": null,
+        "effective_date": "2025-03-01",
+        "conflict_rank": 14
+      },
+      {
+        "doc_id": "P04",
+        "scope_match": "general",
+        "source_type": "policy",
+        "scope_value": null,
+        "effective_date": "2025-03-01",
+        "conflict_rank": 17
+      },
+      {
+        "doc_id": "M05",
+        "scope_match": "general",
+        "source_type": "manual",
+        "scope_value": null,
+        "effective_date": "2025-08-01",
+        "conflict_rank": 21
+      }
+    ],
+    "has_finer_scope": true,
+    "explanation": "未绑定具体订单，按问题中的范围套用：SKU=（未指定），品类=手机数码。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n品类级规定优先于通用，适用：P15《手机数码品类专项规定》（来源=政策，范围=品类：手机数码，生效日=2025-04-01）、F07《FAQ：手机激活后还能七天无理由退货吗？》（来源=FAQ，范围=品类：手机数码，生效日=2025-09-01）。\n因此本品类专项覆盖（优先于并取代其适用位置上的）通用规定，作答须采用专类结论并说明依据，不得用通用规则替代或缩减专项时限。"
+  },
+  "q042_conflict_fixture_only": {
+    "note": "仅验证冲突排序与说明，正式答题数字以测试集第二次跑分为准，不在此调参。",
+    "inferred": {
+      "sku": "SKU-HX-WATCH-S3",
+      "category": null,
+      "inferred": true,
+      "source": "question_inferred"
+    },
+    "first_docs": [
+      {
+        "doc_id": "P08",
+        "scope_match": "sku",
+        "source_type": "policy",
+        "scope_value": "SKU-HX-WATCH-S3",
+        "effective_date": "2025-06-01",
+        "conflict_rank": 1
+      },
+      {
+        "doc_id": "F06",
+        "scope_match": "sku",
+        "source_type": "faq",
+        "scope_value": "SKU-HX-WATCH-S3",
+        "effective_date": "2025-09-01",
+        "conflict_rank": 6
+      },
+      {
+        "doc_id": "P04",
+        "scope_match": "general",
+        "source_type": "policy",
+        "scope_value": null,
+        "effective_date": "2025-03-01",
+        "conflict_rank": 11
+      },
+      {
+        "doc_id": "P07",
+        "scope_match": "general",
+        "source_type": "policy",
+        "scope_value": null,
+        "effective_date": "2025-01-15",
+        "conflict_rank": 12
+      },
+      {
+        "doc_id": "M23",
+        "scope_match": "general",
+        "source_type": "manual",
+        "scope_value": null,
+        "effective_date": "2025-08-01",
+        "conflict_rank": 17
+      },
+      {
+        "doc_id": "M03",
+        "scope_match": "general",
+        "source_type": "manual",
+        "scope_value": null,
+        "effective_date": "2025-08-01",
+        "conflict_rank": 19
+      },
+      {
+        "doc_id": "M09",
+        "scope_match": "general",
+        "source_type": "manual",
+        "scope_value": null,
+        "effective_date": "2025-08-01",
+        "conflict_rank": 22
+      },
+      {
+        "doc_id": "F05",
+        "scope_match": "general",
+        "source_type": "faq",
+        "scope_value": null,
+        "effective_date": "2025-09-01",
+        "conflict_rank": 23
+      }
+    ],
+    "has_finer_scope": true,
+    "explanation": "未绑定具体订单，按问题中的范围套用：SKU=SKU-HX-WATCH-S3，品类=（未指定）。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\nSKU 级规定优先于品类与通用，适用：P08《指定商品延保政策（SKU-HX-WATCH-S3）》（来源=政策，范围=sku：SKU-HX-WATCH-S3，生效日=2025-06-01）、F06《FAQ：星河手表 S3 的质保期限是多久？》（来源=FAQ，范围=sku：SKU-HX-WATCH-S3，生效日=2025-09-01）。\n因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。"
+  }
+}

@@ -1,4 +1,4 @@
-"""本机演示界面：切换演示账号后进行单轮政策问答、查订单或查物流。
+"""本机演示界面：切换演示账号后进行政策问答、查订单或查物流，支持多轮追问。
 
 仅绑定 127.0.0.1。请通过 `python -m app.start` 启动。
 演示账号必须用侧边栏切换器选择，不要在对话里输入身份。
@@ -20,7 +20,8 @@ load_dotenv(ROOT / ".env", override=False)
 
 from app.config import clear_settings_cache, get_settings  # noqa: E402
 from app.db import check_sqlite  # noqa: E402
-from app.orchestrator import FRIDGE_QUESTION, handle_question  # noqa: E402
+from app.dialogue import DialogueSession, answer_turn  # noqa: E402
+from app.orchestrator import FRIDGE_QUESTION  # noqa: E402
 from app.seed import context_from_demo_account, list_demo_accounts, seed  # noqa: E402
 
 clear_settings_cache()
@@ -33,7 +34,7 @@ if home_env.is_file():
 
 st.set_page_config(page_title="政策问答系统", layout="centered")
 st.title("政策问答系统（轻量版）")
-st.caption("第四段：查订单、查物流，并按订单范围套政策。页面只监听 127.0.0.1。")
+st.caption("第五段：多轮对话、句级引用与冲突消解。查订单后按范围套政策。页面只监听 127.0.0.1。")
 
 # 确保演示数据已写入当前 POLICY_QA_HOME 下的数据库。
 try:
@@ -71,33 +72,59 @@ except ValueError:
     ctx = None
     st.error("所选演示账号无效或尚未写入数据库，请重新启动 `python -m app.start`。")
 
+if st.session_state.get("_account_ext") != selected_ext:
+    st.session_state._account_ext = selected_ext
+    st.session_state.messages = []
+    st.session_state.dialogue = DialogueSession(ctx=ctx)
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
+if "dialogue" not in st.session_state:
+    st.session_state.dialogue = DialogueSession(ctx=ctx)
+else:
+    st.session_state.dialogue.ctx = ctx
+
+def _render_meta(meta: dict) -> None:
+    facts = meta.get("order_fields_injected") or {}
+    if facts.get("order_no"):
+        reused = "（复用本会话已查结果）" if meta.get("order_reused") else ""
+        st.info(
+            f"已查订单 {facts.get('order_no')}{reused}：SKU={facts.get('sku')}，"
+            f"类目={facts.get('category')}，签收={facts.get('received_at')}，"
+            f"会员={facts.get('is_member')}，运费险={facts.get('shipping_insurance')}"
+        )
+    citations = meta.get("citations") or []
+    if citations:
+        with st.expander("句级引用"):
+            for item in citations:
+                span = ""
+                if item.get("char_start") is not None:
+                    span = f" {item.get('char_start')}-{item.get('char_end')}"
+                st.write(
+                    f"- [{item.get('sid')}] {item.get('doc_id') or '无效编号'} "
+                    f"{item.get('section_path') or ''}{span}"
+                )
+                if item.get("text"):
+                    st.caption(item["text"])
+    elif meta.get("cited_policies"):
+        with st.expander("引用的政策"):
+            for item in meta["cited_policies"]:
+                st.write(
+                    f"- {item.get('doc_id')} {item.get('title') or ''} "
+                    f"（{item.get('section_path') or ''}）"
+                )
+    if meta.get("model"):
+        cascaded = "已级联到更强模型" if meta.get("cascaded") else "未级联，使用默认快速模型"
+        st.caption(f"模型：{meta.get('model')}（{cascaded}）")
 
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
-        meta = msg.get("meta") or {}
-        if meta.get("order_fields_injected") and meta["order_fields_injected"].get("order_no"):
-            facts = meta["order_fields_injected"]
-            st.info(
-                f"已查订单 {facts.get('order_no')}：SKU={facts.get('sku')}，"
-                f"类目={facts.get('category')}，签收={facts.get('received_at')}，"
-                f"会员={facts.get('is_member')}，运费险={facts.get('shipping_insurance')}"
-            )
-        if meta.get("cited_policies"):
-            with st.expander("引用的政策"):
-                for item in meta["cited_policies"]:
-                    st.write(
-                        f"- {item.get('doc_id')} {item.get('title') or ''} "
-                        f"（{item.get('section_path') or ''}）"
-                    )
-        if meta.get("model"):
-            cascaded = "已级联到更强模型" if meta.get("cascaded") else "未级联，使用默认快速模型"
-            st.caption(f"模型：{meta.get('model')}（{cascaded}）")
+        if msg.get("meta"):
+            _render_meta(msg["meta"])
 
 pending = st.session_state.pop("_pending_question", None)
-typed = st.chat_input("输入问题。例如：这单冰箱买了 20 天质量问题还能退吗")
+typed = st.chat_input("输入问题，可先问政策再追问同一订单。例如：这单冰箱买了 20 天质量问题还能退吗")
 question = pending or typed
 if question:
     st.session_state.messages.append({"role": "user", "content": question})
@@ -105,26 +132,12 @@ if question:
         st.markdown(question)
     with st.chat_message("assistant"):
         with st.spinner("正在作答…"):
-            result = handle_question(question, ctx)
+            result = answer_turn(st.session_state.dialogue, question)
         answer = result.get("answer") or result.get("error_type") or "没有得到回答。"
         st.markdown(answer)
-        facts = result.get("order_fields_injected") or {}
-        if facts.get("order_no"):
-            st.info(
-                f"已查订单 {facts.get('order_no')}：SKU={facts.get('sku')}，"
-                f"类目={facts.get('category')}，签收={facts.get('received_at')}，"
-                f"会员={facts.get('is_member')}，运费险={facts.get('shipping_insurance')}"
-            )
-        if result.get("cited_policies"):
-            with st.expander("引用的政策"):
-                for item in result["cited_policies"]:
-                    st.write(
-                        f"- {item.get('doc_id')} {item.get('title') or ''} "
-                        f"（{item.get('section_path') or ''}）"
-                    )
+        _render_meta(result)
         if result.get("model"):
-            cascaded = "已级联到更强模型" if result.get("cascaded") else "未级联，使用默认快速模型"
-            st.caption(f"模型：{result.get('model')}（{cascaded}）  耗时 {result.get('elapsed_ms')} ms")
+            st.caption(f"耗时 {result.get('elapsed_ms')} ms")
         elif result.get("error_type"):
             st.caption(f"错误：{result.get('error_type')}")
     st.session_state.messages.append({"role": "assistant", "content": answer, "meta": result})

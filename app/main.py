@@ -1,4 +1,4 @@
-"""FastAPI 应用：健康检查与单轮问答入口。演示账号只能从已知列表选取，不能传 user_id。"""
+"""FastAPI 应用：健康检查与问答入口。演示账号只能从已知列表选取，不能传 user_id。单轮接口；多轮请用页面会话。"""
 
 from __future__ import annotations
 
@@ -34,6 +34,8 @@ def _public_ask_payload(result: dict) -> dict[str, Any]:
         "cascade": result.get("cascade"),
         "order_fields_injected": result.get("order_fields_injected"),
         "cited_policies": result.get("cited_policies"),
+        "citations": result.get("citations"),
+        "order_reused": result.get("order_reused"),
         "tool": result.get("tool"),
         "error_type": result.get("error_type"),
         "usage": result.get("usage"),

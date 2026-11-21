@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "errors": [],
+  "q041_gold_sentences": 9,
+  "checks": {
+    "scope_order": [
+      "P08",
+      "P-CAT",
+      "P07"
+    ],
+    "source_order": [
+      "P01",
+      "M01",
+      "F01"
+    ],
+    "effective_date_order": [
+      "P-NEW",
+      "P-OLD"
+    ],
+    "q041_first": [
+      "P15",
+      "P02"
+    ]
+  },
+  "n_corpus": 40
+}

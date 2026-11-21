@@ -1,0 +1,1880 @@
+{
+  "ok": true,
+  "split": "test",
+  "model": "qwen3.8-flash",
+  "cascade_note": "级联阈值尚未标定，默认不升级（reason=no_threshold_always_fast）",
+  "summary": {
+    "split": "test",
+    "n_questions": 12,
+    "n_answerable": 10,
+    "n_refusal": 2,
+    "n_generation_ok": 12,
+    "n_generation_failed": 0,
+    "generation_failed_ids": [],
+    "citation": {
+      "metric": "sentence_precision",
+      "definition": "按句子算引用精度。系统回答中每个 [S#] 映射到证据句（doc_id+section_path+字符起止，与条款标注同一 documents.body 坐标系）；该句与任一金标条款跨度在同一章节下字符交集长度>0 视为正确。不对着检索改标注。可答题、生成成功的题目上统计。",
+      "n_answerable_generated": 10,
+      "n_with_citations": 10,
+      "n_without_citations": 0,
+      "macro_precision_over_questions_with_citations": 0.2730769230769231,
+      "macro_precision_missing_as_zero": 0.2730769230769231,
+      "macro_recall_over_questions_with_gold_sentences": 0.49375,
+      "micro_precision": 0.20634920634920634,
+      "micro_n_correct": 13,
+      "micro_n_cited": 63
+    },
+    "answer_quality": {
+      "definition": "可答题：不得拒答，且至少引用到一条金标句或覆盖至少一条金标要点；要点覆盖见 app.quality.point_coverage。拒答另计。",
+      "n_answerable_generated": 10,
+      "n_task_ok": 9,
+      "n_task_fail": 1,
+      "task_ok_over_generated": "9/10",
+      "task_fail_ids": [
+        "Q076"
+      ],
+      "macro_point_coverage": 1.0
+    },
+    "refusal": {
+      "n": 2,
+      "n_evaluated": 2,
+      "n_correct": 2,
+      "n_incorrect": 0,
+      "n_generation_failed": 0,
+      "correct_over_total": "2/2",
+      "incorrect_ids": [],
+      "generation_failed_ids": [],
+      "note": "小样本只报对了几道/共几道，不设 90% 目标。"
+    }
+  },
+  "items": [
+    {
+      "id": "Q042",
+      "type": "multi_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：星河手表 S3（SKU-HX-WATCH-S3）的质量保证期限为自签收之日起 24 个月，而非通用的 12 个月。**\n\n**依据说明：**\n1. **适用更细范围规则**：根据冲突解析口径，SKU 级规定优先于品类与通用规定。针对该特定商品，适用《指定商品延保政策（SKU-HX-WATCH-S3）》及对应 FAQ [S1][S16]。\n2. **覆盖一般规则**：该 SKU 的 24 个月质保规定明确覆盖并取代了平台《商品质量保证期限通则》中的通用 12 个月规定 [S2][S10][S17][S23]。因此，尽管存在通用 12 个月的规定，但在本 SKU 上应适用 24 个月 [S10][S23]。\n3. **生效条件**：此政策适用于 2025-06-01 当日及之后签收的订单 [S7][S16]。\n4. **质保范围提示**：24 个月质保主要涵盖手表主机的主要功能故障；表带、充电线等附件仍按通用规则或商品说明执行；因进水、摔损、私拆造成的损坏不在延保范围内 [S11][S12][S13][S19][S20][S21]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03278688524590164,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03278688524590164,
+        "top2_rrf": 0.03225806451612903,
+        "margin_rrf": 0.0005288207297726097,
+        "top1_dense": 0.9201878011226654,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 2089,
+        "output_tokens": 309,
+        "total_tokens": 2398
+      },
+      "elapsed_ms": 6639,
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 140,
+          "char_end": 177,
+          "text": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月。"
+        },
+        {
+          "sid": "S16",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 101,
+          "char_end": 180,
+          "text": "SKU-HX-WATCH-S3（星河手表 S3，品类：智能穿戴）的质量保证期限为自签收之日起 24 个月，适用于 2025-06-01 当日及之后签收的订单。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 177,
+          "char_end": 240,
+          "text": "该 24 个月规定覆盖（即在本 SKU 上优先于、并取代其适用位置上的）平台《商品质量保证期限通则》中的通用 12 个月规定。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 279,
+          "char_end": 332,
+          "text": "按冲突排序口径，范围比较时 SKU 级优先于通用，因此本 SKU 应适用 24 个月，而不是 12 个月。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 180,
+          "char_end": 209,
+          "text": "该 24 个月是 SKU 级专项规定，按冲突排序优先于通用"
+        },
+        {
+          "sid": "S23",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 186,
+          "char_end": 246,
+          "text": "月是 SKU 级专项规定，按冲突排序优先于通用 12 个月，因此本 SKU 应适用 24 个月，而不是通用 12 个月。"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "4.生效日",
+          "char_start": 423,
+          "char_end": 478,
+          "text": "本政策自 2025-06-01 起生效，对该生效日当日及之后签收的 SKU-HX-WATCH-S3 订单适用。"
+        },
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 345,
+          "char_end": 366,
+          "text": "24 个月质保涵盖手表主机的主要功能故障。"
+        },
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 366,
+          "char_end": 389,
+          "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 389,
+          "char_end": 411,
+          "text": "因进水、摔损、私拆造成的损坏不在本延保范围。"
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 284,
+          "char_end": 304,
+          "text": "24 个月质保涵盖手表主机主要功能故障；"
+        },
+        {
+          "sid": "S20",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 304,
+          "char_end": 327,
+          "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+        },
+        {
+          "sid": "S21",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 327,
+          "char_end": 347,
+          "text": "进水、摔损、私拆造成的损坏不在延保范围。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 13,
+        "n_correct": 3,
+        "n_incorrect": 10,
+        "precision": 0.23076923076923078,
+        "n_gold_sentences": 16,
+        "n_gold_hit": 3,
+        "recall": 0.1875,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 3,
+          "n_hit": 3,
+          "recall": 1.0,
+          "hits": [
+            true,
+            true,
+            true
+          ]
+        },
+        "citation_recall": 0.1875,
+        "citation_precision": 0.23076923076923078
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": {
+        "question_id": "Q042",
+        "meets_expected": true,
+        "required_points": [
+          {
+            "id": "warranty_24_months",
+            "expected": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月",
+            "ok": true
+          },
+          {
+            "id": "sku_covers_general_12",
+            "expected": "按冲突排序应优先适用 SKU 级规定，24 个月覆盖通用 12 个月",
+            "ok": true
+          },
+          {
+            "id": "not_only_general_12",
+            "expected": "不得只回答通用 12 个月",
+            "ok": true
+          }
+        ]
+      },
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=SKU-HX-WATCH-S3，品类=（未指定）。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\nSKU 级规定优先于品类与通用，适用：P08《指定商品延保政策（SKU-HX-WATCH-S3）》（来源=政策，范围=sku：SKU-HX-WATCH-S3，生效日=2025-06-01）、F06《FAQ：星河手表 S3 的质保期限是多久？》（来源=FAQ，范围=sku：SKU-HX-WATCH-S3，生效日=2025-09-01）。\n因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。",
+      "by_scope_doc_ids": {
+        "sku": [
+          "P08",
+          "F06"
+        ],
+        "category": [],
+        "general": [
+          "P02",
+          "P04",
+          "P07",
+          "P01",
+          "M23",
+          "M03",
+          "F05",
+          "F12"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q072",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n星河优选电子电器的通用质保期限为自签收之日起 **12 个月**。\n\n**依据简述：**\n根据平台通用政策，除法律另有规定、商品详情页或专项政策有更具体规定外，电子电器类及其他适用质保的商品，质量保证期限统一为自签收之日起 12 个月 [S6]。该条款属于通用范围政策 [S7]。若存在更细范围（如特定 SKU 或品类）的专项规定，应优先适用该专项规则，但若无此类专项规定，则直接适用上述通用 12 个月期限 [S8][S10]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03252247488101534,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03252247488101534,
+        "top2_rrf": 0.03252247488101534,
+        "margin_rrf": 0.0,
+        "top1_dense": 0.8793597891926765,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 2266,
+        "output_tokens": 132,
+        "total_tokens": 2398
+      },
+      "elapsed_ms": 3945,
+      "citations": [
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 27,
+          "char_end": 97,
+          "text": "除法律另有规定、商品详情页或专项政策另有更具体规定外，星河优选销售的电子电器类及其他适用质保的商品，质量保证期限为自签收之日起 12 个月。"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 97,
+          "char_end": 115,
+          "text": "本条规定是通用政策，适用范围为通用。"
+        },
+        {
+          "sid": "S8",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "3.与专项质保的关系",
+          "char_start": 225,
+          "char_end": 269,
+          "text": "某一 SKU 或某一品类如另有专项质保期限，按《平台售后总则与冲突排序口径》比较后适用。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "3.与专项质保的关系",
+          "char_start": 291,
+          "char_end": 330,
+          "text": "在同时存在通用 12 个月与某 SKU 更长或更短期限时，应优先适用该 SKU"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 4,
+        "n_correct": 2,
+        "n_incorrect": 2,
+        "precision": 0.5,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 2,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 1.0,
+        "citation_precision": 0.5
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P02",
+          "P04",
+          "P07",
+          "P01",
+          "M23",
+          "M03",
+          "F05",
+          "F12"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q073",
+      "type": "multi_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不能。** 您购买的其他款手表无法直接享受 SKU-HX-WATCH-S3 的 24 个月延保政策。\n\n**依据：**\n1. **适用范围限制**：该 24 个月质保政策仅适用于 SKU 编码为 `SKU-HX-WATCH-S3` 的商品（星河手表 S3），其他 SKU，包括同品类下的其他手表，不得直接援引本文件 [S1][S3]。\n2. **FAQ 明确排除**：针对“和其他手表一样吗”的问题，官方答复明确指出其他 SKU（含同品类其他手表）不得直接援引该 24 个月质保的答复口径 [S15][S24]。\n3. **覆盖关系说明**：虽然 `SKU-HX-WATCH-S3` 的 24 个月规定覆盖了平台通用的 12 个月规定 [S5][S10]，但这种覆盖仅限于该特定 SKU，并不延伸至同品类的其他商品。因此，您的另一款手表应遵循其对应的通用质保规则或该商品自身的专项条款，而非此 SKU 的延保政策。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.031544957774465976,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.031544957774465976,
+        "top2_rrf": 0.031544957774465976,
+        "margin_rrf": 0.0,
+        "top1_dense": 0.7524215430021286,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 2151,
+        "output_tokens": 241,
+        "total_tokens": 2392
+      },
+      "elapsed_ms": 5229,
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "1.适用范围",
+          "char_start": 40,
+          "char_end": 89,
+          "text": "本政策仅适用于 SKU 编码为 SKU-HX-WATCH-S3 的商品（商品名称：星河手表 S3；"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "1.适用范围",
+          "char_start": 100,
+          "char_end": 127,
+          "text": "其他 SKU，包括同品类其他手表，不得直接援引本文件。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "1.常见问题",
+          "char_start": 79,
+          "char_end": 88,
+          "text": "和其他手表一样吗？"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 246,
+          "char_end": 273,
+          "text": "其他 SKU，包括同品类其他手表，不得直接援引本答复。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 177,
+          "char_end": 240,
+          "text": "该 24 个月规定覆盖（即在本 SKU 上优先于、并取代其适用位置上的）平台《商品质量保证期限通则》中的通用 12 个月规定。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 279,
+          "char_end": 332,
+          "text": "按冲突排序口径，范围比较时 SKU 级优先于通用，因此本 SKU 应适用 24 个月，而不是 12 个月。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 2,
+        "n_incorrect": 4,
+        "precision": 0.3333333333333333,
+        "n_gold_sentences": 8,
+        "n_gold_hit": 2,
+        "recall": 0.25,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 2,
+          "n_hit": 2,
+          "recall": 1.0,
+          "hits": [
+            true,
+            true
+          ]
+        },
+        "citation_recall": 0.25,
+        "citation_precision": 0.3333333333333333
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=SKU-HX-WATCH-S3，品类=（未指定）。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\nSKU 级规定优先于品类与通用，适用：P08《指定商品延保政策（SKU-HX-WATCH-S3）》（来源=政策，范围=sku：SKU-HX-WATCH-S3，生效日=2025-06-01）、F06《FAQ：星河手表 S3 的质保期限是多久？》（来源=FAQ，范围=sku：SKU-HX-WATCH-S3，生效日=2025-09-01）。\n因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。",
+      "by_scope_doc_ids": {
+        "sku": [
+          "P08",
+          "F06"
+        ],
+        "category": [],
+        "general": [
+          "P07",
+          "M23",
+          "M03",
+          "F05",
+          "F12",
+          "F02"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q074",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：** SKU-HX-WATCH-S3 的 24 个月延保（质保）从**签收之日**起开始计算，但该政策仅对 **2025-06-01 当日及之后签收** 的订单生效 [S1][S2]。\n\n**依据说明：**\n1.  **起算时间**：根据《指定商品延保政策（SKU-HX-WATCH-S3）》，该 SKU 的质量保证期限为自**签收之日起** 24 个月 [S2]。\n2.  **政策生效范围**：本政策自 2025-06-01 起生效，仅适用于在该日期当日及之后签收的 SKU-HX-WATCH-S3 订单 [S1]。\n3.  **规则覆盖关系**：此 24 个月规定属于 SKU 级专项条款，按冲突排序口径，它优先于并取代了平台《商品质量保证期限通则》中通用的 12 个月规定 [S3][S10]。因此，对于符合上述时间条件的订单，应适用 24 个月而非通用的 12 个月 [S18][S23]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.032018442622950824,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.032018442622950824,
+        "top2_rrf": 0.03200204813108039,
+        "margin_rrf": 1.639449187043618e-05,
+        "top1_dense": 0.8121457248926163,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 2003,
+        "output_tokens": 260,
+        "total_tokens": 2263
+      },
+      "elapsed_ms": 4838,
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "4.生效日",
+          "char_start": 423,
+          "char_end": 478,
+          "text": "本政策自 2025-06-01 起生效，对该生效日当日及之后签收的 SKU-HX-WATCH-S3 订单适用。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 140,
+          "char_end": 177,
+          "text": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月。"
+        },
+        {
+          "sid": "S3",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 177,
+          "char_end": 240,
+          "text": "该 24 个月规定覆盖（即在本 SKU 上优先于、并取代其适用位置上的）平台《商品质量保证期限通则》中的通用 12 个月规定。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 279,
+          "char_end": 332,
+          "text": "按冲突排序口径，范围比较时 SKU 级优先于通用，因此本 SKU 应适用 24 个月，而不是 12 个月。"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 180,
+          "char_end": 209,
+          "text": "该 24 个月是 SKU 级专项规定，按冲突排序优先于通用"
+        },
+        {
+          "sid": "S23",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 186,
+          "char_end": 246,
+          "text": "月是 SKU 级专项规定，按冲突排序优先于通用 12 个月，因此本 SKU 应适用 24 个月，而不是通用 12 个月。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 1,
+        "n_incorrect": 5,
+        "precision": 0.16666666666666666,
+        "n_gold_sentences": 1,
+        "n_gold_hit": 1,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 1.0,
+        "citation_precision": 0.16666666666666666
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=SKU-HX-WATCH-S3，品类=（未指定）。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\nSKU 级规定优先于品类与通用，适用：P08《指定商品延保政策（SKU-HX-WATCH-S3）》（来源=政策，范围=sku：SKU-HX-WATCH-S3，生效日=2025-06-01）、F06《FAQ：星河手表 S3 的质保期限是多久？》（来源=FAQ，范围=sku：SKU-HX-WATCH-S3，生效日=2025-09-01）。\n因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。",
+      "by_scope_doc_ids": {
+        "sku": [
+          "P08",
+          "F06"
+        ],
+        "category": [],
+        "general": [
+          "P14",
+          "P06",
+          "P04",
+          "P07",
+          "P01",
+          "M23",
+          "M03",
+          "M01",
+          "M14",
+          "F05",
+          "F01"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q075",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不享受。** 星河手表 S3 的表带和充电线等附件，不适用该 SKU 主机的 24 个月专项质保，而是按通用规则或商品说明执行（通常为 12 个月）。\n\n**依据简述：**\n1. **SKU 专项范围限制**：虽然星河手表 S3（SKU-HX-WATCH-S3）适用 24 个月的专项质保期限 [S18]，但该专项质保仅涵盖“手表主机主要功能故障” [S14]。\n2. **附件排除条款**：明确规定表带、充电线等附件仍按通用规则或商品说明执行，不在上述 24 个月延保范围内 [S15]。\n3. **通用质保基准**：在无更具体规定覆盖附件的情况下，电子电器类商品的通用质量保证期限为自签收之日起 12 个月 [S4]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03278688524590164,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03278688524590164,
+        "top2_rrf": 0.031746031746031744,
+        "margin_rrf": 0.0010408534998698968,
+        "top1_dense": 0.8730579912662506,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 2322,
+        "output_tokens": 193,
+        "total_tokens": 2515
+      },
+      "elapsed_ms": 4748,
+      "citations": [
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "M23",
+          "section_path": "1.先核 SKU 再核期限",
+          "char_start": 50,
+          "char_end": 89,
+          "text": "仅 SKU-HX-WATCH-S3（星河手表 S3）适用 24 个月专项质保；"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "M23",
+          "section_path": "2.附件与除外责任",
+          "char_start": 165,
+          "char_end": 207,
+          "text": "即使是 SKU-HX-WATCH-S3，24 个月质保涵盖的是手表主机主要功能故障。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "M23",
+          "section_path": "2.附件与除外责任",
+          "char_start": 207,
+          "char_end": 230,
+          "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 27,
+          "char_end": 97,
+          "text": "除法律另有规定、商品详情页或专项政策另有更具体规定外，星河优选销售的电子电器类及其他适用质保的商品，质量保证期限为自签收之日起 12 个月。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 4,
+        "n_correct": 0,
+        "n_incorrect": 4,
+        "precision": 0.0,
+        "n_gold_sentences": 3,
+        "n_gold_hit": 0,
+        "recall": 0.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.0,
+        "citation_precision": 0.0
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P10",
+          "P07",
+          "P01",
+          "M23",
+          "M03",
+          "F05",
+          "F12"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q076",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不在 24 个月延保范围内。**\n\n**依据：**\n1. **明确除外责任**：针对星河手表 S3（SKU-HX-WATCH-S3），因进水、摔损或私拆造成的损坏，明确不属于该 SKU 的 24 个月专项质保范围 [S16]。\n2. **质保覆盖定义**：该 SKU 的 24 个月质保仅涵盖手表主机的主要功能故障 [S14]。\n3. **适用规则说明**：虽然通用质保期限为 12 个月 [S5]，但 SKU-HX-WATCH-S3 拥有更具体的 24 个月专项规定，应优先适用该专项条款 [S9][S18][S21]。然而，专项条款中已明确将人为损坏（进水、摔损、私拆）排除在外 [S16]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.032266458495966696,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.032266458495966696,
+        "top2_rrf": 0.032018442622950824,
+        "margin_rrf": 0.00024801587301587213,
+        "top1_dense": 0.7686655670404434,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 2302,
+        "output_tokens": 192,
+        "total_tokens": 2494
+      },
+      "elapsed_ms": 2853,
+      "citations": [
+        {
+          "sid": "S16",
+          "valid_evidence": true,
+          "doc_id": "M23",
+          "section_path": "2.附件与除外责任",
+          "char_start": 230,
+          "char_end": 252,
+          "text": "因进水、摔损、私拆造成的损坏不在该延保范围。"
+        },
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "M23",
+          "section_path": "2.附件与除外责任",
+          "char_start": 165,
+          "char_end": 207,
+          "text": "即使是 SKU-HX-WATCH-S3，24 个月质保涵盖的是手表主机主要功能故障。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 27,
+          "char_end": 97,
+          "text": "除法律另有规定、商品详情页或专项政策另有更具体规定外，星河优选销售的电子电器类及其他适用质保的商品，质量保证期限为自签收之日起 12 个月。"
+        },
+        {
+          "sid": "S9",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "3.与专项质保的关系",
+          "char_start": 291,
+          "char_end": 330,
+          "text": "在同时存在通用 12 个月与某 SKU 更长或更短期限时，应优先适用该 SKU"
+        },
+        {
+          "sid": "S18",
+          "valid_evidence": true,
+          "doc_id": "M23",
+          "section_path": "1.先核 SKU 再核期限",
+          "char_start": 50,
+          "char_end": 89,
+          "text": "仅 SKU-HX-WATCH-S3（星河手表 S3）适用 24 个月专项质保；"
+        },
+        {
+          "sid": "S21",
+          "valid_evidence": true,
+          "doc_id": "M03",
+          "section_path": "1.核对质保期限",
+          "char_start": 88,
+          "char_end": 134,
+          "text": "例如 SKU-HX-WATCH-S3 应核对其 24 个月专项规定，而不是直接套用通用 12"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 0,
+        "n_incorrect": 6,
+        "precision": 0.0,
+        "n_gold_sentences": 3,
+        "n_gold_hit": 0,
+        "recall": 0.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": false,
+        "looks_like_refusal": true,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.0,
+        "citation_precision": 0.0
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": true,
+        "ok": false
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P02",
+          "P04",
+          "P07",
+          "P01",
+          "M23",
+          "M03",
+          "M13",
+          "F05",
+          "F12",
+          "F02"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q077",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：不按通用 12 个月质保计算，而是按该食品本身的保质期执行。**\n\n**依据：**\n根据平台通用质保政策，虽然电子电器类及其他适用质保的商品通常享有自签收之日起 12 个月的质量保证期限 [S14]，但存在明确的例外情形。对于食品保质期短于 12 个月的情况，不适用通用的 12 个月期限，而是直接按其实际保质期执行 [S10]。因此，若食品本身保质期不足 12 个月，其质保期即为该商品的保质期时长。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03225806451612903,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03225806451612903,
+        "top2_rrf": 0.030886196246139225,
+        "margin_rrf": 0.0013718682699898066,
+        "top1_dense": 0.7181934714317322,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 2222,
+        "output_tokens": 120,
+        "total_tokens": 2342
+      },
+      "elapsed_ms": 2491,
+      "citations": [
+        {
+          "sid": "S14",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 27,
+          "char_end": 97,
+          "text": "除法律另有规定、商品详情页或专项政策另有更具体规定外，星河优选销售的电子电器类及其他适用质保的商品，质量保证期限为自签收之日起 12 个月。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P07",
+          "section_path": "2.不计入或缩短的情形",
+          "char_start": 133,
+          "char_end": 208,
+          "text": "下列情形不适用本文件第 1 条的 12 个月期限，或按商品说明执行更短期限：消耗性附件、一次性卫生用品、食品保质期短于 12 个月的，按其保质期执行。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 2,
+        "n_correct": 1,
+        "n_incorrect": 1,
+        "precision": 0.5,
+        "n_gold_sentences": 1,
+        "n_gold_hit": 1,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 1.0,
+        "citation_precision": 0.5
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P04",
+          "P10",
+          "P12",
+          "P07",
+          "M23",
+          "M03",
+          "M05",
+          "F05",
+          "F01"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q078",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：应按 24 个月核对质保期限。**\n\n**依据说明：**\n1.  **适用 SKU 专项政策**：针对 SKU-HX-WATCH-S3（星河手表 S3），其质量保证期限为自签收之日起 24 个月 [S1]。该规定适用于 2025-06-01 当日及之后签收的订单 [S4][S15]。\n2.  **覆盖一般规则**：此 24 个月的规定属于 SKU 级专项条款，按冲突排序口径，它优先于并取代了平台《商品质量保证期限通则》中通用的 12 个月规定 [S2][S10][S16][S23]。因此，不能按通用的 12 个月计算。\n3.  **维修范围提示**：在转办维修前请注意，这 24 个月质保主要涵盖手表主机的主要功能故障 [S11][S19]；表带、充电线等附件仍按通用规则或商品说明执行 [S12][S20]；因进水、摔损、私拆造成的损坏不在本延保范围内 [S13][S21]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03278688524590164,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03278688524590164,
+        "top2_rrf": 0.03200204813108039,
+        "margin_rrf": 0.0007848371148212532,
+        "top1_dense": 0.8615351617336273,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 2037,
+        "output_tokens": 260,
+        "total_tokens": 2297
+      },
+      "elapsed_ms": 5707,
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 140,
+          "char_end": 177,
+          "text": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "4.生效日",
+          "char_start": 423,
+          "char_end": 478,
+          "text": "本政策自 2025-06-01 起生效，对该生效日当日及之后签收的 SKU-HX-WATCH-S3 订单适用。"
+        },
+        {
+          "sid": "S15",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 101,
+          "char_end": 180,
+          "text": "SKU-HX-WATCH-S3（星河手表 S3，品类：智能穿戴）的质量保证期限为自签收之日起 24 个月，适用于 2025-06-01 当日及之后签收的订单。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 177,
+          "char_end": 240,
+          "text": "该 24 个月规定覆盖（即在本 SKU 上优先于、并取代其适用位置上的）平台《商品质量保证期限通则》中的通用 12 个月规定。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 279,
+          "char_end": 332,
+          "text": "按冲突排序口径，范围比较时 SKU 级优先于通用，因此本 SKU 应适用 24 个月，而不是 12 个月。"
+        },
+        {
+          "sid": "S16",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 180,
+          "char_end": 209,
+          "text": "该 24 个月是 SKU 级专项规定，按冲突排序优先于通用"
+        },
+        {
+          "sid": "S23",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 186,
+          "char_end": 246,
+          "text": "月是 SKU 级专项规定，按冲突排序优先于通用 12 个月，因此本 SKU 应适用 24 个月，而不是通用 12 个月。"
+        },
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 345,
+          "char_end": 366,
+          "text": "24 个月质保涵盖手表主机的主要功能故障。"
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 284,
+          "char_end": 304,
+          "text": "24 个月质保涵盖手表主机主要功能故障；"
+        },
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 366,
+          "char_end": 389,
+          "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+        },
+        {
+          "sid": "S20",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 304,
+          "char_end": 327,
+          "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 389,
+          "char_end": 411,
+          "text": "因进水、摔损、私拆造成的损坏不在本延保范围。"
+        },
+        {
+          "sid": "S21",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 327,
+          "char_end": 347,
+          "text": "进水、摔损、私拆造成的损坏不在延保范围。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 13,
+        "n_correct": 0,
+        "n_incorrect": 13,
+        "precision": 0.0,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 0,
+        "recall": 0.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 0.0,
+        "citation_precision": 0.0
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=SKU-HX-WATCH-S3，品类=（未指定）。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\nSKU 级规定优先于品类与通用，适用：P08《指定商品延保政策（SKU-HX-WATCH-S3）》（来源=政策，范围=sku：SKU-HX-WATCH-S3，生效日=2025-06-01）、F06《FAQ：星河手表 S3 的质保期限是多久？》（来源=FAQ，范围=sku：SKU-HX-WATCH-S3，生效日=2025-09-01）。\n因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。",
+      "by_scope_doc_ids": {
+        "sku": [
+          "P08",
+          "F06"
+        ],
+        "category": [],
+        "general": [
+          "P04",
+          "P02",
+          "P07",
+          "M03",
+          "M23",
+          "M01",
+          "F05",
+          "F01"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q085",
+      "type": "single_hop",
+      "cluster": "apparel",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n服装鞋帽按七天无理由退货时，商品须满足**吊牌完整、未经水洗或穿着出门、鞋底无使用磨损**方可办理；试穿导致的轻微整理不影响完好认定，但明显穿着痕迹除外 [S1][S2]。\n\n**依据说明：**\n1.  **为何采用此标准（范围覆盖逻辑）：**\n    由于您的问题针对“服装鞋帽”类目，根据冲突解析规则，**品类级专项规定优先于通用规定**。因此，本回答依据《服装鞋帽品类专项规定》（P17）作答，该专项条款覆盖了通用的商品完好标准（如 P02 中关于“无使用痕迹”的一般性描述），提供了更具体的判定细节 [S5][S6]。FAQ（F10）虽内容一致，但其来源优先级低于政策，且明确声明以专项规定为准，故不作为主要依据 [S10][S11]。\n\n2.  **具体完好标准：**\n    *   **核心要求**：在通用七天无理由时限内，必须保证吊牌完整、未经水洗或穿着出门、鞋底无使用磨损 [S1]。\n    *   **例外情形**：仅因试穿导致的轻微整理不视为影响完好，但若存在明显穿着痕迹则不符合退货条件 [S2]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03278688524590164,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03278688524590164,
+        "top2_rrf": 0.03225806451612903,
+        "margin_rrf": 0.0005288207297726097,
+        "top1_dense": 0.8859625831246376,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1718,
+        "output_tokens": 277,
+        "total_tokens": 1995
+      },
+      "elapsed_ms": 5577,
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P17",
+          "section_path": "2.无理由退货完好标准",
+          "char_start": 72,
+          "char_end": 123,
+          "text": "在通用七天无理由时限内，服装鞋帽须吊牌完整、未经水洗或穿着出门、鞋底无使用磨损，方可按无理由退货办理。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P17",
+          "section_path": "2.无理由退货完好标准",
+          "char_start": 123,
+          "char_end": 150,
+          "text": "试穿导致的轻微整理不影响完好认定，但明显穿着痕迹除外。"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P17",
+          "section_path": "1.适用范围",
+          "char_start": 25,
+          "char_end": 44,
+          "text": "本规定适用于类目为“服装鞋帽”的商品。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P17",
+          "section_path": "1.适用范围",
+          "char_start": 44,
+          "char_end": 54,
+          "text": "本文件为品类级政策。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "F10",
+          "section_path": "3.说明",
+          "char_start": 223,
+          "char_end": 239,
+          "text": "以《服装鞋帽品类专项规定》为准。"
+        },
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "F10",
+          "section_path": "3.说明",
+          "char_start": 239,
+          "char_end": 267,
+          "text": "本 FAQ 是对品类规则的通俗转述，来源优先级低于政策。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 2,
+        "n_incorrect": 4,
+        "precision": 0.3333333333333333,
+        "n_gold_sentences": 2,
+        "n_gold_hit": 2,
+        "recall": 1.0,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 1,
+          "n_hit": 1,
+          "recall": 1.0,
+          "hits": [
+            true
+          ]
+        },
+        "citation_recall": 1.0,
+        "citation_precision": 0.3333333333333333
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": true,
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=（未指定），品类=服装鞋帽。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n品类级规定优先于通用，适用：P17《服装鞋帽品类专项规定》（来源=政策，范围=品类：服装鞋帽，生效日=2025-04-01）、F10《FAQ：衣服或鞋子尺码不合适可以换吗？》（来源=FAQ，范围=品类：服装鞋帽，生效日=2025-09-01）。\n因此本品类专项覆盖（优先于并取代其适用位置上的）通用规定，作答须采用专类结论并说明依据，不得用通用规则替代或缩减专项时限。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [
+          "P17",
+          "F10"
+        ],
+        "general": [
+          "P02",
+          "P10",
+          "P03",
+          "P19",
+          "P12",
+          "M09",
+          "M05",
+          "M16",
+          "M14",
+          "M01",
+          "F02",
+          "F01",
+          "F12",
+          "F03",
+          "F04"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q086",
+      "type": "multi_hop",
+      "cluster": "apparel",
+      "should_refuse": false,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n1.  **能否免费换一次：** 可以。在签收之日起 7 日内，若商品完好（未水洗、无破损），可申请一次因尺码不合适的免费换货 [S20]。\n2.  **运费谁出：** 该次免费换货的往返运费由商家承担一次 [S20]。\n3.  **是否延长七天无理由时限：** 不会。该便利措施不延长七天无理由退货的 7 日时限 [S21][S2]。\n\n**依据简述：**\n*   根据通用政策中关于尺码换货的规定，因尺码不合适且商品完好的情况下，消费者可在签收后 7 日内申请一次免费换货，且商家需承担该次换货的往返运费 [S20]。\n*   同时明确告知，此项针对尺码问题的便利服务并不改变或延长法定的七天无理由退货时限 [S21]；会员身份或其他权益同样不能延长七天无理由的 7 日时限 [S2]。\n*   需注意，若商品已水洗或破损，则不适用此免费换货条款 [S21]。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03252247488101534,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03252247488101534,
+        "top2_rrf": 0.03149801587301587,
+        "margin_rrf": 0.0010244590079994675,
+        "top1_dense": 0.8278718888759613,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1814,
+        "output_tokens": 249,
+        "total_tokens": 2063
+      },
+      "elapsed_ms": 6455,
+      "citations": [
+        {
+          "sid": "S20",
+          "valid_evidence": true,
+          "doc_id": "M09",
+          "section_path": "2.尺码换货",
+          "char_start": 114,
+          "char_end": 162,
+          "text": "因尺码不合适且商品完好的，可在签收之日起 7 日内申请一次免费换货，换货往返运费由商家承担一次。"
+        },
+        {
+          "sid": "S21",
+          "valid_evidence": true,
+          "doc_id": "M09",
+          "section_path": "2.尺码换货",
+          "char_start": 162,
+          "char_end": 197,
+          "text": "须告知消费者：该便利不延长七天无理由时限，已水洗或已破损的商品不适用。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P14",
+          "section_path": "2.增值服务内容",
+          "char_start": 153,
+          "char_end": 192,
+          "text": "会员身份不改变七天无理由 7 日时限，也不使定制类商品因此变得可以无理由退货。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 3,
+        "n_correct": 2,
+        "n_incorrect": 1,
+        "precision": 0.6666666666666666,
+        "n_gold_sentences": 4,
+        "n_gold_hit": 2,
+        "recall": 0.5,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": false,
+        "point_coverage": {
+          "n": 3,
+          "n_hit": 3,
+          "recall": 1.0,
+          "hits": [
+            true,
+            true,
+            true
+          ]
+        },
+        "citation_recall": 0.5,
+        "citation_precision": 0.6666666666666666
+      },
+      "refusal": {
+        "should_refuse": false,
+        "answer_looks_like_refusal": false,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P14",
+          "P06",
+          "P05",
+          "P10",
+          "P19",
+          "P03",
+          "P12",
+          "M09",
+          "M05",
+          "M14",
+          "M04",
+          "M03",
+          "M01",
+          "F02",
+          "F12",
+          "F03",
+          "F01",
+          "F04",
+          "F05"
+        ]
+      },
+      "looks_like_refusal": false
+    },
+    {
+      "id": "Q096",
+      "type": "refusal",
+      "cluster": "refusal_test",
+      "should_refuse": true,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：**\n星河优选当前的售后政策条款中**未收录**关于“海外直邮关税、清关手续费承担方”及“滞关处理流程”的具体规定。因此，无法依据现有政策直接回答该问题，建议您联系人工客服或查阅商品详情页中的跨境专项说明以获取准确信息。\n\n**依据说明：**\n1.  **政策范围限制**：提供的适用证据句（[S1]-[S24]）主要涵盖七天无理由退货、质量问题退换货的运费承担规则、理赔范围以及拒收情形下的责任划分 [S1][S2][S5][S6][S23]。\n2.  **缺失特定条款**：所有可用条款均未提及“关税”、“清关手续费”或“海关滞留/滞关”相关的费用承担主体或处理机制。根据指令要求，对于语料未收录的事项（如跨境关税等），必须明确拒答或建议转人工，不得编造政策。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.030886196246139225,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.030886196246139225,
+        "top2_rrf": 0.030776515151515152,
+        "margin_rrf": 0.00010968109462407283,
+        "top1_dense": 0.6181875169277191,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1667,
+        "output_tokens": 203,
+        "total_tokens": 1870
+      },
+      "elapsed_ms": 4689,
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P06",
+          "section_path": "2.理赔范围",
+          "char_start": 96,
+          "char_end": 140,
+          "text": "运费险主要用于七天无理由退货成立时，对消费者寄回商品产生的合理运费给予约定额度内的赔付。"
+        },
+        {
+          "sid": "S24",
+          "valid_evidence": true,
+          "doc_id": "P12",
+          "section_path": "2.拒收",
+          "char_start": 170,
+          "char_end": 197,
+          "text": "无正当理由拒收的，可能产生往来运费由消费者承担的后果。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P06",
+          "section_path": "2.理赔范围",
+          "char_start": 140,
+          "char_end": 166,
+          "text": "质量问题退货应由商家承担运费，不优先消耗运费险额度；"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "4.其他责任导致的运费",
+          "char_start": 377,
+          "char_end": 424,
+          "text": "因消费者填写地址错误、拒收非质量问题商品、或未经批准拒付到付运费产生的额外费用，由责任方承担。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P05",
+          "section_path": "1.质量问题导致的退换货",
+          "char_start": 30,
+          "char_end": 64,
+          "text": "因质量问题办理退货或换货的，退回运费及必要的再次发货运费由商家承担。"
+        },
+        {
+          "sid": "S23",
+          "valid_evidence": true,
+          "doc_id": "P12",
+          "section_path": "2.拒收",
+          "char_start": 157,
+          "char_end": 170,
+          "text": "拒收后的运费由责任方承担。"
+        }
+      ],
+      "citation_score": {
+        "n_cited": 6,
+        "n_correct": 0,
+        "n_incorrect": 6,
+        "precision": 0.0,
+        "n_gold_sentences": 0,
+        "n_gold_hit": 0,
+        "recall": null,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": true,
+        "point_coverage": {
+          "n": 0,
+          "n_hit": 0,
+          "recall": null,
+          "hits": []
+        },
+        "citation_recall": null,
+        "citation_precision": 0.0
+      },
+      "refusal": {
+        "should_refuse": true,
+        "answer_looks_like_refusal": true,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P06",
+          "P05",
+          "P03",
+          "P19",
+          "P04",
+          "P02",
+          "P10",
+          "P12",
+          "M14",
+          "M04",
+          "M05",
+          "M13",
+          "M03",
+          "M01",
+          "M02",
+          "M16",
+          "F03",
+          "F04",
+          "F02",
+          "F12",
+          "F05"
+        ]
+      },
+      "looks_like_refusal": true
+    },
+    {
+      "id": "Q097",
+      "type": "refusal",
+      "cluster": "refusal_test",
+      "should_refuse": true,
+      "ok_generation": true,
+      "error_type": null,
+      "answer": "**结论：无法回答。**\n\n当前提供的售后政策条款仅涵盖七天无理由退货、质量问题退换货、运费险理赔及退款路径等内容，**未收录“以旧换新”业务规则、旧机回收补贴计算方式或以旧换新对退货金额的影响**。因此，依据现有语料无法给出准确答复。\n\n建议您联系星河优选官方客服或查阅平台专门的《以旧换新服务协议》以获取关于补贴计算和退款抵扣的详细信息。",
+      "model": "qwen3.8-flash",
+      "cascaded": false,
+      "cascade": {
+        "model": "qwen3.8-flash",
+        "upgraded": false,
+        "fast_model": "qwen3.8-flash",
+        "strong_model": "qwen-plus",
+        "signal": "top1_rrf",
+        "score": 0.03128054740957967,
+        "threshold": null,
+        "reason": "no_threshold_always_fast",
+        "top1_rrf": 0.03128054740957967,
+        "top2_rrf": 0.0288981288981289,
+        "margin_rrf": 0.002382418511450768,
+        "top1_dense": 0.5639568865299225,
+        "n_hits": 40
+      },
+      "usage": {
+        "input_tokens": 1779,
+        "output_tokens": 93,
+        "total_tokens": 1872
+      },
+      "elapsed_ms": 3237,
+      "citations": [],
+      "citation_score": {
+        "n_cited": 0,
+        "n_correct": 0,
+        "n_incorrect": 0,
+        "precision": null,
+        "n_gold_sentences": 0,
+        "n_gold_hit": 0,
+        "recall": null,
+        "definition": "引用精度按句子算：系统引用的句子中，与金标条款跨度在同一文档章节下字符交集长度>0 的比例。金标仍是条款跨度，不改为 chunk_id，也不对着检索改标注。"
+      },
+      "task": {
+        "task_ok": true,
+        "looks_like_refusal": true,
+        "point_coverage": {
+          "n": 0,
+          "n_hit": 0,
+          "recall": null,
+          "hits": []
+        },
+        "citation_recall": null,
+        "citation_precision": null
+      },
+      "refusal": {
+        "should_refuse": true,
+        "answer_looks_like_refusal": true,
+        "ok": true
+      },
+      "q041": null,
+      "q042": null,
+      "conflict_has_finer_scope": false,
+      "conflict_explanation": "未绑定具体订单，也未从问题中识别到 SKU 或品类，仅适用通用范围条款。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\n未匹配到 SKU 或品类专项条款，适用文档均为通用范围。不要编造专项规则。",
+      "by_scope_doc_ids": {
+        "sku": [],
+        "category": [],
+        "general": [
+          "P06",
+          "P05",
+          "P04",
+          "P02",
+          "P10",
+          "P19",
+          "P03",
+          "M09",
+          "M05",
+          "M03",
+          "M01",
+          "M04",
+          "M14",
+          "F04",
+          "F03",
+          "F12",
+          "F02",
+          "F05"
+        ]
+      },
+      "looks_like_refusal": true
+    }
+  ],
+  "q042": {
+    "answer": "**结论：星河手表 S3（SKU-HX-WATCH-S3）的质量保证期限为自签收之日起 24 个月，而非通用的 12 个月。**\n\n**依据说明：**\n1. **适用更细范围规则**：根据冲突解析口径，SKU 级规定优先于品类与通用规定。针对该特定商品，适用《指定商品延保政策（SKU-HX-WATCH-S3）》及对应 FAQ [S1][S16]。\n2. **覆盖一般规则**：该 SKU 的 24 个月质保规定明确覆盖并取代了平台《商品质量保证期限通则》中的通用 12 个月规定 [S2][S10][S17][S23]。因此，尽管存在通用 12 个月的规定，但在本 SKU 上应适用 24 个月 [S10][S23]。\n3. **生效条件**：此政策适用于 2025-06-01 当日及之后签收的订单 [S7][S16]。\n4. **质保范围提示**：24 个月质保主要涵盖手表主机的主要功能故障；表带、充电线等附件仍按通用规则或商品说明执行；因进水、摔损、私拆造成的损坏不在延保范围内 [S11][S12][S13][S19][S20][S21]。",
+    "review": {
+      "question_id": "Q042",
+      "meets_expected": true,
+      "required_points": [
+        {
+          "id": "warranty_24_months",
+          "expected": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月",
+          "ok": true
+        },
+        {
+          "id": "sku_covers_general_12",
+          "expected": "按冲突排序应优先适用 SKU 级规定，24 个月覆盖通用 12 个月",
+          "ok": true
+        },
+        {
+          "id": "not_only_general_12",
+          "expected": "不得只回答通用 12 个月",
+          "ok": true
+        }
+      ]
+    },
+    "citations": [
+      {
+        "sid": "S1",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "2.质保期限",
+        "char_start": 140,
+        "char_end": 177,
+        "text": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月。"
+      },
+      {
+        "sid": "S16",
+        "valid_evidence": true,
+        "doc_id": "F06",
+        "section_path": "2.答复口径",
+        "char_start": 101,
+        "char_end": 180,
+        "text": "SKU-HX-WATCH-S3（星河手表 S3，品类：智能穿戴）的质量保证期限为自签收之日起 24 个月，适用于 2025-06-01 当日及之后签收的订单。"
+      },
+      {
+        "sid": "S2",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "2.质保期限",
+        "char_start": 177,
+        "char_end": 240,
+        "text": "该 24 个月规定覆盖（即在本 SKU 上优先于、并取代其适用位置上的）平台《商品质量保证期限通则》中的通用 12 个月规定。"
+      },
+      {
+        "sid": "S10",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "2.质保期限",
+        "char_start": 279,
+        "char_end": 332,
+        "text": "按冲突排序口径，范围比较时 SKU 级优先于通用，因此本 SKU 应适用 24 个月，而不是 12 个月。"
+      },
+      {
+        "sid": "S17",
+        "valid_evidence": true,
+        "doc_id": "F06",
+        "section_path": "2.答复口径",
+        "char_start": 180,
+        "char_end": 209,
+        "text": "该 24 个月是 SKU 级专项规定，按冲突排序优先于通用"
+      },
+      {
+        "sid": "S23",
+        "valid_evidence": true,
+        "doc_id": "F06",
+        "section_path": "2.答复口径",
+        "char_start": 186,
+        "char_end": 246,
+        "text": "月是 SKU 级专项规定，按冲突排序优先于通用 12 个月，因此本 SKU 应适用 24 个月，而不是通用 12 个月。"
+      },
+      {
+        "sid": "S7",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "4.生效日",
+        "char_start": 423,
+        "char_end": 478,
+        "text": "本政策自 2025-06-01 起生效，对该生效日当日及之后签收的 SKU-HX-WATCH-S3 订单适用。"
+      },
+      {
+        "sid": "S11",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "3.覆盖内容",
+        "char_start": 345,
+        "char_end": 366,
+        "text": "24 个月质保涵盖手表主机的主要功能故障。"
+      },
+      {
+        "sid": "S12",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "3.覆盖内容",
+        "char_start": 366,
+        "char_end": 389,
+        "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+      },
+      {
+        "sid": "S13",
+        "valid_evidence": true,
+        "doc_id": "P08",
+        "section_path": "3.覆盖内容",
+        "char_start": 389,
+        "char_end": 411,
+        "text": "因进水、摔损、私拆造成的损坏不在本延保范围。"
+      },
+      {
+        "sid": "S19",
+        "valid_evidence": true,
+        "doc_id": "F06",
+        "section_path": "3.说明",
+        "char_start": 284,
+        "char_end": 304,
+        "text": "24 个月质保涵盖手表主机主要功能故障；"
+      },
+      {
+        "sid": "S20",
+        "valid_evidence": true,
+        "doc_id": "F06",
+        "section_path": "3.说明",
+        "char_start": 304,
+        "char_end": 327,
+        "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+      },
+      {
+        "sid": "S21",
+        "valid_evidence": true,
+        "doc_id": "F06",
+        "section_path": "3.说明",
+        "char_start": 327,
+        "char_end": 347,
+        "text": "进水、摔损、私拆造成的损坏不在延保范围。"
+      }
+    ],
+    "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=SKU-HX-WATCH-S3，品类=（未指定）。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\nSKU 级规定优先于品类与通用，适用：P08《指定商品延保政策（SKU-HX-WATCH-S3）》（来源=政策，范围=sku：SKU-HX-WATCH-S3，生效日=2025-06-01）、F06《FAQ：星河手表 S3 的质保期限是多久？》（来源=FAQ，范围=sku：SKU-HX-WATCH-S3，生效日=2025-09-01）。\n因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。"
+  }
+}

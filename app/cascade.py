@@ -1,6 +1,6 @@
 """模型级联：默认 qwen3.8-flash，检索分数达到阈值时升到 qwen-plus。
 
-阈值在最终检索链路（section_window_400 + dense+BM25 RRF）上，用开发集分 5 箱标定。
+阈值在最终检索链路（section_window_120 + dense+BM25 RRF）上，用开发集分 5 箱标定。
 标定结果写入 reports/cascade_threshold.json。未标定前一律走快速模型。
 自评 confidence 只用于对比实验，不进入本模块的主路径。
 """

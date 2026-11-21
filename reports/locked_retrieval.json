@@ -1,0 +1,42 @@
+{
+  "name": "locked_retrieval",
+  "measured_at": "2026-11-21T15:40:49+08:00",
+  "timezone": "Asia/Shanghai",
+  "chunking_name": "section_window_120",
+  "chunking": {
+    "name": "section_window_120",
+    "strategy": "section_window_chars",
+    "chunk_size": 120,
+    "overlap": 24,
+    "min_tail": 15,
+    "unit": "python_unicode_chars",
+    "scope": "within_section_path"
+  },
+  "retriever": "hybrid",
+  "retrieval": "hybrid",
+  "embedding_model": "text-embedding-v4",
+  "embedding_dim": 1024,
+  "bm25": true,
+  "rrf": true,
+  "rerank": false,
+  "generation": false,
+  "dev_Recall@5": 0.7493055555555556,
+  "dev_Hit@5": 0.875,
+  "dev_metrics": {
+    "Recall@5": 0.7493055555555556,
+    "Hit@5": 0.875,
+    "MRR@5": 0.6055555555555555,
+    "nDCG@5": 0.6014486395126614,
+    "Recall@10": 0.8409722222222222,
+    "Hit@10": 0.9583333333333334,
+    "n_hit@5": 21,
+    "n_answerable_for_hit": 24
+  },
+  "failure_ids": [
+    "Q013",
+    "Q017",
+    "Q039"
+  ],
+  "selection_reason": "切分选定 section_window_120；BM25+RRF 纳入；gte-rerank 不纳入。全部依据开发集 Recall@5，测试集未参与选型或调参。",
+  "eval_report": "reports/hybrid_dev_eval.json"
+}

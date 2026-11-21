@@ -22,7 +22,7 @@
 - 题目按 `id` 排序，条款跨度按 `doc_id, section_path, char_start, char_end` 排序。
 - `json.dumps(..., ensure_ascii=False, sort_keys=True, separators=(",", ":"))`，再对 UTF-8 字节做 sha256。
 
-本阶段不在测试集上跑评测、不用测试集数字调参。若之后改动测试集，必须在提交说明中写明原因并更新哈希。跑测试集前由 `eval/seal.py` / `scripts/eval_retrieval.py --allow-test` 核对封存值。
+第三段已在锁定检索链路之后第一次跑测试集，数字不参与调参，报告见 `reports/test_run1.json`。若改动测试集，必须在提交说明中写明原因并更新哈希。跑测试集前由 `eval/seal.py` / `scripts/eval_retrieval.py --allow-test` 核对封存值。当前封存 sha256 为 `2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e`。
 
 ## 条款跨度映射
 
@@ -32,8 +32,10 @@
 
 ```bash
 python scripts/map_annotations.py
-python scripts/eval_retrieval.py --split dev --out reports/b0_dev_eval.json
-# 或：python scripts/run_b0_dev.py
+python scripts/eval_retrieval.py --split dev --retriever hybrid --out reports/hybrid_dev_eval.json
+python scripts/check_regression.py --current reports/hybrid_dev_eval.json
+# 第一次测试集（数字不参与调参）：
+# python scripts/eval_retrieval.py --split test --allow-test --retriever hybrid --out reports/test_run1_eval.json
 ```
 
-至少报告 Recall@5（以及 Hit@5、MRR@5、nDCG@5）。拒答用「对了几道 / 共几道」汇报，不设 90% 目标；本段 B0 只评检索，不跑生成。回归规则：与 `reports/last_passed_dev_recall.json` 中上次通过的 Hit@5 逐题比较，净减少（由对变错减去由错变对）超过 1 题则失败。本段不上 CI 门禁。
+至少报告 Recall@5（以及 Hit@5、MRR@5、nDCG@5）。拒答用「对了几道 / 共几道」汇报，不设 90% 目标；本段只评检索，不跑生成。回归规则：与 `reports/last_passed_dev_recall.json` 中上次通过的结果比较，Hit@5 净减少或 Recall@5 净减少超过 1 题则失败。第三段提供可单独运行的 `scripts/check_regression.py`，不上 CI 门禁。

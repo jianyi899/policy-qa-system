@@ -1,0 +1,59 @@
+{
+  "name": "test_run1",
+  "status": "measured",
+  "measured_at": "2026-11-21T15:40:49+08:00",
+  "timezone": "Asia/Shanghai",
+  "split": "test",
+  "note": "轻量版第一次测试集评测。数字不参与调参，也不回写到切分或检索选型。",
+  "chunking_name": "section_window_120",
+  "retriever": "hybrid",
+  "testset_seal": {
+    "ok": true,
+    "expected_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "observed_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "seal_file_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "hash_file_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "n_test_questions": 12,
+    "match": true
+  },
+  "metrics": {
+    "Recall@5": 0.8476190476190476,
+    "Hit@5": 1.0,
+    "MRR@5": 0.5483333333333333,
+    "nDCG@5": 0.6096154242781703,
+    "Recall@10": 0.880952380952381,
+    "Hit@10": 1.0,
+    "n_hit@5": 10,
+    "n_answerable_for_hit": 10
+  },
+  "by_type": {
+    "multi_hop": {
+      "n": 3,
+      "Recall@5": 0.4920634920634921,
+      "Hit@5": 1.0,
+      "n_hit@5": 3
+    },
+    "single_hop": {
+      "n": 7,
+      "Recall@5": 1.0,
+      "Hit@5": 1.0,
+      "n_hit@5": 7
+    }
+  },
+  "n_answerable": 10,
+  "n_failures_hit@5": 0,
+  "failure_ids": [],
+  "refusal": {
+    "n": 2,
+    "ids": [
+      "Q096",
+      "Q097"
+    ],
+    "correct": "not_run",
+    "report": "未测 / 2",
+    "generation": "not_run",
+    "note": "本段只评检索，不跑生成；拒答题按「对了几道 / 共几道」汇报，不设 90% 目标，也不计入 Recall@5。"
+  },
+  "eval_report": "reports/test_run1_eval.json",
+  "generation": "not_run"
+}

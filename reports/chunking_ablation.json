@@ -1,0 +1,377 @@
+{
+  "name": "chunking_ablation",
+  "status": "measured",
+  "measured_at": "2026-11-21T15:40:45+08:00",
+  "timezone": "Asia/Shanghai",
+  "split": "dev",
+  "retrieval": "dense_only",
+  "embedding_model": "text-embedding-v4",
+  "embedding_dim": 1024,
+  "locations": {
+    "note": "安装与评测数据位置如下，未默认写入 C 盘，也未改动用户电脑上的 D:/policy-qa。",
+    "policy_qa_home": "/tmp/policy-qa-stage3-test",
+    "database": "/tmp/policy-qa-stage3-test/data/policy_qa.sqlite",
+    "embed_cache_write": "/tmp/policy-qa-stage3-test/data/embed_cache",
+    "logs": "/tmp/policy-qa-stage3-test/logs",
+    "repo": "/workspace/policy-qa-system",
+    "venv_python": "/workspace/policy-qa-system/.venv/bin/python"
+  },
+  "strategies_distinct": true,
+  "pairwise_chunk_sets": [
+    {
+      "a": "section_window_400",
+      "b": "section_window_120",
+      "n_a": 130,
+      "n_b": 157,
+      "intersection": 105,
+      "only_a": 25,
+      "only_b": 52,
+      "equal": false
+    },
+    {
+      "a": "section_window_400",
+      "b": "sentence_pack_150",
+      "n_a": 130,
+      "n_b": 139,
+      "intersection": 121,
+      "only_a": 9,
+      "only_b": 18,
+      "equal": false
+    },
+    {
+      "a": "section_window_120",
+      "b": "sentence_pack_150",
+      "n_a": 157,
+      "n_b": 139,
+      "intersection": 106,
+      "only_a": 51,
+      "only_b": 33,
+      "equal": false
+    }
+  ],
+  "strategies": [
+    {
+      "name": "section_window_400",
+      "chunking": {
+        "name": "section_window_400",
+        "strategy": "section_window_chars",
+        "chunk_size": 400,
+        "overlap": 80,
+        "min_tail": 40,
+        "unit": "python_unicode_chars",
+        "scope": "within_section_path"
+      },
+      "n_chunks": 130,
+      "n_unmapped_spans": 0,
+      "dev_answerable": {
+        "n_questions": 24,
+        "n_gold_spans": 37,
+        "n_mapped_question_chunk_pairs": 37,
+        "n_questions_missing_gold": 0
+      },
+      "ingest": {
+        "skipped": false,
+        "reason": "ingested",
+        "n_docs": 40,
+        "n_chunks": 130,
+        "n_embeddings": 130,
+        "embedding_api_calls": 0,
+        "embedding_texts_sent": 0,
+        "chunking_name": "section_window_400",
+        "fingerprint": "2c4329130cba3de3a9ecd85913766cacb9032f8c1ed433eaf93214b02bd3e743",
+        "home": "/tmp/policy-qa-stage3-test",
+        "db_path": "/tmp/policy-qa-stage3-test/data/policy_qa.sqlite"
+      },
+      "metrics": {
+        "Recall@5": 0.6902777777777778,
+        "Hit@5": 0.8333333333333334,
+        "MRR@5": 0.5916666666666667,
+        "nDCG@5": 0.5804786200267865,
+        "Recall@10": 0.8270833333333334,
+        "Hit@10": 0.9166666666666666,
+        "n_hit@5": 20,
+        "n_answerable_for_hit": 24
+      },
+      "Recall@5": 0.6902777777777778,
+      "Hit@5": 0.8333333333333334,
+      "n_failures_hit@5": 4,
+      "failure_ids": [
+        "Q008",
+        "Q015",
+        "Q017",
+        "Q039"
+      ],
+      "per_question_path": "reports/chunking_section_window_400_dev_eval.json"
+    },
+    {
+      "name": "section_window_120",
+      "chunking": {
+        "name": "section_window_120",
+        "strategy": "section_window_chars",
+        "chunk_size": 120,
+        "overlap": 24,
+        "min_tail": 15,
+        "unit": "python_unicode_chars",
+        "scope": "within_section_path"
+      },
+      "n_chunks": 157,
+      "n_unmapped_spans": 0,
+      "dev_answerable": {
+        "n_questions": 24,
+        "n_gold_spans": 37,
+        "n_mapped_question_chunk_pairs": 43,
+        "n_questions_missing_gold": 0
+      },
+      "ingest": {
+        "skipped": false,
+        "reason": "ingested",
+        "n_docs": 40,
+        "n_chunks": 157,
+        "n_embeddings": 157,
+        "embedding_api_calls": 0,
+        "embedding_texts_sent": 0,
+        "chunking_name": "section_window_120",
+        "fingerprint": "799703b5dd36b3336a639fca9049c34b38fd4c14e4917245ee9806e7f8aafaf2",
+        "home": "/tmp/policy-qa-stage3-test",
+        "db_path": "/tmp/policy-qa-stage3-test/data/policy_qa.sqlite"
+      },
+      "metrics": {
+        "Recall@5": 0.6972222222222223,
+        "Hit@5": 0.875,
+        "MRR@5": 0.5583333333333333,
+        "nDCG@5": 0.5507751445418524,
+        "Recall@10": 0.7854166666666668,
+        "Hit@10": 0.9166666666666666,
+        "n_hit@5": 21,
+        "n_answerable_for_hit": 24
+      },
+      "Recall@5": 0.6972222222222223,
+      "Hit@5": 0.875,
+      "n_failures_hit@5": 3,
+      "failure_ids": [
+        "Q008",
+        "Q013",
+        "Q017"
+      ],
+      "per_question_path": "reports/chunking_section_window_120_dev_eval.json",
+      "vs_section_window_400": {
+        "baseline": "section_window_400",
+        "current": "section_window_120",
+        "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+        "n_comparable": 24,
+        "n_only_baseline": 0,
+        "n_only_current": 0,
+        "wrong_to_right": {
+          "n": 2,
+          "ids": [
+            "Q015",
+            "Q039"
+          ]
+        },
+        "right_to_wrong": {
+          "n": 1,
+          "ids": [
+            "Q013"
+          ]
+        },
+        "mcnemar": {
+          "n_improved": 2,
+          "n_regressed": 1,
+          "n_discordant": 3,
+          "p_value": 1.0,
+          "test": "mcnemar_exact_binomial",
+          "significant_at_0.05": false,
+          "direction": "positive",
+          "interpretation": "方向为正但未达显著"
+        },
+        "recall@5_changes": {
+          "n_up": 3,
+          "ids_up": [
+            "Q015",
+            "Q016",
+            "Q039"
+          ],
+          "n_down": 2,
+          "ids_down": [
+            "Q011",
+            "Q013"
+          ],
+          "n_same": 19,
+          "net_decrease_questions": -1
+        }
+      }
+    },
+    {
+      "name": "sentence_pack_150",
+      "chunking": {
+        "name": "sentence_pack_150",
+        "strategy": "sentence_pack",
+        "max_chars": 150,
+        "overlap_sentences": 0,
+        "sentence_delimiters": "。！？；!?;",
+        "unit": "python_unicode_chars",
+        "scope": "within_section_path"
+      },
+      "n_chunks": 139,
+      "n_unmapped_spans": 0,
+      "dev_answerable": {
+        "n_questions": 24,
+        "n_gold_spans": 37,
+        "n_mapped_question_chunk_pairs": 37,
+        "n_questions_missing_gold": 0
+      },
+      "ingest": {
+        "skipped": false,
+        "reason": "ingested",
+        "n_docs": 40,
+        "n_chunks": 139,
+        "n_embeddings": 139,
+        "embedding_api_calls": 0,
+        "embedding_texts_sent": 0,
+        "chunking_name": "sentence_pack_150",
+        "fingerprint": "bd12f51a2789d63e2159fc02e5d2c65aa3b6ffa8f688dce35a72b291f3ab57eb",
+        "home": "/tmp/policy-qa-stage3-test",
+        "db_path": "/tmp/policy-qa-stage3-test/data/policy_qa.sqlite"
+      },
+      "metrics": {
+        "Recall@5": 0.6902777777777778,
+        "Hit@5": 0.8333333333333334,
+        "MRR@5": 0.5951388888888889,
+        "nDCG@5": 0.5841629650168415,
+        "Recall@10": 0.74375,
+        "Hit@10": 0.8333333333333334,
+        "n_hit@5": 20,
+        "n_answerable_for_hit": 24
+      },
+      "Recall@5": 0.6902777777777778,
+      "Hit@5": 0.8333333333333334,
+      "n_failures_hit@5": 4,
+      "failure_ids": [
+        "Q008",
+        "Q015",
+        "Q017",
+        "Q039"
+      ],
+      "per_question_path": "reports/chunking_sentence_pack_150_dev_eval.json",
+      "vs_section_window_400": {
+        "baseline": "section_window_400",
+        "current": "sentence_pack_150",
+        "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+        "n_comparable": 24,
+        "n_only_baseline": 0,
+        "n_only_current": 0,
+        "wrong_to_right": {
+          "n": 0,
+          "ids": []
+        },
+        "right_to_wrong": {
+          "n": 0,
+          "ids": []
+        },
+        "mcnemar": {
+          "n_improved": 0,
+          "n_regressed": 0,
+          "n_discordant": 0,
+          "p_value": 1.0,
+          "test": "mcnemar_exact_binomial",
+          "significant_at_0.05": false,
+          "direction": "tied",
+          "interpretation": "无分歧题目，无法检验。"
+        },
+        "recall@5_changes": {
+          "n_up": 0,
+          "ids_up": [],
+          "n_down": 0,
+          "ids_down": [],
+          "n_same": 24,
+          "net_decrease_questions": 0
+        }
+      }
+    }
+  ],
+  "comparisons_vs_section_window_400": {
+    "section_window_120": {
+      "baseline": "section_window_400",
+      "current": "section_window_120",
+      "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+      "n_comparable": 24,
+      "n_only_baseline": 0,
+      "n_only_current": 0,
+      "wrong_to_right": {
+        "n": 2,
+        "ids": [
+          "Q015",
+          "Q039"
+        ]
+      },
+      "right_to_wrong": {
+        "n": 1,
+        "ids": [
+          "Q013"
+        ]
+      },
+      "mcnemar": {
+        "n_improved": 2,
+        "n_regressed": 1,
+        "n_discordant": 3,
+        "p_value": 1.0,
+        "test": "mcnemar_exact_binomial",
+        "significant_at_0.05": false,
+        "direction": "positive",
+        "interpretation": "方向为正但未达显著"
+      },
+      "recall@5_changes": {
+        "n_up": 3,
+        "ids_up": [
+          "Q015",
+          "Q016",
+          "Q039"
+        ],
+        "n_down": 2,
+        "ids_down": [
+          "Q011",
+          "Q013"
+        ],
+        "n_same": 19,
+        "net_decrease_questions": -1
+      }
+    },
+    "sentence_pack_150": {
+      "baseline": "section_window_400",
+      "current": "sentence_pack_150",
+      "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+      "n_comparable": 24,
+      "n_only_baseline": 0,
+      "n_only_current": 0,
+      "wrong_to_right": {
+        "n": 0,
+        "ids": []
+      },
+      "right_to_wrong": {
+        "n": 0,
+        "ids": []
+      },
+      "mcnemar": {
+        "n_improved": 0,
+        "n_regressed": 0,
+        "n_discordant": 0,
+        "p_value": 1.0,
+        "test": "mcnemar_exact_binomial",
+        "significant_at_0.05": false,
+        "direction": "tied",
+        "interpretation": "无分歧题目，无法检验。"
+      },
+      "recall@5_changes": {
+        "n_up": 0,
+        "ids_up": [],
+        "n_down": 0,
+        "ids_down": [],
+        "n_same": 24,
+        "net_decrease_questions": 0
+      }
+    }
+  },
+  "selected": "section_window_120",
+  "selection_rule": "开发集 Recall@5 宏平均最高；并列时保留 section_window_400（B0）。测试集数字不参与选型。",
+  "selection_reason": "按开发集纯密集检索 Recall@5 最高者锁定切分；选定 section_window_120，Recall@5=0.6972222222222223。"
+}

@@ -1,0 +1,81 @@
+{
+  "ok": true,
+  "passed": true,
+  "checked": true,
+  "baseline_path": "/workspace/policy-qa-system/reports/last_passed_dev_recall.json",
+  "baseline_name": "B0",
+  "gate": {
+    "metrics": [
+      "Hit@5",
+      "Recall@5"
+    ],
+    "unit": "questions",
+    "rule": "与上次通过的开发集逐题结果比较：Hit@5 净减少（由对变错减去由错变对）或 Recall@5 净减少（下降题数减去上升题数）超过 1 题则失败。不设绝对 90% 门槛，延迟不进硬门禁。测试集不参与回归决策。",
+    "max_net_loss": 1
+  },
+  "baseline_Recall@5": 0.6902777777777778,
+  "current_Recall@5": 0.7493055555555556,
+  "baseline_Hit@5": 0.8333333333333334,
+  "current_Hit@5": 0.875,
+  "n_common": 24,
+  "became_wrong": [
+    "Q013"
+  ],
+  "became_right": [
+    "Q008",
+    "Q015"
+  ],
+  "hit@5_net_loss": -1,
+  "recall@5_n_up": 5,
+  "recall@5_n_down": 2,
+  "recall@5_net_loss": -3,
+  "comparison": {
+    "baseline": "B0",
+    "current": "hybrid",
+    "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+    "n_comparable": 24,
+    "n_only_baseline": 0,
+    "n_only_current": 0,
+    "wrong_to_right": {
+      "n": 2,
+      "ids": [
+        "Q008",
+        "Q015"
+      ]
+    },
+    "right_to_wrong": {
+      "n": 1,
+      "ids": [
+        "Q013"
+      ]
+    },
+    "mcnemar": {
+      "n_improved": 2,
+      "n_regressed": 1,
+      "n_discordant": 3,
+      "p_value": 1.0,
+      "test": "mcnemar_exact_binomial",
+      "significant_at_0.05": false,
+      "direction": "positive",
+      "interpretation": "方向为正但未达显著"
+    },
+    "recall@5_changes": {
+      "n_up": 5,
+      "ids_up": [
+        "Q005",
+        "Q008",
+        "Q010",
+        "Q015",
+        "Q016"
+      ],
+      "n_down": 2,
+      "ids_down": [
+        "Q011",
+        "Q013"
+      ],
+      "n_same": 17,
+      "net_decrease_questions": -3
+    }
+  },
+  "message": "通过：开发集 Hit@5 净减少 -1 题、Recall@5 净减少 -3 题，均未超过 1 题门禁。"
+}

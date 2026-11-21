@@ -1,21 +1,22 @@
 {
-  "name": "B0",
+  "name": "stage3_locked",
   "split": "dev",
-  "measured_at": "2026-11-21T15:32:45+08:00",
+  "measured_at": "2026-11-21T15:40:49+08:00",
   "timezone": "Asia/Shanghai",
+  "chunking_name": "section_window_120",
+  "retriever": "hybrid",
   "metrics": {
-    "Recall@5": 0.6902777777777778,
-    "Hit@5": 0.8333333333333334,
-    "MRR@5": 0.5916666666666667,
-    "nDCG@5": 0.5804786200267865,
-    "Recall@10": 0.8270833333333334,
-    "Hit@10": 0.9166666666666666,
-    "n_hit@5": 20,
+    "Recall@5": 0.7493055555555556,
+    "Hit@5": 0.875,
+    "MRR@5": 0.6055555555555555,
+    "nDCG@5": 0.6014486395126614,
+    "Recall@10": 0.8409722222222222,
+    "Hit@10": 0.9583333333333334,
+    "n_hit@5": 21,
     "n_answerable_for_hit": 24
   },
   "failure_ids": [
-    "Q008",
-    "Q015",
+    "Q013",
     "Q017",
     "Q039"
   ],
@@ -48,7 +49,7 @@
       "id": "Q005",
       "type": "multi_hop",
       "hit@5": 1.0,
-      "recall@5": 0.5
+      "recall@5": 1.0
     },
     {
       "id": "Q006",
@@ -65,8 +66,8 @@
     {
       "id": "Q008",
       "type": "single_hop",
-      "hit@5": 0.0,
-      "recall@5": 0.0
+      "hit@5": 1.0,
+      "recall@5": 1.0
     },
     {
       "id": "Q009",
@@ -78,13 +79,13 @@
       "id": "Q010",
       "type": "multi_hop",
       "hit@5": 1.0,
-      "recall@5": 0.5
+      "recall@5": 0.75
     },
     {
       "id": "Q011",
       "type": "single_hop",
       "hit@5": 1.0,
-      "recall@5": 1.0
+      "recall@5": 0.5
     },
     {
       "id": "Q012",
@@ -95,8 +96,8 @@
     {
       "id": "Q013",
       "type": "multi_hop",
-      "hit@5": 1.0,
-      "recall@5": 0.5
+      "hit@5": 0.0,
+      "recall@5": 0.0
     },
     {
       "id": "Q014",
@@ -107,14 +108,14 @@
     {
       "id": "Q015",
       "type": "single_hop",
-      "hit@5": 0.0,
-      "recall@5": 0.0
+      "hit@5": 1.0,
+      "recall@5": 0.5
     },
     {
       "id": "Q016",
       "type": "multi_hop",
       "hit@5": 1.0,
-      "recall@5": 0.5
+      "recall@5": 0.6666666666666666
     },
     {
       "id": "Q017",

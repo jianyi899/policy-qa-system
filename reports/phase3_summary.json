@@ -1,0 +1,431 @@
+{
+  "ok": true,
+  "name": "stage3_summary",
+  "measured_at": "2026-11-21T15:40:49+08:00",
+  "timezone": "Asia/Shanghai",
+  "locations": {
+    "note": "安装与评测数据位置如下，未默认写入 C 盘，也未改动用户电脑上的 D:/policy-qa。",
+    "policy_qa_home": "/tmp/policy-qa-stage3-test",
+    "database": "/tmp/policy-qa-stage3-test/data/policy_qa.sqlite",
+    "embed_cache_write": "/tmp/policy-qa-stage3-test/data/embed_cache",
+    "logs": "/tmp/policy-qa-stage3-test/logs",
+    "repo": "/workspace/policy-qa-system",
+    "venv_python": "/workspace/policy-qa-system/.venv/bin/python"
+  },
+  "reload_selected_chunking": {
+    "skipped": false,
+    "reason": "ingested",
+    "n_chunks": 157,
+    "embedding_api_calls": 0,
+    "embedding_texts_sent": 0
+  },
+  "chunking_ablation": {
+    "selected": "section_window_120",
+    "selection_reason": "按开发集纯密集检索 Recall@5 最高者锁定切分；选定 section_window_120，Recall@5=0.6972222222222223。",
+    "strategies": [
+      {
+        "name": "section_window_400",
+        "n_chunks": 130,
+        "Recall@5": 0.6902777777777778,
+        "Hit@5": 0.8333333333333334,
+        "n_failures_hit@5": 4,
+        "failure_ids": [
+          "Q008",
+          "Q015",
+          "Q017",
+          "Q039"
+        ],
+        "vs_section_window_400": null
+      },
+      {
+        "name": "section_window_120",
+        "n_chunks": 157,
+        "Recall@5": 0.6972222222222223,
+        "Hit@5": 0.875,
+        "n_failures_hit@5": 3,
+        "failure_ids": [
+          "Q008",
+          "Q013",
+          "Q017"
+        ],
+        "vs_section_window_400": {
+          "baseline": "section_window_400",
+          "current": "section_window_120",
+          "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+          "n_comparable": 24,
+          "n_only_baseline": 0,
+          "n_only_current": 0,
+          "wrong_to_right": {
+            "n": 2,
+            "ids": [
+              "Q015",
+              "Q039"
+            ]
+          },
+          "right_to_wrong": {
+            "n": 1,
+            "ids": [
+              "Q013"
+            ]
+          },
+          "mcnemar": {
+            "n_improved": 2,
+            "n_regressed": 1,
+            "n_discordant": 3,
+            "p_value": 1.0,
+            "test": "mcnemar_exact_binomial",
+            "significant_at_0.05": false,
+            "direction": "positive",
+            "interpretation": "方向为正但未达显著"
+          },
+          "recall@5_changes": {
+            "n_up": 3,
+            "ids_up": [
+              "Q015",
+              "Q016",
+              "Q039"
+            ],
+            "n_down": 2,
+            "ids_down": [
+              "Q011",
+              "Q013"
+            ],
+            "n_same": 19,
+            "net_decrease_questions": -1
+          }
+        }
+      },
+      {
+        "name": "sentence_pack_150",
+        "n_chunks": 139,
+        "Recall@5": 0.6902777777777778,
+        "Hit@5": 0.8333333333333334,
+        "n_failures_hit@5": 4,
+        "failure_ids": [
+          "Q008",
+          "Q015",
+          "Q017",
+          "Q039"
+        ],
+        "vs_section_window_400": {
+          "baseline": "section_window_400",
+          "current": "sentence_pack_150",
+          "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+          "n_comparable": 24,
+          "n_only_baseline": 0,
+          "n_only_current": 0,
+          "wrong_to_right": {
+            "n": 0,
+            "ids": []
+          },
+          "right_to_wrong": {
+            "n": 0,
+            "ids": []
+          },
+          "mcnemar": {
+            "n_improved": 0,
+            "n_regressed": 0,
+            "n_discordant": 0,
+            "p_value": 1.0,
+            "test": "mcnemar_exact_binomial",
+            "significant_at_0.05": false,
+            "direction": "tied",
+            "interpretation": "无分歧题目，无法检验。"
+          },
+          "recall@5_changes": {
+            "n_up": 0,
+            "ids_up": [],
+            "n_down": 0,
+            "ids_down": [],
+            "n_same": 24,
+            "net_decrease_questions": 0
+          }
+        }
+      }
+    ]
+  },
+  "bm25_rrf": {
+    "adopted": true,
+    "Recall@5": 0.7493055555555556,
+    "dense_Recall@5": 0.6972222222222223,
+    "comparison_vs_dense": {
+      "baseline": "section_window_120+dense",
+      "current": "section_window_120+hybrid",
+      "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+      "n_comparable": 24,
+      "n_only_baseline": 0,
+      "n_only_current": 0,
+      "wrong_to_right": {
+        "n": 1,
+        "ids": [
+          "Q008"
+        ]
+      },
+      "right_to_wrong": {
+        "n": 1,
+        "ids": [
+          "Q039"
+        ]
+      },
+      "mcnemar": {
+        "n_improved": 1,
+        "n_regressed": 1,
+        "n_discordant": 2,
+        "p_value": 1.0,
+        "test": "mcnemar_exact_binomial",
+        "significant_at_0.05": false,
+        "direction": "tied",
+        "interpretation": "无方向差异"
+      },
+      "recall@5_changes": {
+        "n_up": 3,
+        "ids_up": [
+          "Q005",
+          "Q008",
+          "Q010"
+        ],
+        "n_down": 1,
+        "ids_down": [
+          "Q039"
+        ],
+        "n_same": 20,
+        "net_decrease_questions": -2
+      }
+    },
+    "reason": "融合后开发集 Recall@5 高于纯密集，纳入主链路。"
+  },
+  "gte_rerank": {
+    "status": "failed",
+    "adopted": false,
+    "error_type": "AccessDenied",
+    "Recall@5": null,
+    "comparison_vs_hybrid": null,
+    "comparison_vs_best_before_rerank": null,
+    "reason": "gte-rerank API 调用失败，不编造结果，本步不纳入主链路。"
+  },
+  "locked_pipeline": {
+    "name": "locked_retrieval",
+    "measured_at": "2026-11-21T15:40:49+08:00",
+    "timezone": "Asia/Shanghai",
+    "chunking_name": "section_window_120",
+    "chunking": {
+      "name": "section_window_120",
+      "strategy": "section_window_chars",
+      "chunk_size": 120,
+      "overlap": 24,
+      "min_tail": 15,
+      "unit": "python_unicode_chars",
+      "scope": "within_section_path"
+    },
+    "retriever": "hybrid",
+    "retrieval": "hybrid",
+    "embedding_model": "text-embedding-v4",
+    "embedding_dim": 1024,
+    "bm25": true,
+    "rrf": true,
+    "rerank": false,
+    "generation": false,
+    "dev_Recall@5": 0.7493055555555556,
+    "dev_Hit@5": 0.875,
+    "dev_metrics": {
+      "Recall@5": 0.7493055555555556,
+      "Hit@5": 0.875,
+      "MRR@5": 0.6055555555555555,
+      "nDCG@5": 0.6014486395126614,
+      "Recall@10": 0.8409722222222222,
+      "Hit@10": 0.9583333333333334,
+      "n_hit@5": 21,
+      "n_answerable_for_hit": 24
+    },
+    "failure_ids": [
+      "Q013",
+      "Q017",
+      "Q039"
+    ],
+    "selection_reason": "切分选定 section_window_120；BM25+RRF 纳入；gte-rerank 不纳入。全部依据开发集 Recall@5，测试集未参与选型或调参。",
+    "eval_report": "reports/hybrid_dev_eval.json"
+  },
+  "regression": {
+    "ok": true,
+    "passed": true,
+    "checked": true,
+    "baseline_path": "/workspace/policy-qa-system/reports/last_passed_dev_recall.json",
+    "baseline_name": "B0",
+    "gate": {
+      "metrics": [
+        "Hit@5",
+        "Recall@5"
+      ],
+      "unit": "questions",
+      "rule": "与上次通过的开发集逐题结果比较：Hit@5 净减少（由对变错减去由错变对）或 Recall@5 净减少（下降题数减去上升题数）超过 1 题则失败。不设绝对 90% 门槛，延迟不进硬门禁。测试集不参与回归决策。",
+      "max_net_loss": 1
+    },
+    "baseline_Recall@5": 0.6902777777777778,
+    "current_Recall@5": 0.7493055555555556,
+    "baseline_Hit@5": 0.8333333333333334,
+    "current_Hit@5": 0.875,
+    "n_common": 24,
+    "became_wrong": [
+      "Q013"
+    ],
+    "became_right": [
+      "Q008",
+      "Q015"
+    ],
+    "hit@5_net_loss": -1,
+    "recall@5_n_up": 5,
+    "recall@5_n_down": 2,
+    "recall@5_net_loss": -3,
+    "comparison": {
+      "baseline": "B0",
+      "current": "hybrid",
+      "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+      "n_comparable": 24,
+      "n_only_baseline": 0,
+      "n_only_current": 0,
+      "wrong_to_right": {
+        "n": 2,
+        "ids": [
+          "Q008",
+          "Q015"
+        ]
+      },
+      "right_to_wrong": {
+        "n": 1,
+        "ids": [
+          "Q013"
+        ]
+      },
+      "mcnemar": {
+        "n_improved": 2,
+        "n_regressed": 1,
+        "n_discordant": 3,
+        "p_value": 1.0,
+        "test": "mcnemar_exact_binomial",
+        "significant_at_0.05": false,
+        "direction": "positive",
+        "interpretation": "方向为正但未达显著"
+      },
+      "recall@5_changes": {
+        "n_up": 5,
+        "ids_up": [
+          "Q005",
+          "Q008",
+          "Q010",
+          "Q015",
+          "Q016"
+        ],
+        "n_down": 2,
+        "ids_down": [
+          "Q011",
+          "Q013"
+        ],
+        "n_same": 17,
+        "net_decrease_questions": -3
+      }
+    },
+    "message": "通过：开发集 Hit@5 净减少 -1 题、Recall@5 净减少 -3 题，均未超过 1 题门禁。"
+  },
+  "updated_last_passed": true,
+  "test_run1": {
+    "ok": true,
+    "split": "test",
+    "retriever": "hybrid",
+    "n_questions_in_split": 12,
+    "n_answerable": 10,
+    "n_refusal_excluded": 2,
+    "n_used_for_recall": 10,
+    "metrics": {
+      "Recall@5": 0.8476190476190476,
+      "Hit@5": 1.0,
+      "MRR@5": 0.5483333333333333,
+      "nDCG@5": 0.6096154242781703,
+      "Recall@10": 0.880952380952381,
+      "Hit@10": 1.0,
+      "n_hit@5": 10,
+      "n_answerable_for_hit": 10
+    },
+    "Recall@5": 0.8476190476190476,
+    "Hit@5": 1.0,
+    "by_type": {
+      "multi_hop": {
+        "n": 3,
+        "Recall@5": 0.4920634920634921,
+        "Hit@5": 1.0,
+        "n_hit@5": 3
+      },
+      "single_hop": {
+        "n": 7,
+        "Recall@5": 1.0,
+        "Hit@5": 1.0,
+        "n_hit@5": 7
+      }
+    },
+    "n_failures_hit@5": 0,
+    "failure_ids": [],
+    "settings": {
+      "retriever": "hybrid",
+      "embedding_model": "text-embedding-v4",
+      "embedding_dim": 1024,
+      "n_chunks": 157,
+      "distance": "sqlite-vec cosine",
+      "score": null,
+      "bm25": {
+        "implementation": "rank_bm25.BM25Okapi",
+        "tokenizer": "jieba",
+        "k1": 1.5,
+        "b": 0.75
+      },
+      "rrf": {
+        "fusion": "rrf",
+        "rrf_k": 60,
+        "bm25": {
+          "implementation": "rank_bm25.BM25Okapi",
+          "tokenizer": "jieba",
+          "k1": 1.5,
+          "b": 0.75
+        }
+      },
+      "rerank": false
+    },
+    "definitions": {
+      "Recall@5": "前 5 条中命中的金标切片数 / 该题金标切片数，再对可答题宏平均。拒答题不进分母。",
+      "Hit@5": "前 5 条至少命中 1 个金标切片记为 1，否则为 0，再宏平均。",
+      "MRR@5": "第一个金标切片排名的倒数，未命中为 0，再宏平均。",
+      "nDCG@5": "相关切片相关性按二元，再宏平均。",
+      "retrieval": "密集检索与 BM25Okapi（jieba，k1=1.5，b=0.75）经 RRF（k=60）融合。不加 rerank。"
+    },
+    "refusal": {
+      "n": 2,
+      "ids": [
+        "Q096",
+        "Q097"
+      ],
+      "correct": "not_run",
+      "report": "未测 / 2",
+      "generation": "not_run",
+      "note": "本段只评检索，不跑生成；拒答题按「对了几道 / 共几道」汇报，不设 90% 目标，也不计入 Recall@5。"
+    },
+    "testset_seal": {
+      "ok": true,
+      "expected_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+      "observed_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+      "seal_file_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+      "hash_file_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+      "n_test_questions": 12,
+      "match": true
+    },
+    "report_path": "reports/test_run1.json",
+    "per_question_path": "reports/test_run1_eval.json",
+    "generation": "not_run"
+  },
+  "testset_seal": {
+    "ok": true,
+    "expected_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "observed_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "seal_file_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "hash_file_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "n_test_questions": 12,
+    "match": true
+  }
+}

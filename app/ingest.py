@@ -11,9 +11,18 @@ from app.chunking import chunk_sections, get_strategy, params_dict
 from app.config import Settings, get_settings
 from app.corpus_io import EXPECTED_DOCS, load_corpus
 from app.db import VECTOR_TABLE, connection, pack_embedding
-from app.embeddings import EmbeddingError, api_usage, embed_texts, reset_api_counters, resolve_model_dim
+from app.embed_cache import embed_texts_cached
+from app.embeddings import EmbeddingError, api_usage, reset_api_counters, resolve_model_dim
+from app.pipeline import load_locked_pipeline
 
 DEFAULT_CHUNKING = "section_window_400"
+
+
+def resolve_chunking_name(chunking_name: str | None = None) -> str:
+    if chunking_name:
+        return chunking_name
+    locked = load_locked_pipeline().get("chunking_name")
+    return locked or DEFAULT_CHUNKING
 
 
 def _now_iso() -> str:
@@ -144,10 +153,11 @@ def _replace_corpus(conn, docs: list[dict], chunks: list[dict], vectors: list[li
         )
 
 
-def ingest_corpus(settings: Settings | None = None, *, chunking_name: str = DEFAULT_CHUNKING) -> dict:
+def ingest_corpus(settings: Settings | None = None, *, chunking_name: str | None = None) -> dict:
     """写入语料。若指纹与库内记录一致则跳过 embedding。"""
     if settings is None:
         settings = get_settings()
+    chunking_name = resolve_chunking_name(chunking_name)
     reset_api_counters()
     model, dim = resolve_model_dim(settings)
     docs = load_corpus()
@@ -183,7 +193,7 @@ def ingest_corpus(settings: Settings | None = None, *, chunking_name: str = DEFA
                 **usage,
             }
 
-        vectors = embed_texts([c["text"] for c in chunks], model=model, expected_dim=dim, settings=settings)
+        vectors = embed_texts_cached([c["text"] for c in chunks], model=model, expected_dim=dim, settings=settings)
         _replace_corpus(conn, docs, chunks, vectors, model, dim)
         ingested_at = _now_iso()
         conn.execute(

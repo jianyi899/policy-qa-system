@@ -1,0 +1,773 @@
+{
+  "rule": "overlap_len / span_len > 0.5；同一文档同一 section_path 内比较字符区间",
+  "threshold": 0.5,
+  "n_questions": 40,
+  "n_gold_spans": 54,
+  "n_mapped_question_chunk_pairs": 54,
+  "n_unique_relevant_chunks": 34,
+  "n_questions_with_gold_chunks": 34,
+  "n_unmapped_spans": 0,
+  "unmapped_spans": [],
+  "items": [
+    {
+      "question_id": "Q001",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 101,
+          "char_end": 235,
+          "chunk_id": 415,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q002",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 235,
+          "char_end": 366,
+          "chunk_id": 416,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q003",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 235,
+          "char_end": 366,
+          "chunk_id": 416,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q004",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 101,
+          "char_end": 235,
+          "chunk_id": 415,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q005",
+      "split": "dev",
+      "type": "multi_hop",
+      "n_spans": 2,
+      "gold_chunks": [
+        {
+          "doc_id": "P15",
+          "section_path": "1.适用范围",
+          "char_start": 14,
+          "char_end": 101,
+          "chunk_id": 414,
+          "relevance": 1
+        },
+        {
+          "doc_id": "M23",
+          "section_path": "3.品类边界",
+          "char_start": 254,
+          "char_end": 335,
+          "chunk_id": 347,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q006",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 14,
+          "char_end": 150,
+          "chunk_id": 380,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q007",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 14,
+          "char_end": 150,
+          "chunk_id": 380,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q008",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 274,
+          "char_end": 371,
+          "chunk_id": 382,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q009",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "M05",
+          "section_path": "1.定制订单",
+          "char_start": 17,
+          "char_end": 112,
+          "chunk_id": 330,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q010",
+      "split": "dev",
+      "type": "multi_hop",
+      "n_spans": 4,
+      "gold_chunks": [
+        {
+          "doc_id": "P03",
+          "section_path": "2.其他不适用商品",
+          "char_start": 150,
+          "char_end": 274,
+          "chunk_id": 381,
+          "relevance": 1
+        },
+        {
+          "doc_id": "P03",
+          "section_path": "3.不适用时仍可主张质量问题",
+          "char_start": 274,
+          "char_end": 371,
+          "chunk_id": 382,
+          "relevance": 1
+        },
+        {
+          "doc_id": "M16",
+          "section_path": "1.不适用无理由",
+          "char_start": 18,
+          "char_end": 90,
+          "chunk_id": 342,
+          "relevance": 1
+        },
+        {
+          "doc_id": "M16",
+          "section_path": "2.质量或发货失败",
+          "char_start": 90,
+          "char_end": 173,
+          "chunk_id": 343,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q011",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 97,
+          "char_end": 238,
+          "chunk_id": 375,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q012",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 97,
+          "char_end": 238,
+          "chunk_id": 375,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q013",
+      "split": "dev",
+      "type": "multi_hop",
+      "n_spans": 2,
+      "gold_chunks": [
+        {
+          "doc_id": "P01",
+          "section_path": "2.术语",
+          "char_start": 108,
+          "char_end": 228,
+          "chunk_id": 369,
+          "relevance": 1
+        },
+        {
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 97,
+          "char_end": 238,
+          "chunk_id": 375,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q014",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 315,
+          "char_end": 436,
+          "chunk_id": 377,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q015",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 97,
+          "char_end": 238,
+          "chunk_id": 375,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q016",
+      "split": "dev",
+      "type": "multi_hop",
+      "n_spans": 2,
+      "gold_chunks": [
+        {
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 97,
+          "char_end": 238,
+          "chunk_id": 375,
+          "relevance": 1
+        },
+        {
+          "doc_id": "M01",
+          "section_path": "2.时限核对",
+          "char_start": 100,
+          "char_end": 223,
+          "chunk_id": 319,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q017",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P01",
+          "section_path": "2.术语",
+          "char_start": 108,
+          "char_end": 228,
+          "chunk_id": 369,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q018",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 97,
+          "char_end": 194,
+          "chunk_id": 385,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q019",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P04",
+          "section_path": "3.凭证与鉴定",
+          "char_start": 194,
+          "char_end": 278,
+          "chunk_id": 386,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q020",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 278,
+          "char_end": 379,
+          "chunk_id": 387,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q021",
+      "split": "dev",
+      "type": "multi_hop",
+      "n_spans": 2,
+      "gold_chunks": [
+        {
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 97,
+          "char_end": 194,
+          "chunk_id": 385,
+          "relevance": 1
+        },
+        {
+          "doc_id": "P05",
+          "section_path": "1.质量问题导致的退换货",
+          "char_start": 13,
+          "char_end": 118,
+          "chunk_id": 388,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q025",
+      "split": "dev",
+      "type": "multi_hop",
+      "n_spans": 5,
+      "gold_chunks": [
+        {
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 14,
+          "char_end": 150,
+          "chunk_id": 380,
+          "relevance": 1
+        },
+        {
+          "doc_id": "P05",
+          "section_path": "1.质量问题导致的退换货",
+          "char_start": 13,
+          "char_end": 118,
+          "chunk_id": 388,
+          "relevance": 1
+        },
+        {
+          "doc_id": "P05",
+          "section_path": "3.无理由不成立时的运费",
+          "char_start": 234,
+          "char_end": 361,
+          "chunk_id": 390,
+          "relevance": 1
+        },
+        {
+          "doc_id": "M04",
+          "section_path": "2.无理由不成立",
+          "char_start": 92,
+          "char_end": 180,
+          "chunk_id": 328,
+          "relevance": 1
+        },
+        {
+          "doc_id": "M05",
+          "section_path": "1.定制订单",
+          "char_start": 17,
+          "char_end": 112,
+          "chunk_id": 330,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q039",
+      "split": "dev",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 97,
+          "char_end": 238,
+          "chunk_id": 375,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q041",
+      "split": "dev",
+      "type": "multi_hop",
+      "n_spans": 3,
+      "gold_chunks": [
+        {
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 101,
+          "char_end": 235,
+          "chunk_id": 415,
+          "relevance": 1
+        },
+        {
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 235,
+          "char_end": 366,
+          "chunk_id": 416,
+          "relevance": 1
+        },
+        {
+          "doc_id": "M05",
+          "section_path": "2.手机数码激活",
+          "char_start": 112,
+          "char_end": 221,
+          "chunk_id": 331,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q042",
+      "split": "test",
+      "type": "multi_hop",
+      "n_spans": 5,
+      "gold_chunks": [
+        {
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 129,
+          "char_end": 279,
+          "chunk_id": 401,
+          "relevance": 1
+        },
+        {
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 14,
+          "char_end": 117,
+          "chunk_id": 396,
+          "relevance": 1
+        },
+        {
+          "doc_id": "P07",
+          "section_path": "3.与专项质保的关系",
+          "char_start": 210,
+          "char_end": 337,
+          "chunk_id": 398,
+          "relevance": 1
+        },
+        {
+          "doc_id": "P01",
+          "section_path": "3.冲突排序口径",
+          "char_start": 296,
+          "char_end": 431,
+          "chunk_id": 371,
+          "relevance": 1
+        },
+        {
+          "doc_id": "M03",
+          "section_path": "1.核对质保期限",
+          "char_start": 15,
+          "char_end": 140,
+          "chunk_id": 324,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q062",
+      "split": "dev",
+      "type": "refusal",
+      "n_spans": 0,
+      "gold_chunks": []
+    },
+    {
+      "question_id": "Q063",
+      "split": "dev",
+      "type": "refusal",
+      "n_spans": 0,
+      "gold_chunks": []
+    },
+    {
+      "question_id": "Q064",
+      "split": "dev",
+      "type": "refusal",
+      "n_spans": 0,
+      "gold_chunks": []
+    },
+    {
+      "question_id": "Q065",
+      "split": "dev",
+      "type": "refusal",
+      "n_spans": 0,
+      "gold_chunks": []
+    },
+    {
+      "question_id": "Q072",
+      "split": "test",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 14,
+          "char_end": 117,
+          "chunk_id": 396,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q073",
+      "split": "test",
+      "type": "multi_hop",
+      "n_spans": 3,
+      "gold_chunks": [
+        {
+          "doc_id": "P08",
+          "section_path": "1.适用范围",
+          "char_start": 29,
+          "char_end": 129,
+          "chunk_id": 400,
+          "relevance": 1
+        },
+        {
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 14,
+          "char_end": 117,
+          "chunk_id": 396,
+          "relevance": 1
+        },
+        {
+          "doc_id": "M23",
+          "section_path": "1.先核 SKU 再核期限",
+          "char_start": 14,
+          "char_end": 151,
+          "chunk_id": 345,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q074",
+      "split": "test",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P08",
+          "section_path": "4.生效日",
+          "char_start": 413,
+          "char_end": 479,
+          "chunk_id": 404,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q075",
+      "split": "test",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 334,
+          "char_end": 413,
+          "chunk_id": 403,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q076",
+      "split": "test",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 334,
+          "char_end": 413,
+          "chunk_id": 403,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q077",
+      "split": "test",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P07",
+          "section_path": "2.不计入或缩短的情形",
+          "char_start": 117,
+          "char_end": 210,
+          "chunk_id": 397,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q078",
+      "split": "test",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "M03",
+          "section_path": "1.核对质保期限",
+          "char_start": 15,
+          "char_end": 140,
+          "chunk_id": 324,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q085",
+      "split": "test",
+      "type": "single_hop",
+      "n_spans": 1,
+      "gold_chunks": [
+        {
+          "doc_id": "P17",
+          "section_path": "2.无理由退货完好标准",
+          "char_start": 56,
+          "char_end": 152,
+          "chunk_id": 422,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q086",
+      "split": "test",
+      "type": "multi_hop",
+      "n_spans": 2,
+      "gold_chunks": [
+        {
+          "doc_id": "P17",
+          "section_path": "3.尺码换货",
+          "char_start": 152,
+          "char_end": 242,
+          "chunk_id": 423,
+          "relevance": 1
+        },
+        {
+          "doc_id": "M09",
+          "section_path": "2.尺码换货",
+          "char_start": 103,
+          "char_end": 199,
+          "chunk_id": 334,
+          "relevance": 1
+        }
+      ]
+    },
+    {
+      "question_id": "Q096",
+      "split": "test",
+      "type": "refusal",
+      "n_spans": 0,
+      "gold_chunks": []
+    },
+    {
+      "question_id": "Q097",
+      "split": "test",
+      "type": "refusal",
+      "n_spans": 0,
+      "gold_chunks": []
+    }
+  ],
+  "n_chunks": 139,
+  "dev_answerable": {
+    "n_questions": 24,
+    "n_gold_spans": 37,
+    "n_mapped_question_chunk_pairs": 37,
+    "n_questions_missing_gold": 0
+  },
+  "test_answerable": {
+    "n_questions": 10,
+    "n_gold_spans": 17,
+    "n_mapped_question_chunk_pairs": 17,
+    "n_questions_missing_gold": 0
+  },
+  "ok": true
+}

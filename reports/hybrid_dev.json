@@ -1,0 +1,215 @@
+{
+  "name": "bm25_rrf",
+  "status": "measured",
+  "measured_at": "2026-11-21T15:40:46+08:00",
+  "timezone": "Asia/Shanghai",
+  "split": "dev",
+  "chunking_name": "section_window_120",
+  "dense": {
+    "ok": true,
+    "split": "dev",
+    "retriever": "dense",
+    "n_questions_in_split": 28,
+    "n_answerable": 24,
+    "n_refusal_excluded": 4,
+    "n_used_for_recall": 24,
+    "metrics": {
+      "Recall@5": 0.6972222222222223,
+      "Hit@5": 0.875,
+      "MRR@5": 0.5583333333333333,
+      "nDCG@5": 0.5507751445418524,
+      "Recall@10": 0.7854166666666668,
+      "Hit@10": 0.9166666666666666,
+      "n_hit@5": 21,
+      "n_answerable_for_hit": 24
+    },
+    "Recall@5": 0.6972222222222223,
+    "Hit@5": 0.875,
+    "by_type": {
+      "multi_hop": {
+        "n": 7,
+        "Recall@5": 0.46190476190476193,
+        "Hit@5": 0.8571428571428571,
+        "n_hit@5": 6
+      },
+      "single_hop": {
+        "n": 17,
+        "Recall@5": 0.7941176470588235,
+        "Hit@5": 0.8823529411764706,
+        "n_hit@5": 15
+      }
+    },
+    "n_failures_hit@5": 3,
+    "failure_ids": [
+      "Q008",
+      "Q013",
+      "Q017"
+    ],
+    "settings": {
+      "retriever": "dense",
+      "embedding_model": "text-embedding-v4",
+      "embedding_dim": 1024,
+      "n_chunks": 157,
+      "distance": "sqlite-vec cosine",
+      "score": "1 - cosine_distance",
+      "bm25": false,
+      "rrf": false,
+      "rerank": false
+    },
+    "definitions": {
+      "Recall@5": "前 5 条中命中的金标切片数 / 该题金标切片数，再对可答题宏平均。拒答题不进分母。",
+      "Hit@5": "前 5 条至少命中 1 个金标切片记为 1，否则为 0，再宏平均。",
+      "MRR@5": "第一个金标切片排名的倒数，未命中为 0，再宏平均。",
+      "nDCG@5": "相关切片相关性按二元，再宏平均。",
+      "retrieval": "纯密集检索，距离为 sqlite-vec 余弦距离（distance_metric=cosine），得分=1-距离。不加 BM25/RRF/rerank。"
+    },
+    "refusal": {
+      "n": 4,
+      "ids": [
+        "Q062",
+        "Q063",
+        "Q064",
+        "Q065"
+      ],
+      "correct": "not_run",
+      "report": "未测 / 4",
+      "generation": "not_run",
+      "note": "本段只评检索，不跑生成；拒答题按「对了几道 / 共几道」汇报，不设 90% 目标，也不计入 Recall@5。"
+    },
+    "testset_seal": null
+  },
+  "hybrid": {
+    "ok": true,
+    "split": "dev",
+    "retriever": "hybrid",
+    "n_questions_in_split": 28,
+    "n_answerable": 24,
+    "n_refusal_excluded": 4,
+    "n_used_for_recall": 24,
+    "metrics": {
+      "Recall@5": 0.7493055555555556,
+      "Hit@5": 0.875,
+      "MRR@5": 0.6055555555555555,
+      "nDCG@5": 0.6014486395126614,
+      "Recall@10": 0.8409722222222222,
+      "Hit@10": 0.9583333333333334,
+      "n_hit@5": 21,
+      "n_answerable_for_hit": 24
+    },
+    "Recall@5": 0.7493055555555556,
+    "Hit@5": 0.875,
+    "by_type": {
+      "multi_hop": {
+        "n": 7,
+        "Recall@5": 0.569047619047619,
+        "Hit@5": 0.8571428571428571,
+        "n_hit@5": 6
+      },
+      "single_hop": {
+        "n": 17,
+        "Recall@5": 0.8235294117647058,
+        "Hit@5": 0.8823529411764706,
+        "n_hit@5": 15
+      }
+    },
+    "n_failures_hit@5": 3,
+    "failure_ids": [
+      "Q013",
+      "Q017",
+      "Q039"
+    ],
+    "settings": {
+      "retriever": "hybrid",
+      "embedding_model": "text-embedding-v4",
+      "embedding_dim": 1024,
+      "n_chunks": 157,
+      "distance": "sqlite-vec cosine",
+      "score": null,
+      "bm25": {
+        "implementation": "rank_bm25.BM25Okapi",
+        "tokenizer": "jieba",
+        "k1": 1.5,
+        "b": 0.75
+      },
+      "rrf": {
+        "fusion": "rrf",
+        "rrf_k": 60,
+        "bm25": {
+          "implementation": "rank_bm25.BM25Okapi",
+          "tokenizer": "jieba",
+          "k1": 1.5,
+          "b": 0.75
+        }
+      },
+      "rerank": false
+    },
+    "definitions": {
+      "Recall@5": "前 5 条中命中的金标切片数 / 该题金标切片数，再对可答题宏平均。拒答题不进分母。",
+      "Hit@5": "前 5 条至少命中 1 个金标切片记为 1，否则为 0，再宏平均。",
+      "MRR@5": "第一个金标切片排名的倒数，未命中为 0，再宏平均。",
+      "nDCG@5": "相关切片相关性按二元，再宏平均。",
+      "retrieval": "密集检索与 BM25Okapi（jieba，k1=1.5，b=0.75）经 RRF（k=60）融合。不加 rerank。"
+    },
+    "refusal": {
+      "n": 4,
+      "ids": [
+        "Q062",
+        "Q063",
+        "Q064",
+        "Q065"
+      ],
+      "correct": "not_run",
+      "report": "未测 / 4",
+      "generation": "not_run",
+      "note": "本段只评检索，不跑生成；拒答题按「对了几道 / 共几道」汇报，不设 90% 目标，也不计入 Recall@5。"
+    },
+    "testset_seal": null
+  },
+  "comparison_vs_dense": {
+    "baseline": "section_window_120+dense",
+    "current": "section_window_120+hybrid",
+    "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+    "n_comparable": 24,
+    "n_only_baseline": 0,
+    "n_only_current": 0,
+    "wrong_to_right": {
+      "n": 1,
+      "ids": [
+        "Q008"
+      ]
+    },
+    "right_to_wrong": {
+      "n": 1,
+      "ids": [
+        "Q039"
+      ]
+    },
+    "mcnemar": {
+      "n_improved": 1,
+      "n_regressed": 1,
+      "n_discordant": 2,
+      "p_value": 1.0,
+      "test": "mcnemar_exact_binomial",
+      "significant_at_0.05": false,
+      "direction": "tied",
+      "interpretation": "无方向差异"
+    },
+    "recall@5_changes": {
+      "n_up": 3,
+      "ids_up": [
+        "Q005",
+        "Q008",
+        "Q010"
+      ],
+      "n_down": 1,
+      "ids_down": [
+        "Q039"
+      ],
+      "n_same": 20,
+      "net_decrease_questions": -2
+    }
+  },
+  "adopted": true,
+  "reason": "融合后开发集 Recall@5 高于纯密集，纳入主链路。",
+  "per_question_path": "reports/hybrid_dev_eval.json"
+}

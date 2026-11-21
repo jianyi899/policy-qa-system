@@ -6,7 +6,7 @@
     python -m app.start --ingest-only
 
 `--ingest-only` 只建库并按指纹写入语料，不启动 FastAPI / Streamlit，便于在测试目录验收入库。
-第二次启动若语料、切分与 embedding 配置未变，不会重复写入，也不会再次调用 embedding 接口。
+切分策略以 reports/locked_retrieval.json 为准（尚未锁定时回退到 section_window_400）。第二次启动若语料、切分与 embedding 配置未变，不会重复写入，也不会再次调用 embedding 接口。
 Streamlit 固定监听 127.0.0.1。
 """
 

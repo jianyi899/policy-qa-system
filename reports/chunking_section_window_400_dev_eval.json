@@ -1,0 +1,1516 @@
+{
+  "ok": true,
+  "split": "dev",
+  "retriever": "dense",
+  "definitions": {
+    "Recall@5": "前 5 条中命中的金标切片数 / 该题金标切片数，再对可答题宏平均。拒答题不进分母。",
+    "Hit@5": "前 5 条至少命中 1 个金标切片记为 1，否则为 0，再宏平均。",
+    "MRR@5": "第一个金标切片排名的倒数，未命中为 0，再宏平均。",
+    "nDCG@5": "相关切片相关性按二元，再宏平均。",
+    "retrieval": "纯密集检索，距离为 sqlite-vec 余弦距离（distance_metric=cosine），得分=1-距离。不加 BM25/RRF/rerank。"
+  },
+  "n_questions_in_split": 28,
+  "n_answerable": 24,
+  "n_refusal_excluded": 4,
+  "n_used_for_recall": 24,
+  "primary_metric": "Recall@5",
+  "metrics": {
+    "Recall@5": 0.6902777777777778,
+    "Hit@5": 0.8333333333333334,
+    "MRR@5": 0.5916666666666667,
+    "nDCG@5": 0.5804786200267865,
+    "Recall@10": 0.8270833333333334,
+    "Hit@10": 0.9166666666666666,
+    "n_hit@5": 20,
+    "n_answerable_for_hit": 24
+  },
+  "by_type": {
+    "multi_hop": {
+      "n": 7,
+      "Recall@5": 0.5095238095238095,
+      "Hit@5": 1.0,
+      "n_hit@5": 7
+    },
+    "single_hop": {
+      "n": 17,
+      "Recall@5": 0.7647058823529411,
+      "Hit@5": 0.7647058823529411,
+      "n_hit@5": 13
+    }
+  },
+  "k_eval": 5,
+  "k_retrieved": 20,
+  "n_failures_hit@5": 4,
+  "failure_ids": [
+    "Q008",
+    "Q015",
+    "Q017",
+    "Q039"
+  ],
+  "per_question": [
+    {
+      "id": "Q001",
+      "type": "single_hop",
+      "cluster": "phone_digital",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 0.3333333333333333,
+      "ndcg@5": 0.5,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 70,
+          "char_end": 243,
+          "chunk_id": 20,
+          "score": 0.8769425377249718
+        },
+        {
+          "rank": 2,
+          "doc_id": "M05",
+          "section_path": "2.手机数码激活",
+          "char_start": 112,
+          "char_end": 221,
+          "chunk_id": 41,
+          "score": 0.8550232201814651
+        },
+        {
+          "rank": 3,
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 101,
+          "char_end": 235,
+          "chunk_id": 119,
+          "score": 0.8428278714418411
+        },
+        {
+          "rank": 4,
+          "doc_id": "F07",
+          "section_path": "1.常见问题",
+          "char_start": 24,
+          "char_end": 70,
+          "chunk_id": 19,
+          "score": 0.8235704898834229
+        },
+        {
+          "rank": 5,
+          "doc_id": "M16",
+          "section_path": "1.不适用无理由",
+          "char_start": 18,
+          "char_end": 90,
+          "chunk_id": 52,
+          "score": 0.7652182281017303
+        }
+      ]
+    },
+    {
+      "id": "Q002",
+      "type": "single_hop",
+      "cluster": "phone_digital",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 235,
+          "char_end": 366,
+          "chunk_id": 120,
+          "score": 0.7713057994842529
+        },
+        {
+          "rank": 2,
+          "doc_id": "F07",
+          "section_path": "1.常见问题",
+          "char_start": 24,
+          "char_end": 70,
+          "chunk_id": 19,
+          "score": 0.7465646266937256
+        },
+        {
+          "rank": 3,
+          "doc_id": "P10",
+          "section_path": "2.换货时限",
+          "char_start": 97,
+          "char_end": 166,
+          "chunk_id": 110,
+          "score": 0.7404502630233765
+        },
+        {
+          "rank": 4,
+          "doc_id": "M05",
+          "section_path": "2.手机数码激活",
+          "char_start": 112,
+          "char_end": 221,
+          "chunk_id": 41,
+          "score": 0.7125750780105591
+        },
+        {
+          "rank": 5,
+          "doc_id": "P04",
+          "section_path": "1.质量问题范围",
+          "char_start": 13,
+          "char_end": 97,
+          "chunk_id": 89,
+          "score": 0.7038162350654602
+        }
+      ]
+    },
+    {
+      "id": "Q003",
+      "type": "single_hop",
+      "cluster": "phone_digital",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 235,
+          "char_end": 366,
+          "chunk_id": 120,
+          "score": 0.7827597111463547
+        },
+        {
+          "rank": 2,
+          "doc_id": "M05",
+          "section_path": "2.手机数码激活",
+          "char_start": 112,
+          "char_end": 221,
+          "chunk_id": 41,
+          "score": 0.7465578615665436
+        },
+        {
+          "rank": 3,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 70,
+          "char_end": 243,
+          "chunk_id": 20,
+          "score": 0.7104944884777069
+        },
+        {
+          "rank": 4,
+          "doc_id": "P07",
+          "section_path": "4.质保期内的服务",
+          "char_start": 337,
+          "char_end": 424,
+          "chunk_id": 104,
+          "score": 0.7038663923740387
+        },
+        {
+          "rank": 5,
+          "doc_id": "F07",
+          "section_path": "1.常见问题",
+          "char_start": 24,
+          "char_end": 70,
+          "chunk_id": 19,
+          "score": 0.7014063596725464
+        }
+      ]
+    },
+    {
+      "id": "Q004",
+      "type": "single_hop",
+      "cluster": "phone_digital",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 101,
+          "char_end": 235,
+          "chunk_id": 119,
+          "score": 0.7108600735664368
+        },
+        {
+          "rank": 2,
+          "doc_id": "M05",
+          "section_path": "2.手机数码激活",
+          "char_start": 112,
+          "char_end": 221,
+          "chunk_id": 41,
+          "score": 0.7033333778381348
+        },
+        {
+          "rank": 3,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 70,
+          "char_end": 243,
+          "chunk_id": 20,
+          "score": 0.6918278932571411
+        },
+        {
+          "rank": 4,
+          "doc_id": "N05",
+          "section_path": "2.为何会误导检索",
+          "char_start": 133,
+          "char_end": 198,
+          "chunk_id": 71,
+          "score": 0.65302774310112
+        },
+        {
+          "rank": 5,
+          "doc_id": "N05",
+          "section_path": "3.效力声明",
+          "char_start": 198,
+          "char_end": 299,
+          "chunk_id": 72,
+          "score": 0.6350458860397339
+        }
+      ]
+    },
+    {
+      "id": "Q005",
+      "type": "multi_hop",
+      "cluster": "phone_digital",
+      "n_gold": 2,
+      "recall@5": 0.5,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 0.6131471927654584,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "M23",
+          "section_path": "3.品类边界",
+          "char_start": 254,
+          "char_end": 335,
+          "chunk_id": 57,
+          "score": 0.8173961639404297
+        },
+        {
+          "rank": 2,
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 101,
+          "char_end": 235,
+          "chunk_id": 119,
+          "score": 0.8029430061578751
+        },
+        {
+          "rank": 3,
+          "doc_id": "M05",
+          "section_path": "2.手机数码激活",
+          "char_start": 112,
+          "char_end": 221,
+          "chunk_id": 41,
+          "score": 0.7753791064023972
+        },
+        {
+          "rank": 4,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 70,
+          "char_end": 243,
+          "chunk_id": 20,
+          "score": 0.7633365541696548
+        },
+        {
+          "rank": 5,
+          "doc_id": "F07",
+          "section_path": "3.说明",
+          "char_start": 243,
+          "char_end": 330,
+          "chunk_id": 21,
+          "score": 0.7521409839391708
+        }
+      ]
+    },
+    {
+      "id": "Q006",
+      "type": "single_hop",
+      "cluster": "custom_returns",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 14,
+          "char_end": 150,
+          "chunk_id": 85,
+          "score": 0.7036947011947632
+        },
+        {
+          "rank": 2,
+          "doc_id": "M05",
+          "section_path": "1.定制订单",
+          "char_start": 17,
+          "char_end": 112,
+          "chunk_id": 40,
+          "score": 0.687118649482727
+        },
+        {
+          "rank": 3,
+          "doc_id": "F02",
+          "section_path": "2.答复口径",
+          "char_start": 81,
+          "char_end": 207,
+          "chunk_id": 5,
+          "score": 0.6467219293117523
+        },
+        {
+          "rank": 4,
+          "doc_id": "P01",
+          "section_path": "2.术语",
+          "char_start": 108,
+          "char_end": 296,
+          "chunk_id": 77,
+          "score": 0.6444754302501678
+        },
+        {
+          "rank": 5,
+          "doc_id": "N02",
+          "section_path": "2.为何会误导检索",
+          "char_start": 109,
+          "char_end": 170,
+          "chunk_id": 62,
+          "score": 0.6235552132129669
+        }
+      ]
+    },
+    {
+      "id": "Q007",
+      "type": "single_hop",
+      "cluster": "custom_returns",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 14,
+          "char_end": 150,
+          "chunk_id": 85,
+          "score": 0.7634891122579575
+        },
+        {
+          "rank": 2,
+          "doc_id": "F02",
+          "section_path": "2.答复口径",
+          "char_start": 81,
+          "char_end": 207,
+          "chunk_id": 5,
+          "score": 0.7572863698005676
+        },
+        {
+          "rank": 3,
+          "doc_id": "F02",
+          "section_path": "1.常见问题",
+          "char_start": 23,
+          "char_end": 81,
+          "chunk_id": 4,
+          "score": 0.7379868626594543
+        },
+        {
+          "rank": 4,
+          "doc_id": "M05",
+          "section_path": "1.定制订单",
+          "char_start": 17,
+          "char_end": 112,
+          "chunk_id": 40,
+          "score": 0.7264558374881744
+        },
+        {
+          "rank": 5,
+          "doc_id": "N02",
+          "section_path": "1.误导性说法",
+          "char_start": 32,
+          "char_end": 109,
+          "chunk_id": 61,
+          "score": 0.7173616588115692
+        }
+      ]
+    },
+    {
+      "id": "Q008",
+      "type": "single_hop",
+      "cluster": "custom_returns",
+      "n_gold": 1,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "mrr@5": 0.0,
+      "ndcg@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 14,
+          "char_end": 150,
+          "chunk_id": 85,
+          "score": 0.8413768261671066
+        },
+        {
+          "rank": 2,
+          "doc_id": "M05",
+          "section_path": "1.定制订单",
+          "char_start": 17,
+          "char_end": 112,
+          "chunk_id": 40,
+          "score": 0.8204647600650787
+        },
+        {
+          "rank": 3,
+          "doc_id": "F02",
+          "section_path": "2.答复口径",
+          "char_start": 81,
+          "char_end": 207,
+          "chunk_id": 5,
+          "score": 0.8201182335615158
+        },
+        {
+          "rank": 4,
+          "doc_id": "F02",
+          "section_path": "3.说明",
+          "char_start": 207,
+          "char_end": 310,
+          "chunk_id": 6,
+          "score": 0.803909495472908
+        },
+        {
+          "rank": 5,
+          "doc_id": "F01",
+          "section_path": "3.说明",
+          "char_start": 204,
+          "char_end": 302,
+          "chunk_id": 3,
+          "score": 0.8010389059782028
+        }
+      ]
+    },
+    {
+      "id": "Q009",
+      "type": "single_hop",
+      "cluster": "custom_returns",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 0.5,
+      "ndcg@5": 0.6309297535714575,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F02",
+          "section_path": "1.常见问题",
+          "char_start": 23,
+          "char_end": 81,
+          "chunk_id": 4,
+          "score": 0.7682587504386902
+        },
+        {
+          "rank": 2,
+          "doc_id": "M05",
+          "section_path": "1.定制订单",
+          "char_start": 17,
+          "char_end": 112,
+          "chunk_id": 40,
+          "score": 0.7214197814464569
+        },
+        {
+          "rank": 3,
+          "doc_id": "N02",
+          "section_path": "1.误导性说法",
+          "char_start": 32,
+          "char_end": 109,
+          "chunk_id": 61,
+          "score": 0.7152574956417084
+        },
+        {
+          "rank": 4,
+          "doc_id": "F02",
+          "section_path": "2.答复口径",
+          "char_start": 81,
+          "char_end": 207,
+          "chunk_id": 5,
+          "score": 0.6829115748405457
+        },
+        {
+          "rank": 5,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 14,
+          "char_end": 150,
+          "chunk_id": 85,
+          "score": 0.6771596372127533
+        }
+      ]
+    },
+    {
+      "id": "Q010",
+      "type": "multi_hop",
+      "cluster": "custom_returns",
+      "n_gold": 4,
+      "recall@5": 0.5,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 0.6366824387328317,
+      "recall@10": 0.75,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "M16",
+          "section_path": "1.不适用无理由",
+          "char_start": 18,
+          "char_end": 90,
+          "chunk_id": 52,
+          "score": 0.8641836792230606
+        },
+        {
+          "rank": 2,
+          "doc_id": "M16",
+          "section_path": "2.质量或发货失败",
+          "char_start": 90,
+          "char_end": 173,
+          "chunk_id": 53,
+          "score": 0.7927834838628769
+        },
+        {
+          "rank": 3,
+          "doc_id": "F07",
+          "section_path": "1.常见问题",
+          "char_start": 24,
+          "char_end": 70,
+          "chunk_id": 19,
+          "score": 0.7684802860021591
+        },
+        {
+          "rank": 4,
+          "doc_id": "F01",
+          "section_path": "3.说明",
+          "char_start": 204,
+          "char_end": 302,
+          "chunk_id": 3,
+          "score": 0.7618197798728943
+        },
+        {
+          "rank": 5,
+          "doc_id": "F02",
+          "section_path": "3.说明",
+          "char_start": 207,
+          "char_end": 310,
+          "chunk_id": 6,
+          "score": 0.7412589490413666
+        }
+      ]
+    },
+    {
+      "id": "Q011",
+      "type": "single_hop",
+      "cluster": "returns_time",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 0.3333333333333333,
+      "ndcg@5": 0.5,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F01",
+          "section_path": "1.常见问题",
+          "char_start": 23,
+          "char_end": 80,
+          "chunk_id": 1,
+          "score": 0.8324218243360519
+        },
+        {
+          "rank": 2,
+          "doc_id": "N01",
+          "section_path": "1.误导性旧口径",
+          "char_start": 33,
+          "char_end": 116,
+          "chunk_id": 58,
+          "score": 0.813507929444313
+        },
+        {
+          "rank": 3,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 97,
+          "char_end": 315,
+          "chunk_id": 81,
+          "score": 0.7965381145477295
+        },
+        {
+          "rank": 4,
+          "doc_id": "F01",
+          "section_path": "3.说明",
+          "char_start": 204,
+          "char_end": 302,
+          "chunk_id": 3,
+          "score": 0.770232081413269
+        },
+        {
+          "rank": 5,
+          "doc_id": "F01",
+          "section_path": "2.答复口径",
+          "char_start": 80,
+          "char_end": 204,
+          "chunk_id": 2,
+          "score": 0.760614886879921
+        }
+      ]
+    },
+    {
+      "id": "Q012",
+      "type": "single_hop",
+      "cluster": "returns_time",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 97,
+          "char_end": 315,
+          "chunk_id": 81,
+          "score": 0.8397843241691589
+        },
+        {
+          "rank": 2,
+          "doc_id": "F01",
+          "section_path": "2.答复口径",
+          "char_start": 80,
+          "char_end": 204,
+          "chunk_id": 2,
+          "score": 0.8125144988298416
+        },
+        {
+          "rank": 3,
+          "doc_id": "M01",
+          "section_path": "2.时限核对",
+          "char_start": 100,
+          "char_end": 223,
+          "chunk_id": 29,
+          "score": 0.8043421506881714
+        },
+        {
+          "rank": 4,
+          "doc_id": "F01",
+          "section_path": "1.常见问题",
+          "char_start": 23,
+          "char_end": 80,
+          "chunk_id": 1,
+          "score": 0.7798889577388763
+        },
+        {
+          "rank": 5,
+          "doc_id": "F01",
+          "section_path": "3.说明",
+          "char_start": 204,
+          "char_end": 302,
+          "chunk_id": 3,
+          "score": 0.7665553241968155
+        }
+      ]
+    },
+    {
+      "id": "Q013",
+      "type": "multi_hop",
+      "cluster": "returns_time",
+      "n_gold": 2,
+      "recall@5": 0.5,
+      "hit@5": 1.0,
+      "mrr@5": 0.3333333333333333,
+      "ndcg@5": 0.3065735963827292,
+      "recall@10": 0.5,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "M13",
+          "section_path": "1.签收基准",
+          "char_start": 15,
+          "char_end": 96,
+          "chunk_id": 46,
+          "score": 0.8409920930862427
+        },
+        {
+          "rank": 2,
+          "doc_id": "P12",
+          "section_path": "1.签收的法律意义",
+          "char_start": 14,
+          "char_end": 114,
+          "chunk_id": 112,
+          "score": 0.8123005926609039
+        },
+        {
+          "rank": 3,
+          "doc_id": "P02",
+          "section_path": "2.时限计算",
+          "char_start": 97,
+          "char_end": 315,
+          "chunk_id": 81,
+          "score": 0.7786684036254883
+        },
+        {
+          "rank": 4,
+          "doc_id": "M01",
+          "section_path": "2.时限核对",
+          "char_start": 100,
+          "char_end": 223,
+          "chunk_id": 29,
+          "score": 0.7755337953567505
+        },
+        {
+          "rank": 5,
+          "doc_id": "P12",
+          "section_path": "3.物流丢失与损坏",
+          "char_start": 199,
+          "char_end": 259,
+          "chunk_id": 114,
+          "score": 0.7611977159976959
+        }
+      ]
+    },
+    {
+      "id": "Q014",
+      "type": "single_hop",
+      "cluster": "returns_time",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 315,
+          "char_end": 436,
+          "chunk_id": 82,
+          "score": 0.8729950934648514
+        },
+        {
+          "rank": 2,
+          "doc_id": "P17",
+          "section_path": "2.无理由退货完好标准",
+          "char_start": 56,
+          "char_end": 152,
+          "chunk_id": 126,
+          "score": 0.8062150478363037
+        },
+        {
+          "rank": 3,
+          "doc_id": "F01",
+          "section_path": "3.说明",
+          "char_start": 204,
+          "char_end": 302,
+          "chunk_id": 3,
+          "score": 0.7668180912733078
+        },
+        {
+          "rank": 4,
+          "doc_id": "M09",
+          "section_path": "1.完好标准核验",
+          "char_start": 14,
+          "char_end": 103,
+          "chunk_id": 43,
+          "score": 0.7659852802753448
+        },
+        {
+          "rank": 5,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 14,
+          "char_end": 150,
+          "chunk_id": 85,
+          "score": 0.7504206299781799
+        }
+      ]
+    },
+    {
+      "id": "Q015",
+      "type": "single_hop",
+      "cluster": "returns_time",
+      "n_gold": 1,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "mrr@5": 0.0,
+      "ndcg@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "M01",
+          "section_path": "2.时限核对",
+          "char_start": 100,
+          "char_end": 223,
+          "chunk_id": 29,
+          "score": 0.7722477316856384
+        },
+        {
+          "rank": 2,
+          "doc_id": "F01",
+          "section_path": "3.说明",
+          "char_start": 204,
+          "char_end": 302,
+          "chunk_id": 3,
+          "score": 0.7525432705879211
+        },
+        {
+          "rank": 3,
+          "doc_id": "F01",
+          "section_path": "2.答复口径",
+          "char_start": 80,
+          "char_end": 204,
+          "chunk_id": 2,
+          "score": 0.7475603818893433
+        },
+        {
+          "rank": 4,
+          "doc_id": "F07",
+          "section_path": "1.常见问题",
+          "char_start": 24,
+          "char_end": 70,
+          "chunk_id": 19,
+          "score": 0.7454061508178711
+        },
+        {
+          "rank": 5,
+          "doc_id": "N01",
+          "section_path": "1.误导性旧口径",
+          "char_start": 33,
+          "char_end": 116,
+          "chunk_id": 58,
+          "score": 0.7429279386997223
+        }
+      ]
+    },
+    {
+      "id": "Q016",
+      "type": "multi_hop",
+      "cluster": "returns_time",
+      "n_gold": 2,
+      "recall@5": 0.5,
+      "hit@5": 1.0,
+      "mrr@5": 0.5,
+      "ndcg@5": 0.38685280723454163,
+      "recall@10": 0.5,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F01",
+          "section_path": "3.说明",
+          "char_start": 204,
+          "char_end": 302,
+          "chunk_id": 3,
+          "score": 0.8204310536384583
+        },
+        {
+          "rank": 2,
+          "doc_id": "M01",
+          "section_path": "2.时限核对",
+          "char_start": 100,
+          "char_end": 223,
+          "chunk_id": 29,
+          "score": 0.7967414259910583
+        },
+        {
+          "rank": 3,
+          "doc_id": "F07",
+          "section_path": "1.常见问题",
+          "char_start": 24,
+          "char_end": 70,
+          "chunk_id": 19,
+          "score": 0.7736502140760422
+        },
+        {
+          "rank": 4,
+          "doc_id": "F01",
+          "section_path": "1.常见问题",
+          "char_start": 23,
+          "char_end": 80,
+          "chunk_id": 1,
+          "score": 0.7595640122890472
+        },
+        {
+          "rank": 5,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 97,
+          "char_end": 194,
+          "chunk_id": 90,
+          "score": 0.7545519024133682
+        }
+      ]
+    },
+    {
+      "id": "Q017",
+      "type": "single_hop",
+      "cluster": "quality_general",
+      "n_gold": 1,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "mrr@5": 0.0,
+      "ndcg@5": 0.0,
+      "recall@10": 0.0,
+      "hit@10": 0.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "M03",
+          "section_path": "2.鉴定",
+          "char_start": 140,
+          "char_end": 198,
+          "chunk_id": 35,
+          "score": 0.5977910161018372
+        },
+        {
+          "rank": 2,
+          "doc_id": "F07",
+          "section_path": "1.常见问题",
+          "char_start": 24,
+          "char_end": 70,
+          "chunk_id": 19,
+          "score": 0.5956158638000488
+        },
+        {
+          "rank": 3,
+          "doc_id": "P04",
+          "section_path": "1.质量问题范围",
+          "char_start": 13,
+          "char_end": 97,
+          "chunk_id": 89,
+          "score": 0.5930718183517456
+        },
+        {
+          "rank": 4,
+          "doc_id": "N03",
+          "section_path": "2.为何会误导检索",
+          "char_start": 112,
+          "char_end": 173,
+          "chunk_id": 65,
+          "score": 0.5928415656089783
+        },
+        {
+          "rank": 5,
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 278,
+          "char_end": 379,
+          "chunk_id": 92,
+          "score": 0.5843918323516846
+        }
+      ]
+    },
+    {
+      "id": "Q018",
+      "type": "single_hop",
+      "cluster": "quality_general",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 0.5,
+      "ndcg@5": 0.6309297535714575,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P15",
+          "section_path": "3.激活后的质量问题通道",
+          "char_start": 235,
+          "char_end": 366,
+          "chunk_id": 120,
+          "score": 0.7429229021072388
+        },
+        {
+          "rank": 2,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 97,
+          "char_end": 194,
+          "chunk_id": 90,
+          "score": 0.7210436761379242
+        },
+        {
+          "rank": 3,
+          "doc_id": "P07",
+          "section_path": "4.质保期内的服务",
+          "char_start": 337,
+          "char_end": 424,
+          "chunk_id": 104,
+          "score": 0.695258617401123
+        },
+        {
+          "rank": 4,
+          "doc_id": "P10",
+          "section_path": "2.换货时限",
+          "char_start": 97,
+          "char_end": 166,
+          "chunk_id": 110,
+          "score": 0.6869615316390991
+        },
+        {
+          "rank": 5,
+          "doc_id": "P04",
+          "section_path": "1.质量问题范围",
+          "char_start": 13,
+          "char_end": 97,
+          "chunk_id": 89,
+          "score": 0.686627060174942
+        }
+      ]
+    },
+    {
+      "id": "Q019",
+      "type": "single_hop",
+      "cluster": "quality_general",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 0.5,
+      "ndcg@5": 0.6309297535714575,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "M03",
+          "section_path": "2.鉴定",
+          "char_start": 140,
+          "char_end": 198,
+          "chunk_id": 35,
+          "score": 0.7159868478775024
+        },
+        {
+          "rank": 2,
+          "doc_id": "P04",
+          "section_path": "3.凭证与鉴定",
+          "char_start": 194,
+          "char_end": 278,
+          "chunk_id": 91,
+          "score": 0.6560841202735901
+        },
+        {
+          "rank": 3,
+          "doc_id": "P05",
+          "section_path": "4.其他责任导致的运费",
+          "char_start": 361,
+          "char_end": 425,
+          "chunk_id": 96,
+          "score": 0.6223838329315186
+        },
+        {
+          "rank": 4,
+          "doc_id": "M03",
+          "section_path": "3.转维修",
+          "char_start": 198,
+          "char_end": 258,
+          "chunk_id": 36,
+          "score": 0.6092918515205383
+        },
+        {
+          "rank": 5,
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 278,
+          "char_end": 379,
+          "chunk_id": 92,
+          "score": 0.5916257202625275
+        }
+      ]
+    },
+    {
+      "id": "Q020",
+      "type": "single_hop",
+      "cluster": "quality_general",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P04",
+          "section_path": "4.处理方式选择",
+          "char_start": 278,
+          "char_end": 379,
+          "chunk_id": 92,
+          "score": 0.8556611090898514
+        },
+        {
+          "rank": 2,
+          "doc_id": "M03",
+          "section_path": "2.鉴定",
+          "char_start": 140,
+          "char_end": 198,
+          "chunk_id": 35,
+          "score": 0.8045162111520767
+        },
+        {
+          "rank": 3,
+          "doc_id": "M03",
+          "section_path": "3.转维修",
+          "char_start": 198,
+          "char_end": 258,
+          "chunk_id": 36,
+          "score": 0.7765936404466629
+        },
+        {
+          "rank": 4,
+          "doc_id": "P07",
+          "section_path": "4.质保期内的服务",
+          "char_start": 337,
+          "char_end": 424,
+          "chunk_id": 104,
+          "score": 0.7676409780979156
+        },
+        {
+          "rank": 5,
+          "doc_id": "P04",
+          "section_path": "1.质量问题范围",
+          "char_start": 13,
+          "char_end": 97,
+          "chunk_id": 89,
+          "score": 0.7630231082439423
+        }
+      ]
+    },
+    {
+      "id": "Q021",
+      "type": "multi_hop",
+      "cluster": "quality_general",
+      "n_gold": 2,
+      "recall@5": 0.5,
+      "hit@5": 1.0,
+      "mrr@5": 0.2,
+      "ndcg@5": 0.23719771276929622,
+      "recall@10": 0.5,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P12",
+          "section_path": "3.物流丢失与损坏",
+          "char_start": 199,
+          "char_end": 259,
+          "chunk_id": 114,
+          "score": 0.8211332112550735
+        },
+        {
+          "rank": 2,
+          "doc_id": "P19",
+          "section_path": "2.处理",
+          "char_start": 102,
+          "char_end": 166,
+          "chunk_id": 129,
+          "score": 0.811797484755516
+        },
+        {
+          "rank": 3,
+          "doc_id": "M04",
+          "section_path": "2.无理由不成立",
+          "char_start": 92,
+          "char_end": 180,
+          "chunk_id": 38,
+          "score": 0.8093480914831161
+        },
+        {
+          "rank": 4,
+          "doc_id": "M13",
+          "section_path": "3.签收前丢失损坏",
+          "char_start": 222,
+          "char_end": 282,
+          "chunk_id": 48,
+          "score": 0.7951809167861938
+        },
+        {
+          "rank": 5,
+          "doc_id": "P04",
+          "section_path": "2.主张期限",
+          "char_start": 97,
+          "char_end": 194,
+          "chunk_id": 90,
+          "score": 0.788691058754921
+        }
+      ]
+    },
+    {
+      "id": "Q025",
+      "type": "multi_hop",
+      "cluster": "custom_returns",
+      "n_gold": 5,
+      "recall@5": 0.4,
+      "hit@5": 1.0,
+      "mrr@5": 0.5,
+      "ndcg@5": 0.36005461457723403,
+      "recall@10": 0.6,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F02",
+          "section_path": "1.常见问题",
+          "char_start": 23,
+          "char_end": 81,
+          "chunk_id": 4,
+          "score": 0.8680698871612549
+        },
+        {
+          "rank": 2,
+          "doc_id": "M05",
+          "section_path": "1.定制订单",
+          "char_start": 17,
+          "char_end": 112,
+          "chunk_id": 40,
+          "score": 0.844943955540657
+        },
+        {
+          "rank": 3,
+          "doc_id": "N02",
+          "section_path": "1.误导性说法",
+          "char_start": 32,
+          "char_end": 109,
+          "chunk_id": 61,
+          "score": 0.840816855430603
+        },
+        {
+          "rank": 4,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 14,
+          "char_end": 150,
+          "chunk_id": 85,
+          "score": 0.8196419179439545
+        },
+        {
+          "rank": 5,
+          "doc_id": "F02",
+          "section_path": "2.答复口径",
+          "char_start": 81,
+          "char_end": 207,
+          "chunk_id": 5,
+          "score": 0.8026461750268936
+        }
+      ]
+    },
+    {
+      "id": "Q039",
+      "type": "single_hop",
+      "cluster": "returns_time",
+      "n_gold": 1,
+      "recall@5": 0.0,
+      "hit@5": 0.0,
+      "mrr@5": 0.0,
+      "ndcg@5": 0.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F01",
+          "section_path": "3.说明",
+          "char_start": 204,
+          "char_end": 302,
+          "chunk_id": 3,
+          "score": 0.8326938897371292
+        },
+        {
+          "rank": 2,
+          "doc_id": "M01",
+          "section_path": "2.时限核对",
+          "char_start": 100,
+          "char_end": 223,
+          "chunk_id": 29,
+          "score": 0.8026770651340485
+        },
+        {
+          "rank": 3,
+          "doc_id": "P03",
+          "section_path": "1.定制类商品",
+          "char_start": 14,
+          "char_end": 150,
+          "chunk_id": 85,
+          "score": 0.7851724475622177
+        },
+        {
+          "rank": 4,
+          "doc_id": "F07",
+          "section_path": "1.常见问题",
+          "char_start": 24,
+          "char_end": 70,
+          "chunk_id": 19,
+          "score": 0.766399696469307
+        },
+        {
+          "rank": 5,
+          "doc_id": "F02",
+          "section_path": "3.说明",
+          "char_start": 207,
+          "char_end": 310,
+          "chunk_id": 6,
+          "score": 0.765251874923706
+        }
+      ]
+    },
+    {
+      "id": "Q041",
+      "type": "multi_hop",
+      "cluster": "phone_digital",
+      "n_gold": 3,
+      "recall@5": 0.6666666666666666,
+      "hit@5": 1.0,
+      "mrr@5": 0.5,
+      "ndcg@5": 0.49818925746641285,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "dense_cosine_sim",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F07",
+          "section_path": "2.答复口径",
+          "char_start": 70,
+          "char_end": 243,
+          "chunk_id": 20,
+          "score": 0.8936016708612442
+        },
+        {
+          "rank": 2,
+          "doc_id": "M05",
+          "section_path": "2.手机数码激活",
+          "char_start": 112,
+          "char_end": 221,
+          "chunk_id": 41,
+          "score": 0.8761582598090172
+        },
+        {
+          "rank": 3,
+          "doc_id": "F07",
+          "section_path": "1.常见问题",
+          "char_start": 24,
+          "char_end": 70,
+          "chunk_id": 19,
+          "score": 0.85787433385849
+        },
+        {
+          "rank": 4,
+          "doc_id": "P15",
+          "section_path": "2.激活后的特殊退货规则",
+          "char_start": 101,
+          "char_end": 235,
+          "chunk_id": 119,
+          "score": 0.852559819817543
+        },
+        {
+          "rank": 5,
+          "doc_id": "F07",
+          "section_path": "3.说明",
+          "char_start": 243,
+          "char_end": 330,
+          "chunk_id": 21,
+          "score": 0.7721087336540222
+        }
+      ]
+    }
+  ],
+  "refusal": {
+    "n": 4,
+    "ids": [
+      "Q062",
+      "Q063",
+      "Q064",
+      "Q065"
+    ],
+    "correct": "not_run",
+    "report": "未测 / 4",
+    "generation": "not_run",
+    "note": "本段只评检索，不跑生成；拒答题按「对了几道 / 共几道」汇报，不设 90% 目标，也不计入 Recall@5。"
+  },
+  "settings": {
+    "retriever": "dense",
+    "embedding_model": "text-embedding-v4",
+    "embedding_dim": 1024,
+    "n_chunks": 130,
+    "distance": "sqlite-vec cosine",
+    "score": "1 - cosine_distance",
+    "bm25": false,
+    "rrf": false,
+    "rerank": false
+  }
+}

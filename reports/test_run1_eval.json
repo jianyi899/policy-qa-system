@@ -1,0 +1,692 @@
+{
+  "ok": true,
+  "split": "test",
+  "retriever": "hybrid",
+  "definitions": {
+    "Recall@5": "前 5 条中命中的金标切片数 / 该题金标切片数，再对可答题宏平均。拒答题不进分母。",
+    "Hit@5": "前 5 条至少命中 1 个金标切片记为 1，否则为 0，再宏平均。",
+    "MRR@5": "第一个金标切片排名的倒数，未命中为 0，再宏平均。",
+    "nDCG@5": "相关切片相关性按二元，再宏平均。",
+    "retrieval": "密集检索与 BM25Okapi（jieba，k1=1.5，b=0.75）经 RRF（k=60）融合。不加 rerank。"
+  },
+  "n_questions_in_split": 12,
+  "n_answerable": 10,
+  "n_refusal_excluded": 2,
+  "n_used_for_recall": 10,
+  "primary_metric": "Recall@5",
+  "metrics": {
+    "Recall@5": 0.8476190476190476,
+    "Hit@5": 1.0,
+    "MRR@5": 0.5483333333333333,
+    "nDCG@5": 0.6096154242781703,
+    "Recall@10": 0.880952380952381,
+    "Hit@10": 1.0,
+    "n_hit@5": 10,
+    "n_answerable_for_hit": 10
+  },
+  "by_type": {
+    "multi_hop": {
+      "n": 3,
+      "Recall@5": 0.4920634920634921,
+      "Hit@5": 1.0,
+      "n_hit@5": 3
+    },
+    "single_hop": {
+      "n": 7,
+      "Recall@5": 1.0,
+      "Hit@5": 1.0,
+      "n_hit@5": 7
+    }
+  },
+  "k_eval": 5,
+  "k_retrieved": 20,
+  "n_failures_hit@5": 0,
+  "failure_ids": [],
+  "per_question": [
+    {
+      "id": "Q042",
+      "type": "multi_hop",
+      "cluster": "warranty_duration",
+      "n_gold": 7,
+      "recall@5": 0.14285714285714285,
+      "hit@5": 1.0,
+      "mrr@5": 0.2,
+      "ndcg@5": 0.13120507751234178,
+      "recall@10": 0.14285714285714285,
+      "hit@10": 1.0,
+      "score_note": "rrf_k=60",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F06",
+          "section_path": "1.常见问题",
+          "char_start": 25,
+          "char_end": 90,
+          "chunk_id": 445,
+          "score": 0.03278688524590164
+        },
+        {
+          "rank": 2,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 90,
+          "char_end": 210,
+          "chunk_id": 446,
+          "score": 0.03225806451612903
+        },
+        {
+          "rank": 3,
+          "doc_id": "M23",
+          "section_path": "1.先核 SKU 再核期限",
+          "char_start": 14,
+          "char_end": 134,
+          "chunk_id": 492,
+          "score": 0.031746031746031744
+        },
+        {
+          "rank": 4,
+          "doc_id": "N07",
+          "section_path": "1.投毒条款（错误，禁止采用）",
+          "char_start": 25,
+          "char_end": 145,
+          "chunk_id": 511,
+          "score": 0.030776515151515152
+        },
+        {
+          "rank": 5,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 129,
+          "char_end": 249,
+          "chunk_id": 556,
+          "score": 0.030536130536130537
+        }
+      ]
+    },
+    {
+      "id": "Q072",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 0.5,
+      "ndcg@5": 0.6309297535714575,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "rrf_k=60",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F05",
+          "section_path": "1.常见问题",
+          "char_start": 21,
+          "char_end": 61,
+          "chunk_id": 442,
+          "score": 0.03252247488101534
+        },
+        {
+          "rank": 2,
+          "doc_id": "P07",
+          "section_path": "1.通用质保期限",
+          "char_start": 14,
+          "char_end": 117,
+          "chunk_id": 550,
+          "score": 0.03252247488101534
+        },
+        {
+          "rank": 3,
+          "doc_id": "N04",
+          "section_path": "1.误导性传言",
+          "char_start": 34,
+          "char_end": 115,
+          "chunk_id": 505,
+          "score": 0.03125763125763126
+        },
+        {
+          "rank": 4,
+          "doc_id": "N04",
+          "section_path": "3.效力声明",
+          "char_start": 180,
+          "char_end": 281,
+          "chunk_id": 507,
+          "score": 0.03125
+        },
+        {
+          "rank": 5,
+          "doc_id": "F05",
+          "section_path": "2.答复口径",
+          "char_start": 61,
+          "char_end": 179,
+          "chunk_id": 443,
+          "score": 0.031024531024531024
+        }
+      ]
+    },
+    {
+      "id": "Q073",
+      "type": "multi_hop",
+      "cluster": "warranty_duration",
+      "n_gold": 3,
+      "recall@5": 0.3333333333333333,
+      "hit@5": 1.0,
+      "mrr@5": 0.3333333333333333,
+      "ndcg@5": 0.23463936301137822,
+      "recall@10": 0.6666666666666666,
+      "hit@10": 1.0,
+      "score_note": "rrf_k=60",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F06",
+          "section_path": "1.常见问题",
+          "char_start": 25,
+          "char_end": 90,
+          "chunk_id": 445,
+          "score": 0.031544957774465976
+        },
+        {
+          "rank": 2,
+          "doc_id": "M23",
+          "section_path": "2.附件与除外责任",
+          "char_start": 151,
+          "char_end": 254,
+          "chunk_id": 494,
+          "score": 0.031544957774465976
+        },
+        {
+          "rank": 3,
+          "doc_id": "M23",
+          "section_path": "1.先核 SKU 再核期限",
+          "char_start": 14,
+          "char_end": 134,
+          "chunk_id": 492,
+          "score": 0.03149801587301587
+        },
+        {
+          "rank": 4,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 90,
+          "char_end": 210,
+          "chunk_id": 446,
+          "score": 0.031054405392392875
+        },
+        {
+          "rank": 5,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 275,
+          "char_end": 395,
+          "chunk_id": 448,
+          "score": 0.029957522915269395
+        }
+      ]
+    },
+    {
+      "id": "Q074",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 0.5,
+      "ndcg@5": 0.6309297535714575,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "rrf_k=60",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 371,
+          "char_end": 410,
+          "chunk_id": 449,
+          "score": 0.032018442622950824
+        },
+        {
+          "rank": 2,
+          "doc_id": "P08",
+          "section_path": "4.生效日",
+          "char_start": 413,
+          "char_end": 479,
+          "chunk_id": 559,
+          "score": 0.03200204813108039
+        },
+        {
+          "rank": 3,
+          "doc_id": "M23",
+          "section_path": "2.附件与除外责任",
+          "char_start": 151,
+          "char_end": 254,
+          "chunk_id": 494,
+          "score": 0.03128054740957967
+        },
+        {
+          "rank": 4,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 129,
+          "char_end": 249,
+          "chunk_id": 556,
+          "score": 0.031009615384615385
+        },
+        {
+          "rank": 5,
+          "doc_id": "F06",
+          "section_path": "1.常见问题",
+          "char_start": 25,
+          "char_end": 90,
+          "chunk_id": 445,
+          "score": 0.030886196246139225
+        }
+      ]
+    },
+    {
+      "id": "Q075",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 0.25,
+      "ndcg@5": 0.43067655807339306,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "rrf_k=60",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F06",
+          "section_path": "1.常见问题",
+          "char_start": 25,
+          "char_end": 90,
+          "chunk_id": 445,
+          "score": 0.03278688524590164
+        },
+        {
+          "rank": 2,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 275,
+          "char_end": 395,
+          "chunk_id": 448,
+          "score": 0.031746031746031744
+        },
+        {
+          "rank": 3,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 90,
+          "char_end": 210,
+          "chunk_id": 446,
+          "score": 0.0315136476426799
+        },
+        {
+          "rank": 4,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 334,
+          "char_end": 413,
+          "chunk_id": 558,
+          "score": 0.03128054740957967
+        },
+        {
+          "rank": 5,
+          "doc_id": "M23",
+          "section_path": "2.附件与除外责任",
+          "char_start": 151,
+          "char_end": 254,
+          "chunk_id": 494,
+          "score": 0.03125
+        }
+      ]
+    },
+    {
+      "id": "Q076",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 0.2,
+      "ndcg@5": 0.38685280723454163,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "rrf_k=60",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "M23",
+          "section_path": "2.附件与除外责任",
+          "char_start": 151,
+          "char_end": 254,
+          "chunk_id": 494,
+          "score": 0.032266458495966696
+        },
+        {
+          "rank": 2,
+          "doc_id": "F06",
+          "section_path": "1.常见问题",
+          "char_start": 25,
+          "char_end": 90,
+          "chunk_id": 445,
+          "score": 0.032018442622950824
+        },
+        {
+          "rank": 3,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 275,
+          "char_end": 395,
+          "chunk_id": 448,
+          "score": 0.031754032258064516
+        },
+        {
+          "rank": 4,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 90,
+          "char_end": 210,
+          "chunk_id": 446,
+          "score": 0.0315136476426799
+        },
+        {
+          "rank": 5,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 334,
+          "char_end": 413,
+          "chunk_id": 558,
+          "score": 0.031024531024531024
+        }
+      ]
+    },
+    {
+      "id": "Q077",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "rrf_k=60",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P07",
+          "section_path": "2.不计入或缩短的情形",
+          "char_start": 117,
+          "char_end": 210,
+          "chunk_id": 551,
+          "score": 0.03225806451612903
+        },
+        {
+          "rank": 2,
+          "doc_id": "P07",
+          "section_path": "3.与专项质保的关系",
+          "char_start": 210,
+          "char_end": 330,
+          "chunk_id": 552,
+          "score": 0.030886196246139225
+        },
+        {
+          "rank": 3,
+          "doc_id": "M23",
+          "section_path": "1.先核 SKU 再核期限",
+          "char_start": 110,
+          "char_end": 151,
+          "chunk_id": 493,
+          "score": 0.030798389007344232
+        },
+        {
+          "rank": 4,
+          "doc_id": "F05",
+          "section_path": "3.说明",
+          "char_start": 179,
+          "char_end": 261,
+          "chunk_id": 444,
+          "score": 0.030776515151515152
+        },
+        {
+          "rank": 5,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 225,
+          "char_end": 334,
+          "chunk_id": 557,
+          "score": 0.03076923076923077
+        }
+      ]
+    },
+    {
+      "id": "Q078",
+      "type": "single_hop",
+      "cluster": "warranty_duration",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "rrf_k=60",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "M03",
+          "section_path": "1.核对质保期限",
+          "char_start": 15,
+          "char_end": 135,
+          "chunk_id": 469,
+          "score": 0.03278688524590164
+        },
+        {
+          "rank": 2,
+          "doc_id": "M23",
+          "section_path": "1.先核 SKU 再核期限",
+          "char_start": 14,
+          "char_end": 134,
+          "chunk_id": 492,
+          "score": 0.03200204813108039
+        },
+        {
+          "rank": 3,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 371,
+          "char_end": 410,
+          "chunk_id": 449,
+          "score": 0.031024531024531024
+        },
+        {
+          "rank": 4,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 129,
+          "char_end": 249,
+          "chunk_id": 556,
+          "score": 0.031009615384615385
+        },
+        {
+          "rank": 5,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 90,
+          "char_end": 210,
+          "chunk_id": 446,
+          "score": 0.03055037313432836
+        }
+      ]
+    },
+    {
+      "id": "Q085",
+      "type": "single_hop",
+      "cluster": "apparel",
+      "n_gold": 1,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "rrf_k=60",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "P17",
+          "section_path": "2.无理由退货完好标准",
+          "char_start": 56,
+          "char_end": 152,
+          "chunk_id": 579,
+          "score": 0.03278688524590164
+        },
+        {
+          "rank": 2,
+          "doc_id": "M09",
+          "section_path": "1.完好标准核验",
+          "char_start": 14,
+          "char_end": 103,
+          "chunk_id": 479,
+          "score": 0.03225806451612903
+        },
+        {
+          "rank": 3,
+          "doc_id": "P02",
+          "section_path": "3.商品完好标准",
+          "char_start": 315,
+          "char_end": 435,
+          "chunk_id": 527,
+          "score": 0.03149801587301587
+        },
+        {
+          "rank": 4,
+          "doc_id": "M09",
+          "section_path": "3.与通用规则的关系",
+          "char_start": 199,
+          "char_end": 268,
+          "chunk_id": 481,
+          "score": 0.030309988518943745
+        },
+        {
+          "rank": 5,
+          "doc_id": "P10",
+          "section_path": "2.换货时限",
+          "char_start": 97,
+          "char_end": 166,
+          "chunk_id": 561,
+          "score": 0.028814262023217248
+        }
+      ]
+    },
+    {
+      "id": "Q086",
+      "type": "multi_hop",
+      "cluster": "apparel",
+      "n_gold": 2,
+      "recall@5": 1.0,
+      "hit@5": 1.0,
+      "mrr@5": 0.5,
+      "ndcg@5": 0.6509209298071326,
+      "recall@10": 1.0,
+      "hit@10": 1.0,
+      "score_note": "rrf_k=60",
+      "retrieved": [
+        {
+          "rank": 1,
+          "doc_id": "F10",
+          "section_path": "1.常见问题",
+          "char_start": 23,
+          "char_end": 72,
+          "chunk_id": 454,
+          "score": 0.03252247488101534
+        },
+        {
+          "rank": 2,
+          "doc_id": "P17",
+          "section_path": "3.尺码换货",
+          "char_start": 152,
+          "char_end": 242,
+          "chunk_id": 580,
+          "score": 0.03149801587301587
+        },
+        {
+          "rank": 3,
+          "doc_id": "F10",
+          "section_path": "2.答复口径",
+          "char_start": 72,
+          "char_end": 192,
+          "chunk_id": 455,
+          "score": 0.031099324975891997
+        },
+        {
+          "rank": 4,
+          "doc_id": "M09",
+          "section_path": "2.尺码换货",
+          "char_start": 103,
+          "char_end": 199,
+          "chunk_id": 480,
+          "score": 0.03076923076923077
+        },
+        {
+          "rank": 5,
+          "doc_id": "M05",
+          "section_path": "3.食品生鲜与服装",
+          "char_start": 221,
+          "char_end": 297,
+          "chunk_id": 478,
+          "score": 0.0293236301369863
+        }
+      ]
+    }
+  ],
+  "refusal": {
+    "n": 2,
+    "ids": [
+      "Q096",
+      "Q097"
+    ],
+    "correct": "not_run",
+    "report": "未测 / 2",
+    "generation": "not_run",
+    "note": "本段只评检索，不跑生成；拒答题按「对了几道 / 共几道」汇报，不设 90% 目标，也不计入 Recall@5。"
+  },
+  "settings": {
+    "retriever": "hybrid",
+    "embedding_model": "text-embedding-v4",
+    "embedding_dim": 1024,
+    "n_chunks": 157,
+    "distance": "sqlite-vec cosine",
+    "score": null,
+    "bm25": {
+      "implementation": "rank_bm25.BM25Okapi",
+      "tokenizer": "jieba",
+      "k1": 1.5,
+      "b": 0.75
+    },
+    "rrf": {
+      "fusion": "rrf",
+      "rrf_k": 60,
+      "bm25": {
+        "implementation": "rank_bm25.BM25Okapi",
+        "tokenizer": "jieba",
+        "k1": 1.5,
+        "b": 0.75
+      }
+    },
+    "rerank": false
+  },
+  "testset_seal": {
+    "ok": true,
+    "expected_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "observed_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "seal_file_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "hash_file_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "n_test_questions": 12,
+    "match": true
+  }
+}

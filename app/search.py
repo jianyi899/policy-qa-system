@@ -226,3 +226,95 @@ def retrieval_description(
             f"{rerank_model or 'gte-rerank'}。"
         )
     raise ValueError(f"未知 retriever: {retriever}")
+
+
+def _assert_locked_pipeline(pipe: dict) -> None:
+    """拒绝偏离第三段锁定的检索链路。"""
+    from app.embeddings import LOCKED_MODEL, EmbeddingError, resolve_model_dim
+
+    model, dim = resolve_model_dim()
+    if pipe.get("embedding_model") != LOCKED_MODEL or int(pipe.get("embedding_dim") or 0) != dim:
+        raise EmbeddingError("embedding_lock_violation")
+    if model != LOCKED_MODEL:
+        raise EmbeddingError("embedding_lock_violation")
+    retriever = pipe.get("retriever") or pipe.get("retrieval")
+    if retriever != "hybrid" or not pipe.get("bm25") or not pipe.get("rrf") or pipe.get("rerank"):
+        raise RuntimeError("retrieval_lock_violation")
+    if pipe.get("chunking_name") != "section_window_120":
+        raise RuntimeError("retrieval_lock_violation")
+
+
+def load_chunks_with_documents(conn) -> list[dict]:
+    rows = conn.execute(
+        """
+        SELECT c.id, c.doc_id, c.section_path, c.char_start, c.char_end, c.text,
+               d.title, d.source_type, d.scope_type, d.scope_value,
+               d.effective_date, d.expire_date
+        FROM chunks c
+        JOIN documents d ON d.doc_id = c.doc_id
+        ORDER BY c.doc_id, c.section_path, c.char_start, c.id
+        """
+    ).fetchall()
+    corpus = []
+    for r in rows:
+        corpus.append(
+            {
+                "id": int(r["id"]),
+                "chunk_id": int(r["id"]),
+                "doc_id": r["doc_id"],
+                "section_path": r["section_path"],
+                "char_start": int(r["char_start"]),
+                "char_end": int(r["char_end"]),
+                "text": r["text"],
+                "title": r["title"],
+                "source_type": r["source_type"],
+                "scope_type": r["scope_type"],
+                "scope_value": r["scope_value"],
+                "effective_date": r["effective_date"],
+                "expire_date": r["expire_date"],
+            }
+        )
+    return corpus
+
+
+def retrieve(query: str, *, top_k: int = 20, settings=None) -> dict:
+    """对单条问题跑锁定的 hybrid 检索（section_window_120 + BM25 + RRF，不加 rerank）。"""
+    from app.config import get_settings
+    from app.db import connection
+    from app.embed_cache import embed_texts_cached
+    from app.embeddings import LOCKED_MODEL, resolve_model_dim
+    from app.pipeline import load_locked_pipeline
+
+    if settings is None:
+        settings = get_settings()
+    pipe = load_locked_pipeline()
+    _assert_locked_pipeline(pipe)
+    model, dim = resolve_model_dim(settings)
+    vectors = embed_texts_cached([query], model=model, expected_dim=dim, settings=settings)
+    qvec = vectors[0]
+    with connection(read_only=True, settings=settings) as conn:
+        corpus = load_chunks_with_documents(conn)
+        if not corpus:
+            raise RuntimeError("no_chunk_embeddings")
+        dense_scores = dense_scores_aligned(conn, qvec, corpus)
+    ranking = rank_corpus(query, corpus, dense_scores, retriever="hybrid")
+    hits = hits_from_ranking(corpus, ranking, k=top_k)
+    bm25_scores = ranking.get("bm25_scores") or []
+    for item in hits:
+        idx = next(i for i, c in enumerate(corpus) if c["chunk_id"] == item["chunk_id"])
+        item["dense_score"] = float(dense_scores[idx])
+        if bm25_scores:
+            item["bm25_score"] = float(bm25_scores[idx])
+    return {
+        "ok": True,
+        "retriever": "hybrid",
+        "embedding_model": LOCKED_MODEL,
+        "embedding_dim": dim,
+        "chunking_name": pipe.get("chunking_name") or "section_window_120",
+        "bm25": {"tokenizer": "jieba", "k1": BM25_K1, "b": BM25_B},
+        "rrf_k": RRF_K,
+        "rerank": False,
+        "query": query,
+        "top_k": top_k,
+        "hits": hits,
+    }

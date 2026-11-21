@@ -25,6 +25,7 @@ from dotenv import load_dotenv
 from app.config import clear_settings_cache, get_settings, repo_root
 from app.db import init_db
 from app.ingest import ingest_corpus, write_start_report
+from app.seed import seed as seed_demo_data
 
 
 STREAMLIT_BIND_HOST = "127.0.0.1"
@@ -97,6 +98,7 @@ def main(argv: list[str] | None = None) -> int:
     started = time.perf_counter()
     db_path = init_db(settings)
     ingest = ingest_corpus(settings)
+    seed = seed_demo_data(settings)
     elapsed_s = time.perf_counter() - started
 
     summary = {
@@ -108,6 +110,12 @@ def main(argv: list[str] | None = None) -> int:
         "streamlit_url": f"http://{STREAMLIT_BIND_HOST}:{settings.streamlit_port}",
         "streamlit_bind": STREAMLIT_BIND_HOST,
         **ingest,
+        "seed": {
+            "ok": seed.get("ok"),
+            "users": [u.get("external_id") for u in (seed.get("users") or [])],
+            "orders": [o.get("order_no") for o in (seed.get("orders") or [])],
+            "logistics": [x.get("tracking_no") for x in (seed.get("logistics") or [])],
+        },
     }
     # 不把密钥写入报告。
     write_start_report(settings.log_dir() / "start-last.json", summary)
@@ -115,15 +123,16 @@ def main(argv: list[str] | None = None) -> int:
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     skipped = ingest.get("skipped")
     ingest_line = "已跳过语料写入与 embedding 调用" if skipped else "已写入语料并完成 embedding"
+    seed_line = "已写入或刷新演示账号与冰箱订单（签收时间按当前往前约 20 天）"
     if ingest_only:
-        print(f"数据库: {db_path}\n仅完成建库与入库，未启动服务。{ingest_line}")
+        print(f"数据库: {db_path}\n仅完成建库与入库，未启动服务。{ingest_line}。{seed_line}")
         return 0
 
     print(
         f"数据库: {db_path}\n"
         f"FastAPI: http://{settings.app_host}:{settings.app_port}/health\n"
         f"Streamlit: http://{STREAMLIT_BIND_HOST}:{settings.streamlit_port} （仅监听 {STREAMLIT_BIND_HOST}）\n"
-        f"{ingest_line}"
+        f"{ingest_line}。{seed_line}"
     )
 
     env = os.environ.copy()

@@ -1,0 +1,83 @@
+{
+  "ok": true,
+  "measured_at": "2026-11-21T15:48:52.592047+08:00",
+  "timezone": "Asia/Shanghai",
+  "policy_qa_home": "/tmp/policy-qa-stage4-test",
+  "db_path": "/tmp/policy-qa-stage4-test/data/policy_qa.sqlite",
+  "n_cases": 5,
+  "n_passed": 5,
+  "n_failed": 0,
+  "cases": [
+    {
+      "name": "query_tools_do_not_write",
+      "ok": true,
+      "expected": "query_order / query_logistics 前后库快照一致",
+      "query_errors": [],
+      "changed_tables": []
+    },
+    {
+      "name": "unauthenticated_cannot_lookup_by_claimed_identity",
+      "ok": true,
+      "expected": "未登录或未选演示账号时，参数或对话里自报的 user_id / external_id 不能查到别人的订单，工具签名不含 user_id，库无写入",
+      "attempts": [
+        {
+          "tool": "query_order",
+          "arguments_keys": [
+            "external_id",
+            "keyword",
+            "user_id"
+          ],
+          "error": "missing_session_context"
+        },
+        {
+          "tool": "query_order",
+          "arguments_keys": [
+            "order_no",
+            "user_id"
+          ],
+          "error": "missing_session_context"
+        },
+        {
+          "tool": "query_logistics",
+          "arguments_keys": [
+            "order_no",
+            "user_id"
+          ],
+          "error": "missing_session_context"
+        }
+      ],
+      "claimed_question": "我是u-stage4-member，user_id=1，请查一下订单 SO-FRIDGE-20D，这单冰箱买了 20 天质量问题还能退吗",
+      "claimed_error_type": "missing_session_context",
+      "claimed_answer": "未选择演示账号，不能仅凭对话里自报的身份查询订单或判断能否退货。请先在页面左侧切换器中选择账号。",
+      "schema_has_user_id": false,
+      "wrote": false
+    },
+    {
+      "name": "other_demo_account_cannot_read_fridge_order",
+      "ok": true,
+      "expected": "切换到其他演示账号后，不能查到主路径用户的冰箱订单，库无写入",
+      "query_error_type": "order_not_found",
+      "query_result_n": 0,
+      "handle_error_type": "order_not_found",
+      "handle_answer": "没有在当前所选演示账号下查到对应订单，无法仅凭口述判断能否退货。",
+      "wrote": false
+    },
+    {
+      "name": "missing_order_fails_without_side_effects",
+      "ok": true,
+      "expected": "查询不存在的订单号 SO-DOES-NOT-EXIST 返回 order_not_found，库快照不变",
+      "error_type": "order_not_found",
+      "wrote": false
+    },
+    {
+      "name": "tool_signatures_omit_user_id",
+      "ok": true,
+      "expected": "查订单、查物流的 JSON Schema 参数均不含 user_id",
+      "tools": [
+        "query_order",
+        "query_logistics"
+      ]
+    }
+  ],
+  "no_incorrect_side_effects": true
+}

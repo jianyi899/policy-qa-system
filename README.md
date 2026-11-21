@@ -10,8 +10,68 @@
 
 - 第一段地基：SQLite 建表、锁定 `text-embedding-v4`（1024 维从配置读取）、一条命令启动。
 - 第二段语料与评测集：语料补齐至 40 篇（含 N07 投毒）、40 题拆为开发集 28 / 测试集 12，条款跨度标注与映射脚本，以及开发集 B0 密集检索基线。
-- **第三段检索优化（本段）**：三种切分消融、BM25+RRF、gte-rerank 实测，本地回归脚本，以及第一次测试集评测。最终检索链路已写入 `reports/locked_retrieval.json`。
-- 后续才做：查订单 / 查物流、句级引用与冲突消解、演示视频。申请退款等写操作、缓存与 Langfuse 留给第二版。不要使用 LangChain。
+- 第三段检索优化：三种切分消融、BM25+RRF、gte-rerank 实测，本地回归脚本，以及第一次测试集评测。最终检索链路已写入 `reports/locked_retrieval.json`。
+- **第四段查询工具与主路径（本段）**：查订单、查物流；订单的 sku、类目、签收时间、是否会员、运费险注入冲突解析；用演示账号实测跑通「这单冰箱买了 20 天质量问题还能退吗」。
+- 后续才做：多轮对话、句级引用与冲突总序（含第二次跑测试集）、演示视频。申请退款等写操作、缓存与 Langfuse 留给第二版。不要使用 LangChain。
+
+## 第四段实测（查询工具与主路径）
+
+在测试目录 `/tmp/policy-qa-stage4-test` 进行。安装与数据位置是该目录下的数据库 `/tmp/policy-qa-stage4-test/data/policy_qa.sqlite` 和日志；代码仍在本仓库。未默认写入 C 盘，也未改动 Windows 上的 `D:/policy-qa`，未连接 Postgres / Redis。测量时间：2026-11-21 15:49:01（Asia/Shanghai）。数字与回答来源见 `reports/stage4_seed.json`、`reports/stage4_fridge_path.json`、`reports/stage4_adversarial.json`。
+
+命令：
+
+```bash
+export POLICY_QA_HOME=/tmp/policy-qa-stage4-test
+python -m app.start --ingest-only
+python scripts/run_stage4_adversarial.py
+python scripts/run_stage4_fridge_path.py
+```
+
+启动时会写入或刷新演示账号。冰箱订单 `SO-FRIDGE-20D` 的签收时间每次启动都会改成「当前时间往前约 20 天」，以保证主路径口语成立。本段主路径实测使用的字段如下，未编造。
+
+| 字段 | 实测写入值 |
+| --- | --- |
+| 订单号 | `SO-FRIDGE-20D` |
+| 演示账号 | `u-stage4-member`（主路径用户，会员档位 plus） |
+| SKU | `SKU-HX-FRIDGE-BCD216` |
+| 类目 | 大家电 |
+| 签收时间 | 2026-11-01T15:48:55.755851+08:00（Asia/Shanghai） |
+| 距签收日历天数 | 20（签收当日为 0） |
+| 是否会员 | 是（有效期至 2027-05-20T15:48:55.755851+08:00） |
+| 运费险 | 是 |
+| 运单号 | `SF-FRIDGE-20D`（顺丰，状态 delivered；发运 2026-10-29T15:48:55.755851+08:00） |
+
+查订单、查物流在该测试库上跑通。查订单入参只有 `{"keyword": "冰箱"}`，不含 `user_id`；`user_id` 由服务端会话上下文注入。返回的 sku、类目、签收时间、是否会员、运费险已注入冲突解析。本单无冰箱 SKU 或大家电专项条款，适用通用政策。
+
+主路径提问：「这单冰箱买了 20 天质量问题还能退吗」。实测先调用了查订单，再按该订单范围检索并生成。模型为 `qwen3.8-flash`，**未级联**到 `qwen-plus`（级联阈值尚未标定，`reason=no_threshold_always_fast`，检索 top-1 RRF 为 0.0320）。生成耗时 5974 ms，usage 为输入 2009 / 输出 206 / 合计 2215 token。4 项必查要点全部通过；可选项中「质量问题运费由商家承担」已提及，「会员不延长七天窗口」未提及。本段没有跑测试集，也没有用测试集调参。
+
+实测回答原文：
+
+> **结论：可以申请退货，但依据是“质量问题”而非“七天无理由”。**
+>
+> 由于您的订单签收已超过 7 天（当前为第 20 天），已超出七天无理由退货窗口，因此不能按无理由规则办理 [S11]。但是，根据平台政策，即使不适用七天无理由，消费者仍可就质量问题申请退货、换货或维修 [S3]。只要该冰箱在质保期内且故障非因您使用不当导致，即可主张质量问题的售后权利 [S5][S6]。
+>
+> **关于运费：**
+> 此次售后若经核实确认为质量问题成立，退回运费及必要的再次发货运费应由商家承担 [S2]。虽然您购买了运费险，但在质量问题场景下，应优先适用商家承担运费的规则，不消耗运费险额度 [S1][S9]。
+>
+> **建议操作：**
+> 请在售后页面选择“质量问题”作为申请原因，并上传故障视频或照片作为证据，以便客服审核。
+
+生成时纳入冲突序靠前的条款包括 `P05`（运费）、`P03`（无理由不适用时仍可主张质量问题）、`P04`（质量问题退换货）、`P02`（七天无理由时限）和 `P07`（通用质保）等，完整列表见 `reports/stage4_fridge_path.json`。
+
+对抗用例 5 / 5 通过，库快照均无错误写入：
+
+| 用例 | 结果 |
+| --- | --- |
+| 查询工具不写库 | 通过。`query_order` / `query_logistics` 前后快照一致 |
+| 未登录不能靠自报身份查别人的订单 | 通过。无会话时即使参数带 `user_id` 也返回 `missing_session_context`；对话里自称 `u-stage4-member` 同样被拒绝，未返回订单 |
+| 其他演示账号不能读取冰箱订单 | 通过。`u-stage4-other` 查询 `SO-FRIDGE-20D` 得到 `order_not_found` |
+| 查不存在的订单明确失败且无副作用 | 通过。`SO-DOES-NOT-EXIST` 返回 `order_not_found`，库快照不变 |
+| 工具签名不含 `user_id` | 通过。仅有 `query_order`、`query_logistics` 两个查询工具 |
+
+### 如何切换演示账号并跑主路径
+
+用 `python -m app.start` 启动后，打开 `http://127.0.0.1:8501`（只监听本机）。在左侧边栏的「演示账号」切换器中选择 **主路径用户（含冰箱订单 SO-FRIDGE-20D）**，再点击「主路径示例」按钮，或输入「这单冰箱买了 20 天质量问题还能退吗」。不要在对话框里输入身份或 `user_id`，系统不会据此切换账号。也可调用 `POST /ask`，字段为 `question` 与 `demo_account`（例如 `u-stage4-member`），不能传 `user_id`。选择「未选择（未登录）」时，查询订单会失败。
 
 ## 第三段实测（检索优化）
 
@@ -133,7 +193,7 @@ python scripts/run_b0_dev.py
 - 存储：SQLite；向量：sqlite-vec（2026-11-21 查 [PyPI 文件列表](https://pypi.org/pypi/sqlite-vec/0.1.9/json)，最新版 0.1.9 提供 `sqlite_vec-0.1.9-py3-none-win_amd64.whl`，因此不退回 Chroma）
 - Embedding：沿用 E0 锁定的 `text-embedding-v4`，维度 1024 **从配置读取**，见 `docs/embedding-lock.md`
 - 检索（第三段锁定）：`section_window_120` 切分，jieba + `rank_bm25.BM25Okapi`（k1=1.5，b=0.75）与密集检索经 RRF（k=60）融合；gte-rerank 因 API `AccessDenied` 未纳入
-- 生成配置（本段不调用生成）：`QWEN_FAST_MODEL=qwen3.8-flash`，`QWEN_STRONG_MODEL=qwen-plus`
+- 生成：`QWEN_FAST_MODEL=qwen3.8-flash`（compatible-mode，`enable_thinking=False`）级联 `qwen-plus`。第四段主路径已实测生成；因级联阈值尚未标定，本次未升级
 - 页面：Streamlit，仅监听 `127.0.0.1`
 - 依赖与 Windows 安装依据：`requirements.txt`、`docs/windows-packages.md`
 
@@ -150,7 +210,7 @@ python scripts/run_b0_dev.py
 | 密钥 | 仓库根目录或 `POLICY_QA_HOME` 下的本地 `.env`，不进仓库 |
 | 代码与语料 | 本仓库（例如桌面上的项目目录）；40 篇语料在 `corpus/`，不会安装到 C 盘 |
 
-在 Linux 开发机上把 `POLICY_QA_HOME` 换成对应路径即可，例如 `$HOME/policy-qa`。第二段评测目录是 `/tmp/policy-qa-stage2-test`；第三段是 `/tmp/policy-qa-stage3-test`。你自己电脑上的安装和数据默认仍在 `D:/policy-qa`。拉取本段之后首次启动会按锁定切分 `section_window_120` 重新切分并入库（157 个切片）；若本地还没有对应 embedding 缓存，会再次调用 embedding 接口。
+在 Linux 开发机上把 `POLICY_QA_HOME` 换成对应路径即可，例如 `$HOME/policy-qa`。第二段评测目录是 `/tmp/policy-qa-stage2-test`，第三段是 `/tmp/policy-qa-stage3-test`，第四段是 `/tmp/policy-qa-stage4-test`。你自己电脑上的安装和数据默认仍在 `D:/policy-qa`。拉取第三段之后首次启动会按锁定切分 `section_window_120` 重新切分并入库（157 个切片）；若本地还没有对应 embedding 缓存，会再次调用 embedding 接口。启动时还会写入演示账号，并把冰箱订单签收时间刷新为当前往前约 20 天。
 
 ## 本机运行（Windows）
 
@@ -169,7 +229,9 @@ copy .env.example .env
 python -m app.start
 ```
 
-该命令会建库、按需写入语料并调用 embedding，然后启动 FastAPI（默认 `http://127.0.0.1:8000/health`）和 Streamlit（`http://127.0.0.1:8501`）。第二次只需再运行 `python -m app.start`：语料与配置未变时不会重复写入，也不会再次消耗 embedding 额度。若只想建库入库、不启动页面，使用 `python -m app.start --ingest-only`。
+该命令会建库、按需写入语料并调用 embedding，写入演示账号与冰箱订单，然后启动 FastAPI（默认 `http://127.0.0.1:8000/health`）和 Streamlit（`http://127.0.0.1:8501`，只监听 `127.0.0.1`）。第二次只需再运行 `python -m app.start`：语料与配置未变时不会重复写入 embedding，但会刷新演示订单的签收时间。若只想建库入库、不启动页面，使用 `python -m app.start --ingest-only`。
+
+打开页面后，在左侧切换器选择「主路径用户」，即可演示「这单冰箱买了 20 天质量问题还能退吗」。
 
 ## 本机运行（Linux）
 

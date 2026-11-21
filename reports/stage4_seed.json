@@ -1,0 +1,62 @@
+{
+  "ok": true,
+  "measured_at": "2026-11-21T15:48:55.755851+08:00",
+  "timezone": "Asia/Shanghai",
+  "note": "本文件与主路径实测使用的种子一致（签收时间未再刷新）。用户表 id 为当前测试库中的值。",
+  "users": [
+    {
+      "external_id": "u-stage4-member",
+      "id": 1,
+      "is_member": true,
+      "membership_tier": "plus",
+      "membership_expires_at": "2027-05-20T15:48:55.755851+08:00"
+    },
+    {
+      "external_id": "u-stage4-other",
+      "id": 2,
+      "is_member": false,
+      "membership_tier": "none"
+    }
+  ],
+  "orders": [
+    {
+      "order_no": "SO-FRIDGE-20D",
+      "id": 1,
+      "user_external_id": "u-stage4-member",
+      "sku": "SKU-HX-FRIDGE-BCD216",
+      "category": "大家电",
+      "shipping_insurance": true,
+      "received_at": "2026-11-01T15:48:55.755851+08:00",
+      "amount_cents": 299900,
+      "purpose": "fridge_main_path"
+    },
+    {
+      "order_no": "SO-STAGE4-MEMBER-OTHER",
+      "id": 2,
+      "user_external_id": "u-stage4-member",
+      "sku": "SKU-HX-SHIRT-01",
+      "category": "服装鞋帽",
+      "shipping_insurance": false,
+      "received_at": "2026-11-16T15:48:55.755851+08:00",
+      "amount_cents": 19900,
+      "purpose": "same_user_other_order_isolation"
+    },
+    {
+      "order_no": "SO-STAGE4-OTHER-USER",
+      "id": 3,
+      "user_external_id": "u-stage4-other",
+      "sku": "SKU-HX-SNACK-01",
+      "category": "食品生鲜",
+      "shipping_insurance": false,
+      "received_at": "2026-11-16T15:48:55.755851+08:00",
+      "amount_cents": 3900,
+      "purpose": "other_user_isolation"
+    }
+  ],
+  "logistics": [
+    {
+      "tracking_no": "SF-FRIDGE-20D",
+      "order_no": "SO-FRIDGE-20D"
+    }
+  ]
+}

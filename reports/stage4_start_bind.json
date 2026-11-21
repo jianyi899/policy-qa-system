@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "measured_at": "2026-11-21T15:50:05+08:00",
+  "timezone": "Asia/Shanghai",
+  "policy_qa_home": "/tmp/policy-qa-stage4-test",
+  "command": "python -m app.start",
+  "fastapi": {
+    "bind": "127.0.0.1",
+    "port": 8000,
+    "health": "ok"
+  },
+  "streamlit": {
+    "bind": "127.0.0.1",
+    "port": 8501,
+    "http_status": 200
+  },
+  "not_listening_on": "0.0.0.0",
+  "unauthenticated_ask": {
+    "error_type": "missing_session_context",
+    "returned_order": false
+  }
+}

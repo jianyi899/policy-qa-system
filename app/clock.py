@@ -24,6 +24,20 @@ def to_shanghai(dt: datetime | None) -> datetime | None:
     return dt.astimezone(SHANGHAI)
 
 
+def parse_datetime(value) -> datetime | None:
+    """把数据库里的 ISO 文本或 datetime 解析为上海时区。"""
+    if value is None or value == "":
+        return None
+    if isinstance(value, datetime):
+        return to_shanghai(value)
+    text = str(value).strip()
+    if not text:
+        return None
+    if text.endswith("Z"):
+        text = text[:-1] + "+00:00"
+    return to_shanghai(datetime.fromisoformat(text))
+
+
 def iso(dt: datetime | None) -> str | None:
     converted = to_shanghai(dt)
     return converted.isoformat() if converted else None

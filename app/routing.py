@@ -1,7 +1,7 @@
-"""路由层：区分纯政策问答与工具类请求。
+"""路由层：区分纯政策问答与查询工具请求。
 
-工具类在本层绕过缓存，不得读、写政策问答缓存或检索缓存。
-分类只看问题文本，不做语义检索，避免同义变体被当成同一题。
+分类只看问题文本，不做语义检索。第一版不提供申请退款、日报等写操作。
+不从问题文本解析用户身份。
 """
 
 from __future__ import annotations
@@ -9,7 +9,11 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-from app.orchestrator import keyword_for_question
+def keyword_for_question(question: str) -> str | None:
+    if "冰箱" in question:
+        return "冰箱"
+    return None
+
 
 ORDER_NO_RE = re.compile(r"SO-[A-Z0-9-]+", re.IGNORECASE)
 
@@ -98,7 +102,7 @@ POLICY_CUES = (
 
 @dataclass(frozen=True)
 class Route:
-    intent: str  # "tool" | "policy"
+    intent: str  # "tool" | "policy" | "unsupported_write"
     tool: str | None = None
     arguments: dict | None = None
     cacheable: bool = False
@@ -134,15 +138,8 @@ def classify(question: str) -> Route:
     if not text:
         return Route(intent="policy", cacheable=True, reason="empty_question")
 
-    if _has_any(text, DAILY_REPORT_CUES):
-        action = "generate" if any(s in text for s in ("生成", "出一份", "写一份")) else "query"
-        args: dict = {"action": action}
-        if any(s in text for s in ("昨天", "昨日")):
-            args["report_date_offset_days"] = -1
-        date = _extract_report_date(text)
-        if date:
-            args["report_date"] = date
-        return Route(intent="tool", tool="daily_report", arguments=args, cacheable=False, reason="daily_report")
+    if _has_any(text, REFUND_TOOL_CUES) or _has_any(text, DAILY_REPORT_CUES):
+        return Route(intent="unsupported_write", cacheable=False, reason="write_not_in_v1")
 
     if _has_any(text, LOGISTICS_CUES) and not _has_any(text, POLICY_CUES):
         args = {}
@@ -153,19 +150,6 @@ def classify(question: str) -> Route:
         if tracking:
             args["tracking_no"] = tracking
         return Route(intent="tool", tool="query_logistics", arguments=args, cacheable=False, reason="logistics")
-
-    if _has_any(text, REFUND_TOOL_CUES):
-        action = "apply" if any(s in text for s in ("申请", "提交", "发起", "帮我退", "替我退")) else "query"
-        args = {"action": action}
-        order_no = extract_order_no(text)
-        if order_no:
-            args["order_no"] = order_no
-        if action == "apply":
-            if "质量" in text:
-                args["reason"] = "质量问题"
-            elif "不喜欢" in text or "无理由" in text:
-                args["reason"] = "七天无理由"
-        return Route(intent="tool", tool="refund", arguments=args, cacheable=False, reason="refund_tool")
 
     policy_like = _has_any(text, POLICY_CUES)
     if _has_any(text, ORDER_STATUS_CUES) and not policy_like:

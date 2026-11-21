@@ -1,0 +1,429 @@
+{
+  "ok": true,
+  "name": "test_run3",
+  "status": "measured",
+  "split": "test",
+  "policy_qa_home": "/tmp/policy-qa-stage6-test",
+  "note": "第三次也是交付前最后一次跑测试集。在独立测试目录实测生成、引用、检索与拒答。数字不参与调参，也不据此回改链路或拒答启发式。封存 sha256 与前两次对照。检索与 test_run1 / test_run2 对比；生成/引用/拒答/答题质量与 test_run2 对比（第一次只评检索，不能与之硬比）。级联阈值尚未标定，生成仍默认 qwen3.8-flash，不升级到 qwen-plus。",
+  "testset_seal": {
+    "ok": true,
+    "expected_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "observed_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "seal_file_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "hash_file_sha256": "2e4aa054c7843879db1c2982a5482313017055b61c60b2064855d782df22cf3e",
+    "n_test_questions": 12,
+    "match": true
+  },
+  "model": "qwen3.8-flash",
+  "cascade_note": "级联阈值尚未标定，默认不升级（reason=no_threshold_always_fast）",
+  "retrieval": {
+    "metrics": {
+      "Recall@5": 0.8476190476190476,
+      "Hit@5": 1.0,
+      "MRR@5": 0.5483333333333333,
+      "nDCG@5": 0.6096154242781703,
+      "Recall@10": 0.880952380952381,
+      "Hit@10": 1.0,
+      "n_hit@5": 10,
+      "n_answerable_for_hit": 10
+    },
+    "Recall@5": 0.8476190476190476,
+    "Hit@5": 1.0,
+    "by_type": {
+      "multi_hop": {
+        "n": 3,
+        "Recall@5": 0.4920634920634921,
+        "Hit@5": 1.0,
+        "n_hit@5": 3
+      },
+      "single_hop": {
+        "n": 7,
+        "Recall@5": 1.0,
+        "Hit@5": 1.0,
+        "n_hit@5": 7
+      }
+    },
+    "n_used_for_recall": 10,
+    "n_failures_hit@5": 0,
+    "failure_ids": [],
+    "per_question_path": "reports/test_run3_retrieval_eval.json",
+    "vs_test_run1": {
+      "baseline": "test_run1_retrieval",
+      "current": "test_run3_retrieval",
+      "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+      "n_comparable": 10,
+      "n_only_baseline": 0,
+      "n_only_current": 0,
+      "wrong_to_right": {
+        "n": 0,
+        "ids": []
+      },
+      "right_to_wrong": {
+        "n": 0,
+        "ids": []
+      },
+      "mcnemar": {
+        "n_improved": 0,
+        "n_regressed": 0,
+        "n_discordant": 0,
+        "p_value": 1.0,
+        "test": "mcnemar_exact_binomial",
+        "significant_at_0.05": false,
+        "direction": "tied",
+        "interpretation": "无分歧题目，无法检验。"
+      },
+      "recall@5_changes": {
+        "n_up": 0,
+        "ids_up": [],
+        "n_down": 0,
+        "ids_down": [],
+        "n_same": 10,
+        "net_decrease_questions": 0
+      }
+    },
+    "vs_test_run2": {
+      "baseline": "test_run2_retrieval",
+      "current": "test_run3_retrieval",
+      "success_definition": "Hit@5==1 视为对，否则为错（top5 至少命中一条相关切片）",
+      "n_comparable": 10,
+      "n_only_baseline": 0,
+      "n_only_current": 0,
+      "wrong_to_right": {
+        "n": 0,
+        "ids": []
+      },
+      "right_to_wrong": {
+        "n": 0,
+        "ids": []
+      },
+      "mcnemar": {
+        "n_improved": 0,
+        "n_regressed": 0,
+        "n_discordant": 0,
+        "p_value": 1.0,
+        "test": "mcnemar_exact_binomial",
+        "significant_at_0.05": false,
+        "direction": "tied",
+        "interpretation": "无分歧题目，无法检验。"
+      },
+      "recall@5_changes": {
+        "n_up": 0,
+        "ids_up": [],
+        "n_down": 0,
+        "ids_down": [],
+        "n_same": 10,
+        "net_decrease_questions": 0
+      }
+    },
+    "test_run1_recall@5": 0.8476190476190476,
+    "test_run1_hit@5": 1.0,
+    "test_run2_recall@5": 0.8476190476190476,
+    "test_run2_hit@5": 1.0
+  },
+  "generation": {
+    "model": "qwen3.8-flash",
+    "cascade_stats": {
+      "n_items": 12,
+      "n_with_cascade": 12,
+      "n_upgraded_to_plus": 0,
+      "by_model": {
+        "qwen3.8-flash": 12
+      },
+      "note": "级联阈值尚未标定，默认不升级（reason=no_threshold_always_fast）。未编造阈值。"
+    },
+    "summary": {
+      "split": "test",
+      "n_questions": 12,
+      "n_answerable": 10,
+      "n_refusal": 2,
+      "n_generation_ok": 12,
+      "n_generation_failed": 0,
+      "generation_failed_ids": [],
+      "citation": {
+        "metric": "sentence_precision",
+        "definition": "按句子算引用精度。系统回答中每个 [S#] 映射到证据句（doc_id+section_path+字符起止，与条款标注同一 documents.body 坐标系）；该句与任一金标条款跨度在同一章节下字符交集长度>0 视为正确。不对着检索改标注。可答题、生成成功的题目上统计。",
+        "n_answerable_generated": 10,
+        "n_with_citations": 10,
+        "n_without_citations": 0,
+        "macro_precision_over_questions_with_citations": 0.26208333333333333,
+        "macro_precision_missing_as_zero": 0.26208333333333333,
+        "macro_recall_over_questions_with_gold_sentences": 0.49375,
+        "micro_precision": 0.2,
+        "micro_n_correct": 13,
+        "micro_n_cited": 65
+      },
+      "answer_quality": {
+        "definition": "可答题：不得拒答，且至少引用到一条金标句或覆盖至少一条金标要点；要点覆盖见 app.quality.point_coverage。拒答另计。",
+        "n_answerable_generated": 10,
+        "n_task_ok": 7,
+        "n_task_fail": 3,
+        "task_ok_over_generated": "7/10",
+        "task_fail_ids": [
+          "Q073",
+          "Q075",
+          "Q076"
+        ],
+        "macro_point_coverage": 1.0
+      },
+      "refusal": {
+        "n": 2,
+        "n_evaluated": 2,
+        "n_correct": 2,
+        "n_incorrect": 0,
+        "n_generation_failed": 0,
+        "correct_over_total": "2/2",
+        "incorrect_ids": [],
+        "generation_failed_ids": [],
+        "note": "小样本只报对了几道/共几道，不设 90% 目标。"
+      }
+    },
+    "q042": {
+      "answer": "**结论：**\n星河手表 S3（SKU-HX-WATCH-S3）的质量保证期限为自签收之日起 **24 个月**。该 SKU 级专项规定优先于并覆盖了平台通用的 12 个月质保规定。\n\n**依据说明：**\n\n1.  **适用期限与覆盖关系**：\n    根据《指定商品延保政策（SKU-HX-WATCH-S3）》，该特定 SKU 的质保期明确为 24 个月 [S1]。这一规定在冲突排序中属于更细范围（SKU 级），因此它直接覆盖并取代了《商品质量保证期限通则》中的通用 12 个月规定 [S2]。即便语料中同时存在通用规则，按“SKU 级优先于通用”的原则，本商品应适用 24 个月而非 12 个月 [S10]。FAQ 答复口径也确认了这一逻辑，指出 24 个月是 SKU 级专项规定，优先于通用 12 个月 [S17][S23]。\n\n2.  **生效时间与适用范围**：\n    该 24 个月质保政策自 2025-06-01 起生效，适用于当日及之后签收的 SKU-HX-WATCH-S3 订单 [S7][S16]。此政策仅适用于编码为 SKU-HX-WATCH-S3 的商品（星河手表 S3，智能穿戴品类），其他同品类手表不得援引此条款 [S4][S5][S6]。\n\n3.  **质保覆盖内容细节**：\n    *   **主机故障**：24 个月质保涵盖手表主机的主要功能故障 [S11][S19]。\n    *   **附件例外**：表带、充电线等附件仍按通用规则或商品说明执行，不享受 24 个月延保 [S12][S20]。\n    *   **免责情形**：因进水、摔损、私拆造成的损坏不在本延保范围内 [S13][S21]。",
+      "review": {
+        "question_id": "Q042",
+        "meets_expected": true,
+        "required_points": [
+          {
+            "id": "warranty_24_months",
+            "expected": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月",
+            "ok": true
+          },
+          {
+            "id": "sku_covers_general_12",
+            "expected": "按冲突排序应优先适用 SKU 级规定，24 个月覆盖通用 12 个月",
+            "ok": true
+          },
+          {
+            "id": "not_only_general_12",
+            "expected": "不得只回答通用 12 个月",
+            "ok": true
+          }
+        ]
+      },
+      "citations": [
+        {
+          "sid": "S1",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 140,
+          "char_end": 177,
+          "text": "SKU-HX-WATCH-S3 的质量保证期限为自签收之日起 24 个月。"
+        },
+        {
+          "sid": "S2",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 177,
+          "char_end": 240,
+          "text": "该 24 个月规定覆盖（即在本 SKU 上优先于、并取代其适用位置上的）平台《商品质量保证期限通则》中的通用 12 个月规定。"
+        },
+        {
+          "sid": "S10",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "2.质保期限",
+          "char_start": 279,
+          "char_end": 332,
+          "text": "按冲突排序口径，范围比较时 SKU 级优先于通用，因此本 SKU 应适用 24 个月，而不是 12 个月。"
+        },
+        {
+          "sid": "S17",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 180,
+          "char_end": 209,
+          "text": "该 24 个月是 SKU 级专项规定，按冲突排序优先于通用"
+        },
+        {
+          "sid": "S23",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 186,
+          "char_end": 246,
+          "text": "月是 SKU 级专项规定，按冲突排序优先于通用 12 个月，因此本 SKU 应适用 24 个月，而不是通用 12 个月。"
+        },
+        {
+          "sid": "S7",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "4.生效日",
+          "char_start": 423,
+          "char_end": 478,
+          "text": "本政策自 2025-06-01 起生效，对该生效日当日及之后签收的 SKU-HX-WATCH-S3 订单适用。"
+        },
+        {
+          "sid": "S16",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "2.答复口径",
+          "char_start": 101,
+          "char_end": 180,
+          "text": "SKU-HX-WATCH-S3（星河手表 S3，品类：智能穿戴）的质量保证期限为自签收之日起 24 个月，适用于 2025-06-01 当日及之后签收的订单。"
+        },
+        {
+          "sid": "S4",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "1.适用范围",
+          "char_start": 40,
+          "char_end": 89,
+          "text": "本政策仅适用于 SKU 编码为 SKU-HX-WATCH-S3 的商品（商品名称：星河手表 S3；"
+        },
+        {
+          "sid": "S5",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "1.适用范围",
+          "char_start": 89,
+          "char_end": 100,
+          "text": "所属品类：智能穿戴）。"
+        },
+        {
+          "sid": "S6",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "1.适用范围",
+          "char_start": 100,
+          "char_end": 127,
+          "text": "其他 SKU，包括同品类其他手表，不得直接援引本文件。"
+        },
+        {
+          "sid": "S11",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 345,
+          "char_end": 366,
+          "text": "24 个月质保涵盖手表主机的主要功能故障。"
+        },
+        {
+          "sid": "S19",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 284,
+          "char_end": 304,
+          "text": "24 个月质保涵盖手表主机主要功能故障；"
+        },
+        {
+          "sid": "S12",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 366,
+          "char_end": 389,
+          "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+        },
+        {
+          "sid": "S20",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 304,
+          "char_end": 327,
+          "text": "表带、充电线等附件仍按通用规则或商品说明执行；"
+        },
+        {
+          "sid": "S13",
+          "valid_evidence": true,
+          "doc_id": "P08",
+          "section_path": "3.覆盖内容",
+          "char_start": 389,
+          "char_end": 411,
+          "text": "因进水、摔损、私拆造成的损坏不在本延保范围。"
+        },
+        {
+          "sid": "S21",
+          "valid_evidence": true,
+          "doc_id": "F06",
+          "section_path": "3.说明",
+          "char_start": 327,
+          "char_end": 347,
+          "text": "进水、摔损、私拆造成的损坏不在延保范围。"
+        }
+      ],
+      "conflict_explanation": "未绑定具体订单，按问题中的范围套用：SKU=SKU-HX-WATCH-S3，品类=（未指定）。\n冲突排序口径：先比较范围：sku → 品类 → 通用（更具体者优先）；范围相同再比较来源：政策 → 手册 → FAQ；范围与来源均相同再比较生效日：较晚者优先。noise 不得进入比较。\nSKU 级规定优先于品类与通用，适用：P08《指定商品延保政策（SKU-HX-WATCH-S3）》（来源=政策，范围=sku：SKU-HX-WATCH-S3，生效日=2025-06-01）、F06《FAQ：星河手表 S3 的质保期限是多久？》（来源=FAQ，范围=sku：SKU-HX-WATCH-S3，生效日=2025-09-01）。\n因此更细的 SKU 规定覆盖（优先于并取代其适用位置上的）更一般的品类或通用规定，作答须采用 SKU 专项结论，并说明它覆盖了更一般规则，不得只按通用规则作答。"
+    },
+    "per_question_path": "reports/test_run3_generation.json",
+    "vs_test_run1": "第一次测试集未跑生成、引用与拒答，本项无对照，不可与检索指标直接比较。",
+    "vs_test_run2": {
+      "baseline": "test_run2_generation",
+      "current": "test_run3_generation",
+      "success_definition": "task_ok：拒答题须正确拒答；可答题不得拒答，且至少引用到一条金标句或覆盖至少一条金标要点。用已保存回答重算 test_run2，未重跑第二次生成。本对照不参与调参。",
+      "n_comparable": 12,
+      "n_only_baseline": 0,
+      "n_only_current": 0,
+      "wrong_to_right": {
+        "n": 0,
+        "ids": []
+      },
+      "right_to_wrong": {
+        "n": 2,
+        "ids": [
+          "Q073",
+          "Q075"
+        ]
+      },
+      "mcnemar": {
+        "n_improved": 0,
+        "n_regressed": 2,
+        "n_discordant": 2,
+        "p_value": 0.5,
+        "test": "mcnemar_exact_binomial",
+        "significant_at_0.05": false,
+        "direction": "negative",
+        "interpretation": "方向为负但未达显著"
+      },
+      "task_ok": {
+        "baseline": "11/12",
+        "current": "9/12",
+        "answerable_baseline": "9/10",
+        "answerable_current": "7/10",
+        "refusal_baseline": "2/2",
+        "refusal_current": "2/2"
+      },
+      "per_question_path": "reports/test_run3_generation_vs_run2.json"
+    }
+  },
+  "citation": {
+    "metric": "sentence_precision",
+    "definition": "按句子算引用精度。系统回答中每个 [S#] 映射到证据句（doc_id+section_path+字符起止，与条款标注同一 documents.body 坐标系）；该句与任一金标条款跨度在同一章节下字符交集长度>0 视为正确。不对着检索改标注。可答题、生成成功的题目上统计。",
+    "n_answerable_generated": 10,
+    "n_with_citations": 10,
+    "n_without_citations": 0,
+    "macro_precision_over_questions_with_citations": 0.26208333333333333,
+    "macro_precision_missing_as_zero": 0.26208333333333333,
+    "macro_recall_over_questions_with_gold_sentences": 0.49375,
+    "micro_precision": 0.2,
+    "micro_n_correct": 13,
+    "micro_n_cited": 65
+  },
+  "answer_quality": {
+    "definition": "可答题：不得拒答，且至少引用到一条金标句或覆盖至少一条金标要点；要点覆盖见 app.quality.point_coverage。拒答另计。",
+    "n_answerable_generated": 10,
+    "n_task_ok": 7,
+    "n_task_fail": 3,
+    "task_ok_over_generated": "7/10",
+    "task_fail_ids": [
+      "Q073",
+      "Q075",
+      "Q076"
+    ],
+    "macro_point_coverage": 1.0
+  },
+  "refusal": {
+    "n": 2,
+    "n_evaluated": 2,
+    "n_correct": 2,
+    "n_incorrect": 0,
+    "n_generation_failed": 0,
+    "correct_over_total": "2/2",
+    "incorrect_ids": [],
+    "generation_failed_ids": [],
+    "note": "小样本只报对了几道/共几道，不设 90% 目标。"
+  }
+}
